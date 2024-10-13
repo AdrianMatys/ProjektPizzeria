@@ -1,0 +1,70 @@
+services:
+  app:
+    build:
+      args:
+        user: ${USER}
+        uid: 1000
+      context: ./
+      dockerfile: Dockerfile
+    #image: pizza-app  
+    container_name: app-pizza
+    working_dir: /application
+    volumes:
+      - ./:/application
+    ports:
+      - 80:80
+      - ${VITE_PORT}:${VITE_PORT}
+    networks:
+      - network-pizza
+    depends_on:
+      db:
+        condition: service_healthy
+
+  db:
+    image: postgres:16.1-alpine3.19
+    container_name: postgres-pizza
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: ${DB_DATABASE}
+      POSTGRES_USER: ${DB_USERNAME}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+    volumes:
+      - db_data:/var/lib/postgresql/data
+    networks:
+      - network-pizza
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready --dbname ${DB_DATABASE} --username ${DB_USERNAME}" ]
+      interval: 3s
+      timeout: 3s
+      retries: 5
+
+  redis:
+    image: redis:7.2.3-alpine
+    container_name: redis-pizza
+    command: redis-server --appendonly yes --requirepass "${REDIS_PASSWORD}"
+    networks:
+      - network-pizza
+    volumes:
+      - redis_data:/data
+    healthcheck:
+      test: [ "CMD", "redis-cli", "ping" ]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  mailpit:
+    image: axllent/mailpit:v1.20.5
+    container_name: mailpit-pizza
+    networks:
+      - network-pizza
+    ports:
+      - ${MAILPIT_PORT}:8025
+    restart: unless-stopped
+
+networks:
+  network-pizza:
+    driver: bridge
+
+volumes:
+  db_data:
+  redis_data:
