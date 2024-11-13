@@ -32,4 +32,9 @@ Route::get('/set-locale/{locale}', function ($locale) {
     return redirect()->back();
 })->name('set-locale');
 
+
+Route::get('/admin', function () {
+    return view('admin.home');
+})->middleware(['auth', 'role:admin']);
+
 require __DIR__.'/auth.php';

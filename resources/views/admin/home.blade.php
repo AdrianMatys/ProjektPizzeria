@@ -1,0 +1,1 @@
+strona tylko dla administratorow
