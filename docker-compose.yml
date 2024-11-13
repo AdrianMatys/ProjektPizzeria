@@ -60,6 +60,19 @@ services:
     ports:
       - ${MAILPIT_PORT}:8025
     restart: unless-stopped
+  
+  pgadmin:
+    image: dpage/pgadmin4
+    container_name: pgadmin-pizza
+    ports:
+      - "8888:80"
+    networks:
+      - network-pizza
+    environment:
+      PGADMIN_DEFAULT_EMAIL: ${PGADMIN_EMAIL}
+      PGADMIN_DEFAULT_PASSWORD: ${PGADMIN_PASSWORD}
+    depends_on:
+      - db
 
 networks:
   network-pizza:
