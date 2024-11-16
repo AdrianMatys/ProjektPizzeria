@@ -13,6 +13,7 @@ class Pizzeria extends Model
         'address',
         'city',
         'delivery_available',
-        'max_delivery_radius'
+        'max_delivery_radius',
+        'phone_number'
     ];
 }
