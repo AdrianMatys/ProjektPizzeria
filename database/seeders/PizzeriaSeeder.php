@@ -52,5 +52,15 @@ class PizzeriaSeeder extends Seeder
             ]
 
         ]);
+        DB::table('pizzeria_info')->insert([
+            [
+                'name' => "Collegium Pizzerona",
+                'address' => 'Sejmowa 5',
+                'city' => "Legnica",
+                'delivery_available' => 1,
+                'max_delivery_radius' => 10,
+                'phone_number' => '+48 111 222 333'
+            ]
+        ]);
     }
 }
