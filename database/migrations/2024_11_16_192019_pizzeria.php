@@ -17,7 +17,7 @@ return new class extends Migration
             $table->string('address');
             $table->string('city');
             $table->string('phone_number');
-            $table->string('delivery_available');
+            $table->boolean('delivery_available');
             $table->integer('max_delivery_radius');
         });
         Schema::create('opening_hours', function (Blueprint $table) {
