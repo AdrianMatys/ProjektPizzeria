@@ -10,6 +10,12 @@ class Token extends Model
     use HasFactory;
     protected $primaryKey = 'email';
     protected $table = 'registerationTokens';
+    public $timestamps = true;
+    const UPDATED_AT = null;
+
+    public $incrementing = false;
+
+    protected $keyType = 'string';
 
     protected $fillable = [
         'email',
