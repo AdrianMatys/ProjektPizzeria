@@ -1,7 +1,8 @@
 <?php
 
-use App\Http\Controllers\Controllers\ManagementController;
+use App\Http\Controllers\ManagementController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\TokensController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Session;
@@ -45,6 +46,18 @@ Route::resource('management/admin/pizzeria', ManagementController::class)
         'pizzeria' => 'pizzeria',
     ]);
 
+Route::resource('management/admin/tokens', TokensController::class)
+    ->only(['index', 'create', 'store', 'delete'])
+    ->middleware(['auth', 'role:admin'])
+    ->names([
+        'index' => 'management.admin.tokens.index',
+        'create' => 'management.admin.tokens.create',
+        'store' => 'management.admin.tokens.store',
+        'delete' => 'management.admin.tokens.delete',
+    ])
+    ->parameters([
+        'pizzeria' => 'pizzeria',
+    ]);
 
 
 
