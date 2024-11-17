@@ -39,9 +39,19 @@ Route::get('/admin', function () {
 })->middleware(['auth', 'role:admin']);
 
 
-Route::resource('pizzeria/management', ManagementController::class)
-    ->only(['index'])
-    ->middleware(['auth', 'role:admin']);
+Route::resource('management/admin/pizzeria', ManagementController::class)
+    ->only(['index', 'edit', 'update'])
+    ->middleware(['auth', 'role:admin'])
+    ->names([
+        'index' => 'management.admin.pizzeria.index',
+        'edit' => 'management.admin.pizzeria.edit',
+        'update' => 'management.admin.pizzeria.update',
+    ])
+    ->parameters([
+        'pizzeria' => 'pizzeria',
+    ]);
+
+
 
 
 require __DIR__.'/auth.php';

@@ -12,10 +12,12 @@
         <td>{{ $pizzeria->address  }}</td>
         <td>{{ $pizzeria->city  }}</td>
         <td>{{ $pizzeria->phone_number  }}</td>
-        <td>{{ $pizzeria->delivery_available  }}</td>
+        <td>{{ $pizzeria->delivery_available ? "Yes" : "No"  }}</td>
         <td>{{ $pizzeria->max_delivery_radius  }}</td>
     </tr>
 </table>
+<a href="{{ route('management.admin.pizzeria.edit', $pizzeria) }}">Edytuj</a>
+
 <style>
     table, tr, td, th{
         border:1px solid black;

@@ -8,6 +8,9 @@ use Illuminate\Database\Eloquent\Model;
 class Pizzeria extends Model
 {
     protected $table = 'pizzeria_info';
+    protected $primaryKey = 'id';
+    public $timestamps = false;
+
     use HasFactory;
     protected $fillable = [
         'name',
