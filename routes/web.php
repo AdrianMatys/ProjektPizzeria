@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\EmployeesController;
 use App\Http\Controllers\ManagementController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\TokensController;
@@ -54,6 +55,14 @@ Route::resource('management/admin/tokens', TokensController::class)
         'create' => 'management.admin.tokens.create',
         'store' => 'management.admin.tokens.store',
         'destroy' => 'management.admin.tokens.destroy',
+    ]);
+
+Route::resource('management/admin/employees', EmployeesController::class)
+    ->only(['index', 'destroy'])
+    ->middleware(['auth', 'role:admin'])
+    ->names([
+       'index' => 'management.admin.employees.index',
+       'destroy' => 'management.admin.employees.destroy',
     ]);
 
 
