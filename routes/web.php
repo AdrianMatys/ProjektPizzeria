@@ -47,16 +47,13 @@ Route::resource('management/admin/pizzeria', ManagementController::class)
     ]);
 
 Route::resource('management/admin/tokens', TokensController::class)
-    ->only(['index', 'create', 'store', 'delete'])
+    ->only(['index', 'create', 'store', 'destroy'])
     ->middleware(['auth', 'role:admin'])
     ->names([
         'index' => 'management.admin.tokens.index',
         'create' => 'management.admin.tokens.create',
         'store' => 'management.admin.tokens.store',
-        'delete' => 'management.admin.tokens.delete',
-    ])
-    ->parameters([
-        'pizzeria' => 'pizzeria',
+        'destroy' => 'management.admin.tokens.destroy',
     ]);
 
 
