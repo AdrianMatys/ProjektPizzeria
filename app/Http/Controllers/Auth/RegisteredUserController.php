@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Models\Token;
 use App\Models\User;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\RedirectResponse;
@@ -34,7 +35,14 @@ class RegisteredUserController extends Controller
             'name' => 'required|string|max:255',
             'email' => 'required|string|lowercase|email|max:255|unique:'.User::class,
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
+            'registerationToken' => 'required|string|max:255'
         ]);
+
+        $token = Token::where('email', $request['email'])->first();
+        if($token->token != $request->registerationToken){
+            return redirect()->back()->withErrors(['registerationToken' => 'The provided token is invalid.']);
+        }
+        $token->delete();
 
         $user = User::create([
             'name' => $request->name,
