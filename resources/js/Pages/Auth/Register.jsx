@@ -11,6 +11,7 @@ export default function Register() {
         email: '',
         password: '',
         password_confirmation: '',
+        registrationToken: '',
     });
 
     const submit = (e) => {
@@ -27,7 +28,7 @@ export default function Register() {
 
             <form onSubmit={submit}>
                 <div>
-                    <InputLabel htmlFor="name" value="Name" />
+                    <InputLabel htmlFor="name" value="Name"/>
 
                     <TextInput
                         id="name"
@@ -40,11 +41,11 @@ export default function Register() {
                         required
                     />
 
-                    <InputError message={errors.name} className="mt-2" />
+                    <InputError message={errors.name} className="mt-2"/>
                 </div>
 
                 <div className="mt-4">
-                    <InputLabel htmlFor="email" value="Email" />
+                    <InputLabel htmlFor="email" value="Email"/>
 
                     <TextInput
                         id="email"
@@ -57,11 +58,11 @@ export default function Register() {
                         required
                     />
 
-                    <InputError message={errors.email} className="mt-2" />
+                    <InputError message={errors.email} className="mt-2"/>
                 </div>
 
                 <div className="mt-4">
-                    <InputLabel htmlFor="password" value="Password" />
+                    <InputLabel htmlFor="password" value="Password"/>
 
                     <TextInput
                         id="password"
@@ -74,7 +75,7 @@ export default function Register() {
                         required
                     />
 
-                    <InputError message={errors.password} className="mt-2" />
+                    <InputError message={errors.password} className="mt-2"/>
                 </div>
 
                 <div className="mt-4">
@@ -98,6 +99,29 @@ export default function Register() {
 
                     <InputError
                         message={errors.password_confirmation}
+                        className="mt-2"
+                    />
+                </div>
+
+                <div className="mt-4">
+                    <InputLabel
+                        htmlFor="registrationToken"
+                        value="Registeration Token"
+                    />
+
+                    <TextInput
+                        id="registrationToken"
+                        name="registrationToken"
+                        value={data.registrationToken}
+                        className="mt-1 block w-full"
+                        autoComplete="registrationToken"
+                        isFocused={true}
+                        onChange={(e) => setData('registrationToken', e.target.value)}
+                        required
+                    />
+
+                    <InputError
+                        message={errors.registrationToken}
                         className="mt-2"
                     />
                 </div>

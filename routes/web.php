@@ -1,7 +1,9 @@
 <?php
 
-use App\Http\Controllers\Controllers\ManagementController;
+use App\Http\Controllers\EmployeesController;
+use App\Http\Controllers\ManagementController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\TokensController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Session;
@@ -45,6 +47,23 @@ Route::resource('management/admin/pizzeria', ManagementController::class)
         'pizzeria' => 'pizzeria',
     ]);
 
+Route::resource('management/admin/tokens', TokensController::class)
+    ->only(['index', 'create', 'store', 'destroy'])
+    ->middleware(['auth', 'role:admin'])
+    ->names([
+        'index' => 'management.admin.tokens.index',
+        'create' => 'management.admin.tokens.create',
+        'store' => 'management.admin.tokens.store',
+        'destroy' => 'management.admin.tokens.destroy',
+    ]);
+
+Route::resource('management/admin/employees', EmployeesController::class)
+    ->only(['index', 'destroy'])
+    ->middleware(['auth', 'role:admin'])
+    ->names([
+       'index' => 'management.admin.employees.index',
+       'destroy' => 'management.admin.employees.destroy',
+    ]);
 
 
 
