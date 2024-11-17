@@ -39,8 +39,8 @@ class RegisteredUserController extends Controller
         ]);
 
         $token = Token::where('email', $request['email'])->first();
-        if($token->token != $request->registrationToken){
-            return redirect()->back()->withErrors(['registrationToken' => 'The provided token is invalid.']);
+        if(!$token || $token->token != $request->registrationToken){
+            return redirect()->back()->withErrors(['registrationToken' => 'The provided token is invalid or the email address does not have access to create an account.']);
         }
         $token->delete();
 
