@@ -11,7 +11,7 @@ export default function Register() {
         email: '',
         password: '',
         password_confirmation: '',
-        registerationToken: '',
+        registrationToken: '',
     });
 
     const submit = (e) => {
@@ -105,23 +105,23 @@ export default function Register() {
 
                 <div className="mt-4">
                     <InputLabel
-                        htmlFor="registerationToken"
+                        htmlFor="registrationToken"
                         value="Registeration Token"
                     />
 
                     <TextInput
-                        id="registerationToken"
-                        name="registerationToken"
-                        value={data.registerationToken}
+                        id="registrationToken"
+                        name="registrationToken"
+                        value={data.registrationToken}
                         className="mt-1 block w-full"
-                        autoComplete="registerationToken"
+                        autoComplete="registrationToken"
                         isFocused={true}
-                        onChange={(e) => setData('registerationToken', e.target.value)}
+                        onChange={(e) => setData('registrationToken', e.target.value)}
                         required
                     />
 
                     <InputError
-                        message={errors.registerationToken}
+                        message={errors.registrationToken}
                         className="mt-2"
                     />
                 </div>

@@ -35,12 +35,12 @@ class RegisteredUserController extends Controller
             'name' => 'required|string|max:255',
             'email' => 'required|string|lowercase|email|max:255|unique:'.User::class,
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
-            'registerationToken' => 'required|string|max:255'
+            'registrationToken' => 'required|string|max:255'
         ]);
 
         $token = Token::where('email', $request['email'])->first();
-        if($token->token != $request->registerationToken){
-            return redirect()->back()->withErrors(['registerationToken' => 'The provided token is invalid.']);
+        if($token->token != $request->registrationToken){
+            return redirect()->back()->withErrors(['registrationToken' => 'The provided token is invalid.']);
         }
         $token->delete();
 

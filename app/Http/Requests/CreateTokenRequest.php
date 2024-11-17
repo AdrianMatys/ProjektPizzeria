@@ -30,7 +30,7 @@ class CreateTokenRequest extends FormRequest
                 'lowercase',
                 'email',
                 'max:255',
-                'unique:registerationTokens,email'
+                'unique:registrationTokens,email'
             ]
 
         ];

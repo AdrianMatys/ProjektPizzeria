@@ -9,7 +9,7 @@ class Token extends Model
 {
     use HasFactory;
     protected $primaryKey = 'email';
-    protected $table = 'registerationTokens';
+    protected $table = 'registrationTokens';
     public $timestamps = true;
     const UPDATED_AT = null;
 
