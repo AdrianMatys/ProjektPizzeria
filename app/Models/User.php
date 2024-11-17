@@ -48,9 +48,15 @@ class User extends Authenticatable implements MustVerifyEmail, CanResetPassword
             'password' => 'hashed',
         ];
     }
-    
+
     public function hasRole($role)
     {
         return $this->role === $role;
+    }
+    public function isAdmin(){
+        return $this->role == 'admin';
+    }
+    public function isEmployee(){
+        return $this->role == 'employee' || $this->role == 'admin';
     }
 }

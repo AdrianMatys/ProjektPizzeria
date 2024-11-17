@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Controllers\ManagementController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
@@ -36,5 +37,21 @@ Route::get('/set-locale/{locale}', function ($locale) {
 Route::get('/admin', function () {
     return view('admin.home');
 })->middleware(['auth', 'role:admin']);
+
+
+Route::resource('management/admin/pizzeria', ManagementController::class)
+    ->only(['index', 'edit', 'update'])
+    ->middleware(['auth', 'role:admin'])
+    ->names([
+        'index' => 'management.admin.pizzeria.index',
+        'edit' => 'management.admin.pizzeria.edit',
+        'update' => 'management.admin.pizzeria.update',
+    ])
+    ->parameters([
+        'pizzeria' => 'pizzeria',
+    ]);
+
+
+
 
 require __DIR__.'/auth.php';
