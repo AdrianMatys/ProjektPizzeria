@@ -33,12 +33,6 @@ Route::get('/set-locale/{locale}', function ($locale) {
     return redirect()->back();
 })->name('set-locale');
 
-
-Route::get('/admin', function () {
-    return view('admin.home');
-})->middleware(['auth', 'role:admin']);
-
-
 Route::resource('management/admin/pizzeria', ManagementController::class)
     ->only(['index', 'edit', 'update'])
     ->middleware(['auth', 'role:admin'])
