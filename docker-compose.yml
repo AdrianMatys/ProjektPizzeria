@@ -6,7 +6,7 @@ services:
         uid: 1000
       context: ./
       dockerfile: Dockerfile
-    #image: pizza-app  
+    #image: pizza-app
     container_name: app-pizza
     working_dir: /application
     volumes:
@@ -30,6 +30,8 @@ services:
       POSTGRES_PASSWORD: ${DB_PASSWORD}
     volumes:
       - db_data:/var/lib/postgresql/data
+    ports:
+        - 5432:5432
     networks:
       - network-pizza
     healthcheck:
@@ -60,7 +62,7 @@ services:
     ports:
       - ${MAILPIT_PORT}:8025
     restart: unless-stopped
-  
+
   pgadmin:
     image: dpage/pgadmin4
     container_name: pgadmin-pizza
