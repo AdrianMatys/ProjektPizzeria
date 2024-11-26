@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\EmployeesController;
+use App\Http\Controllers\IngredientsController;
 use App\Http\Controllers\ManagementController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\TokensController;
@@ -63,6 +64,17 @@ Route::resource('management/admin/employees', EmployeesController::class)
     ->names([
        'index' => 'management.admin.employees.index',
        'destroy' => 'management.admin.employees.destroy',
+    ]);
+Route::resource('management/employee/ingredients', IngredientsController::class)
+    ->middleware(['auth', 'role:admin'])
+    ->names([
+        'index' => 'management.employee.ingredients.index',
+        'create' => 'management.employee.ingredients.create',
+        'store' => 'management.employee.ingredients.store',
+        'show' => 'management.employee.ingredients.show',
+        'edit' => 'management.employee.ingredients.edit',
+        'update' => 'management.employee.ingredients.update',
+        'destroy' => 'management.employee.ingredients.destroy',
     ]);
 
 
