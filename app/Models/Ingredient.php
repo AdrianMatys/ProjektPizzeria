@@ -13,4 +13,8 @@ class Ingredient extends Model
     {
         return $this->hasMany(Translation::class);
     }
+    public function pizzas(): \Illuminate\Database\Eloquent\Relations\BelongsToMany
+    {
+        return $this->belongsToMany(Pizza::class, 'pizza_ingredients', 'ingredient_id', 'pizza_id');
+    }
 }
