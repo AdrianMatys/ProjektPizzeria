@@ -20,10 +20,10 @@ return new class extends Migration
         });
         Schema::create('translations', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('ingredientID')
+            $table->foreignId('ingredient_id')
                 ->constrained('ingredients')
                 ->onDelete('cascade');
-            $table->char("languageCode", 2);
+            $table->char("language_code", 2);
             $table->string('name');
             $table->timestamps();
         });
