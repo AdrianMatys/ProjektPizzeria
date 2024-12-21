@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('pizzas', function (Blueprint $table) {
         $table->id();
         $table->string('name');
+            $table->timestamps();
     });
         Schema::create('pizza_ingredients', function (Blueprint $table) {
             $table->id();
@@ -23,6 +24,8 @@ return new class extends Migration
             $table->foreignId('pizza_id')
                 ->constrained('pizzas')
                 ->onDelete('cascade');
+            $table->integer('quantity');
+            $table->timestamps();
         });
     }
 
