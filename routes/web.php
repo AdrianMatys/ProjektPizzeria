@@ -3,6 +3,7 @@
 use App\Http\Controllers\EmployeesController;
 use App\Http\Controllers\IngredientsController;
 use App\Http\Controllers\ManagementController;
+use App\Http\Controllers\PizzasController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\TokensController;
 use Illuminate\Foundation\Application;
@@ -75,6 +76,17 @@ Route::resource('management/employee/ingredients', IngredientsController::class)
         'edit' => 'management.employee.ingredients.edit',
         'update' => 'management.employee.ingredients.update',
         'destroy' => 'management.employee.ingredients.destroy',
+    ]);
+Route::resource('management/employee/pizzas', PizzasController::class)
+    ->middleware(['auth', 'role:admin'])
+    ->names([
+        'index' => 'management.employee.pizzas.index',
+        'create' => 'management.employee.pizzas.create',
+        'store' => 'management.employee.pizzas.store',
+        'show' => 'management.employee.pizzas.show',
+        'edit' => 'management.employee.pizzas.edit',
+        'update' => 'management.employee.pizzas.update',
+        'destroy' => 'management.employee.pizzas.destroy',
     ]);
 
 
