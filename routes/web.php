@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\DisplayMenuController;
 use App\Http\Controllers\EmployeesController;
 use App\Http\Controllers\IngredientsController;
 use App\Http\Controllers\ManagementController;
@@ -90,5 +91,7 @@ Route::resource('management/employee/pizzas', PizzasController::class)
     ]);
 
 
+Route::resource('menu', DisplayMenuController::class)
+    ->only(['index']);
 
 require __DIR__.'/auth.php';
