@@ -12,10 +12,14 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('ingredients', function (Blueprint $table) {
+            $table->softDeletes();
             $table->id();
             $table->string('name');
-            $table->unsignedInteger('quantity')->default(0);
+            $table->unsignedInteger('quantity')
+                ->default(0);
             $table->string('unit');
+            $table->decimal('price', 10, 2)
+                ->default(0.00);
             $table->timestamps();
         });
     }
