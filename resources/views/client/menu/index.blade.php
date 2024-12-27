@@ -62,6 +62,7 @@
         <th>name</th>
         <th>ingredients</th>
         <th>Add to cart</th>
+        <th>Modify Pizza</th>
     </tr>
     @foreach($pizzas as $pizza)
         <tr>
@@ -72,9 +73,11 @@
                 @endforeach
             </td>
             <td>
-
                 {{--<a href="{{ route('cart.add', $pizza->id) }}">Add</a>--}}
                 <input type="button" value="Add" onclick="addToCart({{$pizza->id}}, 'Pizza', 1, 10.99)">
+            </td>
+            <td>
+                <a href={{ route("client.pizza.edit", $pizza) }}>Modify</a>
             </td>
         </tr>
     @endforeach
