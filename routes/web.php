@@ -97,6 +97,7 @@ Route::resource('menu', DisplayMenuController::class)
 
 
 Route::get('cart/{id}', [CartController::class, 'index'])->name('cart.index');
+Route::get('cart/{id}/order', [CartController::class, 'order'])->name('cart.order');
 
 Route::post('cart/add', [CartController::class, 'addToCart'])->name('cart.add');
 
