@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\CartController;
 use App\Http\Controllers\DisplayMenuController;
 use App\Http\Controllers\EmployeesController;
 use App\Http\Controllers\IngredientsController;
@@ -93,5 +94,10 @@ Route::resource('management/employee/pizzas', PizzasController::class)
 
 Route::resource('menu', DisplayMenuController::class)
     ->only(['index']);
+
+
+Route::get('cart/{id}', [CartController::class, 'index'])->name('cart.index');
+
+Route::post('cart/add', [CartController::class, 'addToCart'])->name('cart.add');
 
 require __DIR__.'/auth.php';
