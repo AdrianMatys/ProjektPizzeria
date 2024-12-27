@@ -26,7 +26,7 @@ return new class extends Migration {
         Schema::create('order_items', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('order_id');
-            $table->enum('item_type', ['pizzas', 'custom_pizzas', 'edited_pizzas']);
+            $table->enum('item_type', ['Pizza', 'CustomPizza', 'EditedPizza']);
             $table->unsignedBigInteger('item_id');
             $table->integer('quantity')
                 ->default(1);

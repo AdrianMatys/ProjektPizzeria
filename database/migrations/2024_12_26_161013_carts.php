@@ -26,7 +26,7 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('cart_id');
             $table->unsignedBigInteger('item_id');
-            $table->string('item_type');
+            $table->enum('item_type', ['Pizza', 'CustomPizza', 'EditedPizza']);
             $table->integer('quantity')
                 ->default(1);
             $table->timestamps();
