@@ -88,5 +88,8 @@ return new class extends Migration
         Schema::dropIfExists('pizzas');
         Schema::dropIfExists('pizza_ingredients');
         Schema::dropIfExists('edited_pizzas');
+        Schema::dropIfExists('edited_pizza_ingredients');
+        Schema::dropIfExists('custom_pizzas');
+        Schema::dropIfExists('custom_pizza_ingredients');
     }
 };
