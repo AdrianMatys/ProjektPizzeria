@@ -83,6 +83,7 @@
     @endforeach
 </table>
 
+<a href={{ route("client.pizza.create", $pizza) }}>Custom pizza</a>
 <style>
     table, tr, td, th{
         border:1px solid black;

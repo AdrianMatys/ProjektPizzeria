@@ -58,7 +58,6 @@ return new class extends Migration
 
         Schema::create('custom_pizzas', function(Blueprint $table){
             $table->id();
-            $table->unsignedBigInteger('pizza_id');
             $table->timestamps();
         });
         Schema::create('custom_pizza_ingredients', function(Blueprint $table){
