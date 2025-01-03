@@ -29,6 +29,8 @@ return new class extends Migration
             $table->enum('item_type', ['Pizza', 'CustomPizza', 'EditedPizza']);
             $table->integer('quantity')
                 ->default(1);
+            $table->decimal('price', 10, 2)
+                ->default(0.00);
             $table->timestamps();
 
             $table->foreign('cart_id')

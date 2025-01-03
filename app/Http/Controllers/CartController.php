@@ -7,7 +7,6 @@ use App\Models\Order;
 use App\Models\OrderItem;
 use App\Models\Pizza;
 use App\Models\CartItem;
-use http\Env\Response;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -57,7 +56,7 @@ class CartController extends Controller
         $cartItems = CartItem::query()
             ->where('cart_id', $cart->id)
             ->get();
-
+        $totalPrice = 0;
         $data = [
             'user_id' => $user_id,
             'status' => 'pending',
@@ -66,21 +65,20 @@ class CartController extends Controller
         $order = Order::create($data);
         if($cartItems){
             foreach ($cartItems as $item){
-                dump($item->item_id);
-                dump($item->item_type);
                 $itemData = [
                     'order_id' => $order->id,
                     'item_type' => $item->item_type,
                     'item_id' => $item->item_id,
                     'quantity' => $item->quantity,
-                    'price' => 1
+                    'price' => $item->price
                 ];
+                $totalPrice += $item->price * $item->quantity;
                 OrderItem::create($itemData);
             }
-
             CartItem::query()
                 ->where('cart_id', $cart->id)
                 ->delete();
+            $order->update(['total_price' => $totalPrice]);
         }else{
             return response()->json(['error' => 'Twój koszyk jest pusty. Upewnij się, że jesteś zalogowany i koszyk nie jest pusty.'], 401);
         }

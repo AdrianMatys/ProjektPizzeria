@@ -10,7 +10,7 @@ class Pizza extends Model
 {
     use HasFactory;
     use SoftDeletes;
-    protected $fillable = ['name'];
+    protected $fillable = ['name', 'price'];
 
     public function ingredients(): \Illuminate\Database\Eloquent\Relations\BelongsToMany
     {

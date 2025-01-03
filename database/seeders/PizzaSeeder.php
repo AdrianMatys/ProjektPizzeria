@@ -15,9 +15,11 @@ class PizzaSeeder extends Seeder
         DB::table('pizzas')->insert([
             [
                 'name' => "Margherita",
+                'price' => 19.99,
             ],
             [
                 'name' => "Salami",
+                'price' => 24.99,
             ],
         ]);
         DB::table('pizza_ingredients')->insert([

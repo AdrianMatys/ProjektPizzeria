@@ -56,22 +56,25 @@ class PizzaController extends Controller
 
         $customPizza = CustomPizza::create();
         $newIngredients = $validated['ingredient'];
+        $totalPrice = 0;
 
 
         foreach ($newIngredients as $ingredientId) {
+            $ingredient = Ingredient::query()->find($ingredientId);
             CustomPizzaIngredient::create([
                 'custom_pizza_id' => $customPizza->id,
                 'ingredient_id' => $ingredientId,
-                'price' => 0,
+                'price' => $ingredient->price,
             ]);
+            $totalPrice += $ingredient->price;
         }
 
-        $cartItem = CartItem::query()->create([
+        CartItem::query()->create([
             'cart_id' => $cart->id,
             'item_id' => $customPizza->id,
             'item_type' => 'CustomPizza',
             'quantity' => 1,
-            'price' => 0,
+            'price' => $totalPrice,
         ]);
 
         return redirect()->route('client.menu.index')->with('success', 'Dodano do koszyka własną pizze');
@@ -96,29 +99,35 @@ class PizzaController extends Controller
         $addedIngredients = array_values(array_diff($newIngredients, $existingIngredients));
         $removedIngredients = array_values(array_diff($existingIngredients, $newIngredients));
 
+        $totalPrice = $pizza->price;
+
         foreach ($addedIngredients as $ingredientId) {
+            $ingredient = Ingredient::query()->find($ingredientId);
             EditedPizzaIngredients::create([
                 'edited_pizza_id' => $editedPizza->id,
                 'ingredient_id' => $ingredientId,
                 'action' => 'added',
-                'price' => 0,
+                'price' => $ingredient->price,
             ]);
+            $totalPrice += $ingredient->price;
         }
         foreach ($removedIngredients as $ingredientId) {
+            $ingredient = Ingredient::query()->find($ingredientId);
             EditedPizzaIngredients::create([
                 'edited_pizza_id' => $editedPizza->id,
                 'ingredient_id' => $ingredientId,
                 'action' => 'removed',
-                'price' => 0,
+                'price' => $ingredient->price,
             ]);
+            $totalPrice -= $ingredient->price;
         }
 
-        $cartItem = CartItem::query()->create([
+        CartItem::query()->create([
             'cart_id' => $cart->id,
             'item_id' => $editedPizza->id,
             'item_type' => 'EditedPizza',
             'quantity' => 1,
-            'price' => 0,
+            'price' => $totalPrice,
         ]);
 
         return redirect()->route('client.menu.index')->with('success', 'Dodano do koszyka zmodyfikowaną pizze');
