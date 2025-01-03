@@ -74,7 +74,11 @@
             </td>
             <td>
                 {{--<a href="{{ route('cart.add', $pizza->id) }}">Add</a>--}}
-                <input type="button" value="Add" onclick="addToCart({{$pizza->id}}, 'Pizza', 1, 10.99)">
+                @if($pizza->unavailable)
+                    unavaible
+                @else
+                    <input type="button" value="Add" onclick="addToCart({{$pizza->id}}, 'Pizza', 1, 10.99)">
+                @endif
             </td>
             <td>
                 <a href={{ route("client.pizza.edit", $pizza) }}>Modify</a>

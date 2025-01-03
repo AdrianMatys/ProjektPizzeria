@@ -18,6 +18,14 @@ class DisplayMenuController extends Controller
                 }
             ])
             ->get();
+        foreach ($pizzas as $pizza){
+            foreach($pizza->ingredients as $ingredient){
+                if($ingredient->pivot->quantity > $ingredient->quantity){
+                    $pizza->unavailable = true;
+                }
+            }
+
+        }
         return view('client.menu.index', compact('pizzas'));
     }
 
