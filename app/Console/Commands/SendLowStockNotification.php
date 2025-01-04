@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Console\Commands;
+namespace App\Console\Commands;
 
 use App\Mail\LowStockNotification;
 use App\Models\Ingredient;

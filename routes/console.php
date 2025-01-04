@@ -1,6 +1,6 @@
 <?php
 
-use App\Http\Controllers\Console\Commands\SendLowStockNotification;
+use App\Console\Commands\SendLowStockNotification;
 use Illuminate\Support\Facades\Schedule;
 use Illuminate\Foundation\Inspiring;
 use Illuminate\Support\Facades\Artisan;
