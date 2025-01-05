@@ -9,6 +9,7 @@ use App\Models\OrderItem;
 use App\Models\Pizza;
 use App\Models\CartItem;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Auth;
 
 class CartController extends Controller
@@ -79,6 +80,10 @@ class CartController extends Controller
                 $ingredients = $item->item->ingredients;
                 foreach ($ingredients as $ingredient){
                     Ingredient::query()->where('id', $ingredient->id)->decrement('quantity', $ingredient->pivot->quantity * $item->quantity);
+                    $dbIngredient = Ingredient::query()->where('id', $ingredient->id)->first();
+                    if($dbIngredient->quantity > 1000){
+                        Artisan::call('notify:low-stock');
+                    }
                 }
             }
             CartItem::query()
