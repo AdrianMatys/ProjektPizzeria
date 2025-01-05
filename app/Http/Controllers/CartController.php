@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Cart;
+use App\Models\Ingredient;
 use App\Models\Order;
 use App\Models\OrderItem;
 use App\Models\Pizza;
@@ -74,6 +75,11 @@ class CartController extends Controller
                 ];
                 $totalPrice += $item->price * $item->quantity;
                 OrderItem::create($itemData);
+
+                $ingredients = $item->item->ingredients;
+                foreach ($ingredients as $ingredient){
+                    Ingredient::query()->where('id', $ingredient->id)->decrement('quantity', $ingredient->pivot->quantity * $item->quantity);
+                }
             }
             CartItem::query()
                 ->where('cart_id', $cart->id)
