@@ -16,5 +16,6 @@ class Pizza extends Model
     {
         return $this->belongsToMany(Ingredient::class, 'pizza_ingredients', 'pizza_id', 'ingredient_id')
             ->withPivot('quantity');
+
     }
 }
