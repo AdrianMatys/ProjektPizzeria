@@ -1,9 +1,11 @@
 <?php
 
+use App\Http\Controllers\CartController;
 use App\Http\Controllers\DisplayMenuController;
 use App\Http\Controllers\EmployeesController;
 use App\Http\Controllers\IngredientsController;
 use App\Http\Controllers\ManagementController;
+use App\Http\Controllers\PizzaController;
 use App\Http\Controllers\PizzasController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\TokensController;
@@ -78,7 +80,7 @@ Route::resource('management/employee/ingredients', IngredientsController::class)
         'update' => 'management.employee.ingredients.update',
         'destroy' => 'management.employee.ingredients.destroy',
     ]);
-Route::resource('management/employee/pizzas', PizzasController::class)
+Route::resource('pizza', PizzasController::class)
     ->middleware(['auth', 'role:admin'])
     ->names([
         'index' => 'management.employee.pizzas.index',
@@ -92,6 +94,24 @@ Route::resource('management/employee/pizzas', PizzasController::class)
 
 
 Route::resource('menu', DisplayMenuController::class)
-    ->only(['index']);
+    ->only(['index'])
+    ->names([
+        'index' => 'client.menu.index',
+    ]);
+
+
+Route::get('cart/{id}', [CartController::class, 'index'])->name('cart.index');
+Route::get('cart/{id}/order', [CartController::class, 'order'])->name('cart.order');
+
+Route::post('cart/add', [CartController::class, 'addToCart'])->name('cart.add');
+
+Route::resource('pizza', PizzaController::class)
+    ->middleware(['auth', 'role:admin'])
+    ->names([
+        'create' => 'client.pizza.create',
+        'store' => 'client.pizza.store',
+        'edit' => 'client.pizza.edit',
+        'update' => 'client.pizza.update',
+    ]);
 
 require __DIR__.'/auth.php';

@@ -17,31 +17,37 @@ class StorageSeeder extends Seeder
                 'name' => "Dough",
                 'quantity' => '5000',
                 'unit' => "g",
+                'price' => 10,
             ],
             [
                 'name' => "Tomato pizza sauce",
                 'quantity' => '3000',
                 'unit' => "g",
+                'price' => 2,
             ],
             [
                 'name' => "Ham",
                 'quantity' => '4000',
                 'unit' => "g",
+                'price' => 4.99,
             ],
             [
                 'name' => "Salami",
                 'quantity' => '5000',
                 'unit' => "g",
+                'price' => 7.99,
             ],
             [
                 'name' => "Oregano",
                 'quantity' => '800',
                 'unit' => "g",
+                'price' => 0.99,
             ],
             [
                 'name' => "Cheese",
                 'quantity' => '4000',
                 'unit' => "g",
+                'price' => 5.99,
             ]
         ]);
         DB::table('translations')->insert([
