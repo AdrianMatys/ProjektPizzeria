@@ -8,6 +8,7 @@ use App\Http\Controllers\ManagementController;
 use App\Http\Controllers\PizzaController;
 use App\Http\Controllers\PizzasController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\StatisticsController;
 use App\Http\Controllers\TokensController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
@@ -69,6 +70,14 @@ Route::resource('management/admin/employees', EmployeesController::class)
        'index' => 'management.admin.employees.index',
        'destroy' => 'management.admin.employees.destroy',
     ]);
+
+Route::resource('management/admin/statistics', StatisticsController::class)
+    ->only(['index'])
+    ->middleware(['auth', 'role:admin'])
+    ->names([
+        'index' => 'management.admin.statistics.index',
+    ]);
+
 Route::resource('management/employee/ingredients', IngredientsController::class)
     ->middleware(['auth', 'role:admin'])
     ->names([
