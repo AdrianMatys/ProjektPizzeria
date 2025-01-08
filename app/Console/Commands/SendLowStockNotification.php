@@ -2,6 +2,7 @@
 
 namespace App\Console\Commands;
 
+use App\Actions\Logs\LogLowStockNotificationAction;
 use App\Actions\Logs\LogUpdatePizzeriaAction;
 use App\Mail\LowStockNotification;
 use App\Models\Ingredient;
@@ -30,7 +31,7 @@ class SendLowStockNotification extends Command
     /**
      * Execute the console command.
      */
-    public function handle(LogUpdatePizzeriaAction $logLowStockNotificationAction)
+    public function handle(LogLowStockNotificationAction $logLowStockNotificationAction)
     {
         Log::info('Low stock notification started');
 
