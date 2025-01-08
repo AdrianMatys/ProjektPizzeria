@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Actions\Logs\LogCreateNewUserAction;
+use App\Actions\Logs\LogUpdateIngredientAction;
 use App\Models\Cart;
 use App\Models\Ingredient;
 use App\Models\Order;
@@ -48,7 +50,7 @@ class CartController extends Controller
         return response()->json(['success' => true, 'message' => 'Dodano do koszyka', 'item' => $cartItem]);
     }
 
-    public function order(Request $request, int $user_id)
+    public function order(Request $request, int $user_id, LogUpdateIngredientAction $logNewOrderAction)
     {
 
         if (!$user_id) {
@@ -142,6 +144,8 @@ class CartController extends Controller
                 ->where('cart_id', $cart->id)
                 ->delete();
             $order->update(['total_price' => $totalPrice]);
+
+            $logNewOrderAction->execute($user_id, ['cart_id' => $cart->id]);
         } else {
             return response()->json(['error' => 'Twój koszyk jest pusty. Upewnij się, że jesteś zalogowany i koszyk nie jest pusty.'],
                 401);

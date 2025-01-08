@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers\Auth;
 
+use App\Actions\Logs\LogCreateNewUserAction;
+use App\Actions\Logs\LogUpdateIngredientAction;
 use App\Http\Controllers\Controller;
 use App\Models\Token;
 use App\Models\User;
@@ -29,7 +31,7 @@ class RegisteredUserController extends Controller
      *
      * @throws \Illuminate\Validation\ValidationException
      */
-    public function store(Request $request): RedirectResponse
+    public function store(Request $request, LogCreateNewUserAction $logCreateNewUserAction): RedirectResponse
     {
         $request->validate([
             'name' => 'required|string|max:255',
@@ -49,6 +51,7 @@ class RegisteredUserController extends Controller
             'email' => $request->email,
             'password' => Hash::make($request->password),
         ]);
+        $logCreateNewUserAction->execute($user->id);
 
         event(new Registered($user));
 

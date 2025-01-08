@@ -24,7 +24,8 @@ class DatabaseSeeder extends Seeder
         $this->call([
             PizzeriaSeeder::class,
             StorageSeeder::class,
-            PizzaSeeder::class
+            PizzaSeeder::class,
+            LogSeeder::class
         ]);
     }
 }
