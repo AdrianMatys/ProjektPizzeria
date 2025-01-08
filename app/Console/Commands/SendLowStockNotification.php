@@ -2,6 +2,7 @@
 
 namespace App\Console\Commands;
 
+use App\Actions\Logs\LogUpdatePizzeriaAction;
 use App\Mail\LowStockNotification;
 use App\Models\Ingredient;
 use App\Models\User;
@@ -29,7 +30,7 @@ class SendLowStockNotification extends Command
     /**
      * Execute the console command.
      */
-    public function handle()
+    public function handle(LogUpdatePizzeriaAction $logLowStockNotificationAction)
     {
         Log::info('Low stock notification started');
 
@@ -50,6 +51,7 @@ class SendLowStockNotification extends Command
         foreach ($admins as $admin){
             Mail::to($admin->email)->send(new LowStockNotification($lowStockIngredients));
             $this->info("Wysłano powiadomienia i niskim stanie magazynowym do: {{$admin->email}}");
+            $logLowStockNotificationAction->execute(['email' => $admin->email, 'ingredients' => $lowStockIngredients]);
         }
     }
 }
