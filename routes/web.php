@@ -4,6 +4,7 @@ use App\Http\Controllers\CartController;
 use App\Http\Controllers\DisplayMenuController;
 use App\Http\Controllers\EmployeesController;
 use App\Http\Controllers\IngredientsController;
+use App\Http\Controllers\LogsController;
 use App\Http\Controllers\ManagementController;
 use App\Http\Controllers\PizzaController;
 use App\Http\Controllers\PizzasController;
@@ -77,6 +78,11 @@ Route::resource('management/admin/statistics', StatisticsController::class)
     ->names([
         'index' => 'management.admin.statistics.index',
     ]);
+
+Route::get('/management/admin/logs', [LogsController::class, 'index'])->name('management.admin.logs.index')
+    ->middleware(['auth', 'role:admin']);
+Route::get('/management/admin/logs/{log}', [LogsController::class, 'show'])->name('management.admin.logs.show')
+    ->middleware(['auth', 'role:admin']);
 
 Route::resource('management/employee/ingredients', IngredientsController::class)
     ->middleware(['auth', 'role:admin'])
