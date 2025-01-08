@@ -89,7 +89,7 @@ Route::resource('management/employee/ingredients', IngredientsController::class)
         'update' => 'management.employee.ingredients.update',
         'destroy' => 'management.employee.ingredients.destroy',
     ]);
-Route::resource('pizza', PizzasController::class)
+Route::resource('management/employee/pizzas', PizzasController::class)
     ->middleware(['auth', 'role:admin'])
     ->names([
         'index' => 'management.employee.pizzas.index',
@@ -99,6 +99,12 @@ Route::resource('pizza', PizzasController::class)
         'edit' => 'management.employee.pizzas.edit',
         'update' => 'management.employee.pizzas.update',
         'destroy' => 'management.employee.pizzas.destroy',
+    ]);
+Route::resource('pizza', PizzaController::class)
+    ->middleware(['auth', 'role:admin'])
+    ->names([
+        'create' => 'client.pizza.create',
+        'edit' => 'client.pizza.edit',
     ]);
 
 
