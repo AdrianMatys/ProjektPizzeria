@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Actions\Logs\LogCreateNewUserAction;
+use App\Actions\Logs\LogNewOrderAction;
 use App\Actions\Logs\LogUpdateIngredientAction;
 use App\Models\Cart;
 use App\Models\Ingredient;
@@ -50,7 +51,7 @@ class CartController extends Controller
         return response()->json(['success' => true, 'message' => 'Dodano do koszyka', 'item' => $cartItem]);
     }
 
-    public function order(Request $request, int $user_id, LogUpdateIngredientAction $logNewOrderAction)
+    public function order(Request $request, int $user_id, LogNewOrderAction $logNewOrderAction)
     {
 
         if (!$user_id) {

@@ -15,6 +15,6 @@ class LogLowStockNotificationAction
 
     public function execute(array $details): void
     {
-        $this->loggerService->logByName("Notifications", null, $details);
+        $this->loggerService->logByName("Low stock", null, $details);
     }
 }
