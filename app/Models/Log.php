@@ -21,7 +21,10 @@ class Log extends Model
     public function user(){
         return $this->belongsTo(User::class);
     }
-    public function logType(){
-        return $this->belongsTo(LogType::class);
+    public function type(){
+        return $this->belongsTo(LogType::class, 'log_type_id');
+    }
+    public function category(){
+
     }
 }

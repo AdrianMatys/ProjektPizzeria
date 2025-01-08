@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class LogType extends Model
 {
     use HasFactory;
-    public function logCategory(){
+    public function category(){
         return $this->belongsTo(LogCategory::class);
     }
     public function logs(){
