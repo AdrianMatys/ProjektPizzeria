@@ -4,10 +4,12 @@ use App\Http\Controllers\CartController;
 use App\Http\Controllers\DisplayMenuController;
 use App\Http\Controllers\EmployeesController;
 use App\Http\Controllers\IngredientsController;
+use App\Http\Controllers\LogsController;
 use App\Http\Controllers\ManagementController;
 use App\Http\Controllers\PizzaController;
 use App\Http\Controllers\PizzasController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\StatisticsController;
 use App\Http\Controllers\TokensController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
@@ -69,6 +71,19 @@ Route::resource('management/admin/employees', EmployeesController::class)
        'index' => 'management.admin.employees.index',
        'destroy' => 'management.admin.employees.destroy',
     ]);
+
+Route::resource('management/admin/statistics', StatisticsController::class)
+    ->only(['index'])
+    ->middleware(['auth', 'role:admin'])
+    ->names([
+        'index' => 'management.admin.statistics.index',
+    ]);
+
+Route::get('/management/admin/logs', [LogsController::class, 'index'])->name('management.admin.logs.index')
+    ->middleware(['auth', 'role:admin']);
+Route::get('/management/admin/logs/{log}', [LogsController::class, 'show'])->name('management.admin.logs.show')
+    ->middleware(['auth', 'role:admin']);
+
 Route::resource('management/employee/ingredients', IngredientsController::class)
     ->middleware(['auth', 'role:admin'])
     ->names([
@@ -80,7 +95,7 @@ Route::resource('management/employee/ingredients', IngredientsController::class)
         'update' => 'management.employee.ingredients.update',
         'destroy' => 'management.employee.ingredients.destroy',
     ]);
-Route::resource('pizza', PizzasController::class)
+Route::resource('management/employee/pizzas', PizzasController::class)
     ->middleware(['auth', 'role:admin'])
     ->names([
         'index' => 'management.employee.pizzas.index',
@@ -90,6 +105,12 @@ Route::resource('pizza', PizzasController::class)
         'edit' => 'management.employee.pizzas.edit',
         'update' => 'management.employee.pizzas.update',
         'destroy' => 'management.employee.pizzas.destroy',
+    ]);
+Route::resource('pizza', PizzaController::class)
+    ->middleware(['auth', 'role:admin'])
+    ->names([
+        'create' => 'client.pizza.create',
+        'edit' => 'client.pizza.edit',
     ]);
 
 

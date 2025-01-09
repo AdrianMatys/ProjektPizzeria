@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Auth;
 
+use App\Actions\Logs\LogUpdateIngredientAction;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -27,7 +28,7 @@ class PasswordResetLinkController extends Controller
      *
      * @throws \Illuminate\Validation\ValidationException
      */
-    public function store(Request $request): RedirectResponse
+    public function store(Request $request, LogUpdateIngredientAction $logPasswordReset): RedirectResponse
     {
         $request->validate([
             'email' => 'required|email',
@@ -39,7 +40,7 @@ class PasswordResetLinkController extends Controller
         $status = Password::sendResetLink(
             $request->only('email')
         );
-
+        $logPasswordReset->execute(['email' => $request->only('email')]);
         if ($status == Password::RESET_LINK_SENT) {
             return back()->with('status', __($status));
         }

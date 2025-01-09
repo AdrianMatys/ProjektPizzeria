@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Actions\Logs\LogNewPizzaAction;
+use App\Actions\Logs\LogUpdateIngredientAction;
 use App\Http\Requests\UpdateIngredientRequest;
 use App\Models\Ingredient;
 use Illuminate\Http\Request;
@@ -33,25 +35,27 @@ class IngredientsController extends Controller
         return view('management.employee.ingredients.edit', compact('ingredient'));
     }
 
-    public function destroy($id){
+    public function destroy($id, LogNewPizzaAction $logDeletedIngredientAction){
         $ingredient = Ingredient::query()->find($id);
         if(!$ingredient)
             return redirect()->route('management.employee.ingredients.index')->with('error', 'Nie udało się usunąć składnika');
-
+        $logDeletedIngredientAction->execute(auth()->id(), ['ingredientName'=> $ingredient->name]);
         $ingredient->delete();
         return redirect()->route('management.employee.ingredients.index')->with('success', 'Składnik został usunięty');
     }
 
-    public function update(UpdateIngredientRequest $request, Ingredient $ingredient){
+    public function update(UpdateIngredientRequest $request, Ingredient $ingredient, LogUpdateIngredientAction $logUpdateIngredientAction){
         $validated = $request->validated();
         $ingredient->update($validated);
+        $logUpdateIngredientAction->execute(auth()->id(), ['ingredientName' => $ingredient->name]);
         return redirect()->route('management.employee.ingredients.index')->with('success', 'Zaktualizowano składnik');
 
     }
 
-    public function store(UpdateIngredientRequest $request, Ingredient $ingredient){
+    public function store(UpdateIngredientRequest $request, LogNewPizzaAction $logNewIngredientAction){
         $validated = $request->validated();
         $ingredient = Ingredient::create($validated);
+        $logNewIngredientAction->execute(auth()->id(), ['ingredientName' => $ingredient->name]);
         return redirect()->route('management.employee.ingredients.index')->with('success', 'Dodano nowy składnik');
 
     }
