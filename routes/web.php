@@ -115,6 +115,9 @@ Route::resource('management/employee/orders', ManageOrdersController::class)
         'edit' => 'management.employee.orders.edit',
         'update' => 'management.employee.orders.update',
     ]);
+Route::patch('management/employee/orders/{order}/status', [ManageOrdersController::class, 'updateStatus'])
+    ->middleware(['auth', 'role:admin'])
+    ->name('management.employee.orders.updateStatus');
 
 
 
