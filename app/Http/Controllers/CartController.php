@@ -154,7 +154,7 @@ class CartController extends Controller
             return response()->json(['error' => 'Twój koszyk jest pusty. Upewnij się, że jesteś zalogowany i koszyk nie jest pusty.'],
                 401);
         }
-        return view('client.order.completed', compact('cartItems'));
+        return view('client.orders.completed', compact('cartItems'));
     }
 
     public function index(Request $request, int $user_id)
