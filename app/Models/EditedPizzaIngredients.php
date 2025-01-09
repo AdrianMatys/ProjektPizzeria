@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -18,5 +19,11 @@ class EditedPizzaIngredients extends Model
     public function ingredient()
     {
         return $this->belongsTo(Ingredient::class);
+    }
+    public function name(): Attribute
+    {
+        return Attribute::get(
+            fn(): string => $this->ingredient->name . "( " . $this->action . ' )',
+        );
     }
 }
