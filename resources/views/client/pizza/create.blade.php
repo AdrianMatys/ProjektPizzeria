@@ -15,9 +15,9 @@
 
                         @foreach($ingredients as $availableIngredient )
                             @if($availableIngredient->name == $ingredient->name)
-                                <option value="{{$availableIngredient->id}}" selected="selected">{{$availableIngredient->name}}</option>
+                                <option value="{{$availableIngredient->id}}" selected="selected">{{ $availableIngredient->translations->first()->name ?? $availableIngredient->name }}</option>
                             @else
-                                <option value="{{$availableIngredient->id}}">{{$availableIngredient->name}}</option>
+                                <option value="{{$availableIngredient->id}}">{{ $availableIngredient->translations->first()->name ?? $availableIngredient->name }}</option>
                             @endif
                         @endforeach
                     </select>
@@ -41,7 +41,7 @@
 <script>
     let options = ''
     @foreach($ingredients as $ingredient)
-        options += '<option value="{{$ingredient->id}}">{{$ingredient->name}}</option>'
+        options += '<option value="{{$ingredient->id}}">{{ $ingredient->translations->first()->name ?? $ingredient->name }}</option>'
     @endforeach
     function removeIngredient(button) {
         let row = button.parentNode.parentNode;
