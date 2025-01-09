@@ -98,12 +98,16 @@ class CartController extends Controller
                         } else {
                             $removedIngredients[] = $deletedIngredient->ingredient_id;
                         }
-                        dump($deletedIngredient->ingredient_id.' x '.$deletedIngredient->action.' (edited)');
                     }
                     $baseIngredients = $cartItem->item->basePizza->ingredients;
                     foreach ($baseIngredients as $baseIngredient) {
                         if (!in_array($baseIngredient->id, $removedIngredients)) {
-                            $totalQuantity = $baseIngredient->pivot->quantity * $cartItem->quantity;
+                            if($baseIngredient->pivot){
+                                $baseIngredientQuantity = $baseIngredient->pivot->quantity;
+                            }else{
+                                $baseIngredientQuantity = $baseIngredient->quantityOnPizza;
+                            }
+                            $totalQuantity = $baseIngredientQuantity * $cartItem->quantity;
                             Ingredient::query()
                                 ->where('id', $baseIngredient->id)
                                 ->decrement('quantity', $totalQuantity);
@@ -136,7 +140,6 @@ class CartController extends Controller
                                 ->where('id', $ingredient->id)
                                 ->first();
                             $this->checkLowStock($dbIngredient->quantity);
-                        dump($ingredient->id.' x '.$ingredient->action.' (edited)');
                     }
                 }
             }

@@ -24,8 +24,28 @@ class EditedPizza extends Model
     {
         return $this->belongsTo(Pizza::class);
     }
-    public function ingredients(){
+    public function editedIingredients()
+    {
         return $this->hasMany(EditedPizzaIngredients::class);
     }
 
+    public function getingredientsAttribute()
+    {
+        $ingredients = $this->editedIingredients;
+        $finalIngredients = $this->basePizza->ingredients;
+        $ingredientIds = $finalIngredients->pluck('id');
+
+        foreach ($ingredients as $ingredient) {
+            if ($ingredient->action == 'added') {
+                $finalIngredients[] = $ingredient->ingredient;
+            } elseif ($ingredient->action == 'removed') {
+                $key = $ingredientIds->search($ingredient->ingredient_id);
+                if ($key !== false) {
+                    $finalIngredients = $finalIngredients->forget($key);
+                }
+            }
+        }
+
+        return $finalIngredients;
+    }
 }
