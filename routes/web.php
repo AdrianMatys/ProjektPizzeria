@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\CartController;
+use App\Http\Controllers\ClientOrdersController;
 use App\Http\Controllers\DisplayMenuController;
 use App\Http\Controllers\EmployeesController;
 use App\Http\Controllers\IngredientsController;
@@ -134,6 +135,16 @@ Route::resource('menu', DisplayMenuController::class)
     ->names([
         'index' => 'client.menu.index',
     ]);
+
+Route::resource('orders', ClientOrdersController::class)
+    ->middleware(['auth'])
+    ->names([
+        'index' => 'client.orders.index',
+        'show' => 'client.orders.show',
+    ]);
+Route::patch('orders/{order}/cancel', [ClientOrdersController::class, 'cancelOrder'])
+    ->middleware(['auth'])
+    ->name('client.orders.cancelOrder');
 
 
 Route::get('cart/{id}', [CartController::class, 'index'])->name('cart.index');
