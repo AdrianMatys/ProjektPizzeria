@@ -13,6 +13,7 @@ use App\Http\Controllers\PizzasController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\StatisticsController;
 use App\Http\Controllers\TokensController;
+use App\Http\Controllers\TranslationsController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Session;
@@ -120,6 +121,14 @@ Route::patch('management/employee/orders/{order}/status', [ManageOrdersControlle
     ->middleware(['auth', 'role:admin'])
     ->name('management.employee.orders.updateStatus');
 
+Route::resource('management/employee/translations', TranslationsController::class)
+    ->middleware(['auth', 'role:admin'])
+    ->names([
+        'index' => 'management.employee.translations.index',
+        'show' => 'management.employee.translations.show',
+        'edit' => 'management.employee.translations.edit',
+        'update' => 'management.employee.translations.update',
+    ]);
 
 
 Route::resource('pizza', PizzaController::class)
