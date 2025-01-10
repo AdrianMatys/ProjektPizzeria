@@ -185,12 +185,9 @@ class StatisticsController extends Controller
                         $quantity = $ingredient->ingredient->quantityOnPizza;
                         $name = $ingredient->ingredient->name;
                         break;
+                    case 'Pizza':
                     case 'CustomPizza':
                         $quantity = $ingredient->quantityOnPizza;
-                        $name = $ingredient->name;
-                        break;
-                    case 'Pizza':
-                        $quantity = $ingredient->pivot->quantity;
                         $name = $ingredient->name;
                         break;
                 }

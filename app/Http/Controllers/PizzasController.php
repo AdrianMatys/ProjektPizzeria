@@ -79,9 +79,7 @@ class PizzasController extends Controller
         $pizza = Pizza::create($validated);
 
         foreach ($validated['ingredient'] as $index=>$ingredientId){
-            $pizza->ingredients()->attach($ingredientId, [
-               'quantity' => $validated['quantity'][$index],
-            ]);
+            $pizza->ingredients()->attach($ingredientId);
         }
 
         $logNewPizzaAction->execute(auth()->id(), ['pizza' => $validated]);

@@ -20,7 +20,7 @@ class DisplayMenuController extends Controller
             ->get();
         foreach ($pizzas as $pizza){
             foreach($pizza->ingredients as $ingredient){
-                if($ingredient->pivot->quantity > $ingredient->quantity){
+                if($ingredient->quantityOnPizza > $ingredient->quantity){
                     $pizza->unavailable = true;
                 }
             }
