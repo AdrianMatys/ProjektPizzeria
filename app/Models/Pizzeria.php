@@ -20,4 +20,6 @@ class Pizzeria extends Model
         'max_delivery_radius',
         'phone_number'
     ];
+
+
 }

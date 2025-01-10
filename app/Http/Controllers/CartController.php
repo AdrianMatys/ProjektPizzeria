@@ -53,6 +53,48 @@ class CartController extends Controller
 
     public function order(Request $request, int $user_id, LogNewOrderAction $logNewOrderAction)
     {
+        $totalPrice = 0;
+
+        if (!$user_id) {
+            return response()->json(['error' => 'Nie znaleziono użytkownika. Upewnij się, że jesteś zalogowany.'], 401);
+        }
+
+        $cart = Cart::query()->where('user_id', $user_id)->first();
+        $cartItems = CartItem::query()
+            ->where('cart_id', $cart->id)
+            ->get();
+
+        if($cartItems->isEmpty()){
+            return response()->json(['error' => 'Twój koszyk jest pusty. Upewnij się, że jesteś zalogowany i koszyk nie jest pusty.']);
+        }
+
+        $order = Order::create([
+            'user_id' => $user_id,
+            'status' => 'pending',
+            'total_price' => 0,
+        ]);
+
+
+        foreach ($cartItems as $cartItem){
+            $totalPrice += $cartItem->price * $cartItem->quantity;
+            $itemData = [
+                'order_id' => $order->id,
+                'item_type' => $cartItem->item_type,
+                'item_id' => $cartItem->item_id,
+                'quantity' => $cartItem->quantity,
+                'price' => $cartItem->price
+            ];
+
+            OrderItem::create($itemData);
+
+        }
+
+
+        return view('client.orders.completed', compact('cartItems'));
+    }
+
+    public function order_old(Request $request, int $user_id, LogNewOrderAction $logNewOrderAction)
+    {
 
         if (!$user_id) {
             return response()->json(['error' => 'Nie znaleziono użytkownika. Upewnij się, że jesteś zalogowany.'], 401);
