@@ -1,4 +1,6 @@
 @include('shared.return-message')
+<a href="{{ route('management.employee.translations.index') }}">Back to translations</a>
+<br><br>
 <table>
     <tr>
         <th>Ingredient name</th>
