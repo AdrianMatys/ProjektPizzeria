@@ -17,6 +17,9 @@
             <td>
                 {{ $translation->language_code }}
             </td>
+            <td>
+                <a href="{{route('management.employee.translations.edit', $translation)}}">Edit translation</a>
+            </td>
         </tr>
     @endforeach
 </table>
