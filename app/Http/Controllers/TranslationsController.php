@@ -23,10 +23,10 @@ class TranslationsController extends Controller
     {
         return view('management.employee.translations.edit', compact('translation'));
     }
-    public function update(UpdateTranslationRequest $request, Translation $translation){
+    public function update(UpdateTranslationRequest $request, Translation $translation, LogUpdateTranslationAction $logUpdateTranslationAction){
         $validated = $request->validated();
         $translation->update($validated);
-
+        $logUpdateTranslationAction->execute(auth()->id(), ['name' => $translation->name]);
         $translations = Translation::query()->where('ingredient_id', $translation->ingredient_id)->get();
         return view('management.employee.translations.show', compact('translations'))->with('success', 'Zaktualizowano tłumaczenie');
 

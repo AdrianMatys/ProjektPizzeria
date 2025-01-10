@@ -76,6 +76,11 @@ class LogSeeder extends Seeder
                 'description' => "Administrator has updated information about pizzeria",
             ],
             [
+                'category_id' => 4,
+                'name' => "Updated translation",
+                'description' => "Employee has updated ingredient translation",
+            ],
+            [
                 'category_id' => 5,
                 'name' => "New ingredient",
                 'description' => "Employee added a new ingredient",
