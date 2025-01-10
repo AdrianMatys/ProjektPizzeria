@@ -12,4 +12,9 @@ class TranslationsController extends Controller
         $translations = Translation::query()->get();
         return view('management.employee.translations.index', compact('translations'));
     }
+    public function show(Translation $translation)
+    {
+        $translations = $translation->ingredient->translations;
+        return view('management.employee.translations.show', compact('translations'));
+    }
 }
