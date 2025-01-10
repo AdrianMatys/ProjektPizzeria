@@ -16,6 +16,7 @@ class TranslationsController extends Controller
     public function index()
     {
         $translations = Translation::query()->get();
+        $translations = $translations->unique('ingredient_id');
         return view('management.employee.translations.index', compact('translations'));
     }
     public function show(Translation $translation)
