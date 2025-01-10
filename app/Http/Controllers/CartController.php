@@ -144,11 +144,7 @@ class CartController extends Controller
                     $baseIngredients = $cartItem->item->basePizza->ingredients;
                     foreach ($baseIngredients as $baseIngredient) {
                         if (!in_array($baseIngredient->id, $removedIngredients)) {
-                            if($baseIngredient->pivot){
-                                $baseIngredientQuantity = $baseIngredient->pivot->quantity;
-                            }else{
-                                $baseIngredientQuantity = $baseIngredient->quantityOnPizza;
-                            }
+                            $baseIngredientQuantity = $baseIngredient->quantityOnPizza;
                             $totalQuantity = $baseIngredientQuantity * $cartItem->quantity;
                             Ingredient::query()
                                 ->where('id', $baseIngredient->id)
@@ -162,7 +158,7 @@ class CartController extends Controller
 
                 } elseif ($cartItem->item_type == 'Pizza') {
                     foreach ($ingredients as $ingredient) {
-                        $totalQuantity = $ingredient->pivot->quantity * $cartItem->quantity;
+                        $totalQuantity = $ingredient->quantityOnPizza * $cartItem->quantity;
                         Ingredient::query()
                             ->where('id', $ingredient->id)
                             ->decrement('quantity', $totalQuantity);

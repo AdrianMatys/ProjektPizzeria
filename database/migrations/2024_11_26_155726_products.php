@@ -27,7 +27,6 @@ return new class extends Migration
             $table->foreignId('pizza_id')
                 ->constrained('pizzas')
                 ->onDelete('restrict');
-            $table->integer('quantity')->default(1);
             $table->timestamps();
         });
         Schema::create('edited_pizzas', function(Blueprint $table){

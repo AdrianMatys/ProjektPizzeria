@@ -25,8 +25,6 @@ class UpdatePizzaRequest extends FormRequest
             'name' => 'required|string|max:255',
             'ingredient' => 'required|array|min:1',
             'ingredient.*' => 'required|exists:ingredients,id',
-            'quantity' => 'required|array|min:1',
-            'quantity.*' => 'required|integer|min:1|max:1000000',
         ];
     }
 }
