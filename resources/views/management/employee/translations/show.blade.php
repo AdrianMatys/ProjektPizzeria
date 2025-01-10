@@ -7,6 +7,7 @@
         <th>Translation</th>
         <th>Language</th>
         <th>Edit</th>
+        <th>Delete</th>
     </tr>
     @foreach($translations as $translation)
         <tr>
@@ -21,6 +22,13 @@
             </td>
             <td>
                 <a href="{{route('management.employee.translations.edit', $translation)}}">Edit translation</a>
+            </td>
+            <td>
+                <form action="{{ route('management.employee.translations.destroy', $translation->id) }}" method="post">
+                    @csrf
+                    @method('delete')
+                    <button type="submit">X</button>
+                </form>
             </td>
         </tr>
     @endforeach

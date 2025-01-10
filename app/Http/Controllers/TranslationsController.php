@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Actions\Logs\LogCreateTranslationAction;
 use App\Actions\Logs\LogUpdateTranslationAction;
 use App\Http\Requests\CreateTranslationRequest;
 use App\Http\Requests\UpdateTranslationRequest;
@@ -51,5 +52,9 @@ class TranslationsController extends Controller
         Translation::create($validated);
         return redirect()->route('management.employee.translations.index')->with('success', 'Dodano nowe tłumaczenie');
 
+    }
+    public function destroy(Translation $translation){
+        $translation->delete();
+        return redirect()->route('management.employee.translations.index')->with('success', 'Tłumaczenie zostało usunięte');
     }
 }

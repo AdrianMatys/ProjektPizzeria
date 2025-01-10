@@ -130,6 +130,7 @@ Route::resource('management/employee/translations', TranslationsController::clas
         'create' => 'management.employee.translations.create',
         'store' => 'management.employee.translations.store',
         'update' => 'management.employee.translations.update',
+        'destroy' => 'management.employee.translations.destroy',
     ]);
 
 
