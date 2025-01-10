@@ -127,6 +127,8 @@ Route::resource('management/employee/translations', TranslationsController::clas
         'index' => 'management.employee.translations.index',
         'show' => 'management.employee.translations.show',
         'edit' => 'management.employee.translations.edit',
+        'create' => 'management.employee.translations.create',
+        'store' => 'management.employee.translations.store',
         'update' => 'management.employee.translations.update',
     ]);
 

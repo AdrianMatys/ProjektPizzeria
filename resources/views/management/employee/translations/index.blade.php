@@ -1,4 +1,6 @@
 @include('shared.return-message')
+<td><a href={{ route("management.employee.translations.create") }}>Add new</a></td>
+<br><br>
 <table>
     <tr>
         <th>Ingredient name</th>
