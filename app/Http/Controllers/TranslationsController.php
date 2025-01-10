@@ -39,7 +39,7 @@ class TranslationsController extends Controller
         return view('management.employee.translations.show', compact('translations'))->with('success', 'Zaktualizowano tłumaczenie');
 
     }
-    public function store(CreateTranslationRequest $request){
+    public function store(CreateTranslationRequest $request, LogCreateTranslationAction $logCreateTranslationAction){
         $validated = $request->validated();
         $ingredientTranslation = Translation::query()
             ->where('ingredient_id', $validated['ingredient_id'])
@@ -49,7 +49,12 @@ class TranslationsController extends Controller
             return redirect()->back()->with('error', 'Tłumaczenie tego składnika w tym języku już istnieje');
 
         }
-        Translation::create($validated);
+        $translation = Translation::create($validated);
+        $logCreateTranslationAction->execute(auth()->id(), [
+            'ingredientName' => $translation->ingredient->name,
+            'language_code' => $translation->language_code,
+            'name' => $translation->name
+        ]);
         return redirect()->route('management.employee.translations.index')->with('success', 'Dodano nowe tłumaczenie');
 
     }
