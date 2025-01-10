@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Actions\Logs\LogCreateTranslationAction;
+use App\Actions\Logs\LogDeleteTranslationAction;
 use App\Actions\Logs\LogUpdateTranslationAction;
 use App\Http\Requests\CreateTranslationRequest;
 use App\Http\Requests\UpdateTranslationRequest;
@@ -58,7 +59,12 @@ class TranslationsController extends Controller
         return redirect()->route('management.employee.translations.index')->with('success', 'Dodano nowe tłumaczenie');
 
     }
-    public function destroy(Translation $translation){
+    public function destroy(Translation $translation, LogDeleteTranslationAction $logDeleteTranslationAction){
+        $logDeleteTranslationAction->execute(auth()->id(),
+            [
+                'name' => $translation->name,
+                'language_code' => $translation->language_code
+            ]);
         $translation->delete();
         return redirect()->route('management.employee.translations.index')->with('success', 'Tłumaczenie zostało usunięte');
     }

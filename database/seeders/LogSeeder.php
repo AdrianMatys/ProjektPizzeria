@@ -119,6 +119,11 @@ class LogSeeder extends Seeder
                 'name' => "New translation",
                 'description' => "Employee added new translation",
             ],
+            [
+                'category_id' => 7,
+                'name' => "Deleted translation",
+                'description' => "Employee deleted translation",
+            ],
         ]);
     }
 }
