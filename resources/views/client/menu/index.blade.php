@@ -69,7 +69,7 @@
             <td>{{ $pizza->name }}</td>
             <td>
                 @foreach($pizza->ingredients as $ingredient)
-                    {{ $ingredient->translations->first()->name ?? $ingredient->name }} ({{ $ingredient->pivot->quantity}} g)
+                    {{ $ingredient->translations->first()->name ?? $ingredient->name }} ({{ $ingredient->quantityOnPizza}} g)
                 @endforeach
             </td>
             <td>
