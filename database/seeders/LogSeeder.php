@@ -38,6 +38,10 @@ class LogSeeder extends Seeder
                 'id' => 6,
                 'name' => "Pizzas",
             ],
+            [
+                'id' => 7,
+                'name' => "Translations",
+            ],
         ]);
         DB::table('log_types')->insert([
             [
@@ -76,11 +80,6 @@ class LogSeeder extends Seeder
                 'description' => "Administrator has updated information about pizzeria",
             ],
             [
-                'category_id' => 4,
-                'name' => "Updated translation",
-                'description' => "Employee has updated ingredient translation",
-            ],
-            [
                 'category_id' => 5,
                 'name' => "New ingredient",
                 'description' => "Employee added a new ingredient",
@@ -109,6 +108,11 @@ class LogSeeder extends Seeder
                 'category_id' => 6,
                 'name' => "Updated pizza",
                 'description' => "Employee updated pizza",
+            ],
+            [
+                'category_id' => 7,
+                'name' => "Updated translation",
+                'description' => "Employee has updated ingredient translation",
             ],
         ]);
     }
