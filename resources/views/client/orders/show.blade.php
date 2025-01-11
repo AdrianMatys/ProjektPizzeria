@@ -29,6 +29,7 @@
                                     @endforeach
                                 </table>
                             </td>
+                            <td>Quantity: {{$orderItem->quantity}}</td>
                         </tr>
                     @endforeach
                 </table>
