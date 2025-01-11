@@ -159,8 +159,10 @@ Route::patch('orders/{order}/cancel', [ClientOrdersController::class, 'cancelOrd
     ->name('client.orders.cancelOrder');
 
 
-Route::get('cart/{id}', [CartController::class, 'index'])->name('cart.index');
-Route::get('cart/{id}/order', [CartController::class, 'order'])->name('cart.order');
+Route::get('cart/{id}', [CartController::class, 'index'])->name('cart.index')
+    ->middleware(['auth']);
+Route::get('cart/{id}/order', [CartController::class, 'order'])->name('cart.order')
+    ->middleware(['auth']);
 
 Route::post('cart/add', [CartController::class, 'addToCart'])->name('cart.add');
 
