@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class ClientModifyPizzaRequest extends FormRequest
+class AddItemToCartRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -22,8 +22,10 @@ class ClientModifyPizzaRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'ingredient' => 'required|array|min:1',
-            'ingredient.*' => 'required|exists:ingredients,id',
+            'item_id' => ['required', 'integer'],
+            'item_type' => ['required', 'string', 'in:Pizza,CustomPizza,EditedPizza'],
+            'quantity' => ['required', 'min:1', 'max:100'],
+            'price' => ['required', 'numeric', 'min:0.01'],
         ];
     }
 }

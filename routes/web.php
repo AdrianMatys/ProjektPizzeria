@@ -14,6 +14,7 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\StatisticsController;
 use App\Http\Controllers\TokensController;
 use App\Http\Controllers\TranslationsController;
+use App\Models\Cart;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Session;
@@ -71,8 +72,8 @@ Route::resource('management/admin/employees', EmployeesController::class)
     ->only(['index', 'destroy'])
     ->middleware(['auth', 'role:admin'])
     ->names([
-       'index' => 'management.admin.employees.index',
-       'destroy' => 'management.admin.employees.destroy',
+        'index' => 'management.admin.employees.index',
+        'destroy' => 'management.admin.employees.destroy',
     ]);
 
 Route::resource('management/admin/statistics', StatisticsController::class)
@@ -98,6 +99,7 @@ Route::resource('management/employee/ingredients', IngredientsController::class)
         'update' => 'management.employee.ingredients.update',
         'destroy' => 'management.employee.ingredients.destroy',
     ]);
+
 Route::resource('management/employee/pizzas', PizzasController::class)
     ->middleware(['auth', 'role:admin'])
     ->names([
@@ -109,6 +111,7 @@ Route::resource('management/employee/pizzas', PizzasController::class)
         'update' => 'management.employee.pizzas.update',
         'destroy' => 'management.employee.pizzas.destroy',
     ]);
+
 Route::resource('management/employee/orders', ManageOrdersController::class)
     ->middleware(['auth', 'role:admin'])
     ->names([
@@ -121,6 +124,7 @@ Route::patch('management/employee/orders/{order}/status', [ManageOrdersControlle
     ->middleware(['auth', 'role:admin'])
     ->name('management.employee.orders.updateStatus');
 
+
 Route::resource('management/employee/translations', TranslationsController::class)
     ->middleware(['auth', 'role:admin'])
     ->names([
@@ -132,15 +136,6 @@ Route::resource('management/employee/translations', TranslationsController::clas
         'update' => 'management.employee.translations.update',
         'destroy' => 'management.employee.translations.destroy',
     ]);
-
-
-Route::resource('pizza', PizzaController::class)
-    ->middleware(['auth', 'role:admin'])
-    ->names([
-        'create' => 'client.pizza.create',
-        'edit' => 'client.pizza.edit',
-    ]);
-
 
 Route::resource('menu', DisplayMenuController::class)
     ->only(['index'])
@@ -159,10 +154,14 @@ Route::patch('orders/{order}/cancel', [ClientOrdersController::class, 'cancelOrd
     ->name('client.orders.cancelOrder');
 
 
-Route::get('cart/{id}', [CartController::class, 'index'])->name('cart.index');
-Route::get('cart/{id}/order', [CartController::class, 'order'])->name('cart.order');
+Route::get('cart', [CartController::class, 'index'])->name('cart.index')
+    ->middleware(['auth']);
+Route::get('cart/order', [CartController::class, 'order'])->name('cart.order')
+    ->can("order", Cart::class)
+    ->middleware(['auth']);
 
-Route::post('cart/add', [CartController::class, 'addToCart'])->name('cart.add');
+Route::post('cart/add', [CartController::class, 'addToCart'])->name('cart.add')
+    ->middleware(['auth']);
 
 Route::resource('pizza', PizzaController::class)
     ->middleware(['auth', 'role:admin'])

@@ -7,12 +7,15 @@ use Illuminate\Http\Request;
 
 class LogsController extends Controller
 {
-    public function index(){
+    public function index()
+    {
         $logs = Log::query()->with('type')->get();
+
         return view('management.admin.logs.index', compact('logs'));
     }
-    public function show(Log $log){
 
+    public function show(Log $log)
+    {
         return view('management.admin.logs.show', compact('log'));
     }
 }

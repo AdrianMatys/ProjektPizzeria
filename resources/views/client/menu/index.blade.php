@@ -34,7 +34,7 @@
     }
     async function updateCart() {
         try{
-            const response = await fetch('cart/1', {
+            const response = await fetch('cart', {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json',
@@ -69,7 +69,7 @@
             <td>{{ $pizza->name }}</td>
             <td>
                 @foreach($pizza->ingredients as $ingredient)
-                    {{ $ingredient->translations->first()->name ?? $ingredient->name }} ({{ $ingredient->pivot->quantity}} g)
+                    {{ $ingredient->translations->first()->name ?? $ingredient->name }} ({{ $ingredient->quantityOnPizza}} g)
                 @endforeach
             </td>
             <td>

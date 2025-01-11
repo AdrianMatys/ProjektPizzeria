@@ -20,11 +20,16 @@ class ManagementController extends Controller
         return view('management.admin.pizzeria.edit', compact('pizzeria'));
     }
 
-    public function update(UpdatePizzeriaRequest $request, Pizzeria $pizzeria, LogUpdatePizzeriaAction $logUpdatePizzeriaAction)
-    {
+    public function update(
+        UpdatePizzeriaRequest $request,
+        Pizzeria $pizzeria,
+        LogUpdatePizzeriaAction $logUpdatePizzeriaAction
+    ) {
         $validated = $request->validated();
         $pizzeria->update($validated);
-        $logUpdatePizzeriaAction->execute(auth()->id(), ['pizzeria'=>$validated]);
+
+        $logUpdatePizzeriaAction->execute(auth()->id(), ['pizzeria' => $validated]);
+
         return redirect()->route('management.admin.pizzeria.index')->with('success', 'Zaktualizowano dane pizzerii');
     }
 }

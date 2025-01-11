@@ -3,6 +3,7 @@
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
+use Illuminate\Http\Response;
 
 return Application::configure(basePath: dirname(__DIR__))
     ->withRouting(
@@ -24,5 +25,13 @@ return Application::configure(basePath: dirname(__DIR__))
         //
     })
     ->withExceptions(function (Exceptions $exceptions) {
-        //
+        $exceptions->respond(function (Response $response, Exception $expection) {
+            if ($expection->getMessage() === 'emptyCart') {
+                return redirect(route('client.menu.index'))->with([
+                    'error' => "Twój koszyk jest pusty",
+                ]);
+            }
+
+            return $response;
+        });
     })->create();

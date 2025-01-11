@@ -21,7 +21,6 @@ class CreateTranslationRequest extends FormRequest
      */
     public function rules(): array
     {
-
         return [
             'ingredient_id' => 'required|integer|exists:ingredients,id',
             'language_code' => 'required|string|min:2|max:2',

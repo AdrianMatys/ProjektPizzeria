@@ -9,7 +9,6 @@
     <table id="ingredientsTable">
         <tr>
             <th>ingredients</th>
-            <th>quantity (g)</th>
             <th>remove</th>
         </tr>
     </table>
@@ -37,16 +36,13 @@
         let newRow = table.insertRow(-1);
         let cell1 = newRow.insertCell(0);
         let cell2 = newRow.insertCell(1);
-        let cell3 = newRow.insertCell(2);
+
         cell1.innerHTML = ''+
             '<select name="ingredient[]]" id="ingredient[]">' +
                 options +
             '</select>'
 
-
-
-        cell2.innerHTML = '<input type="number" name="quantity[]" id="quantity[]">'
-        cell3.innerHTML = '<button type="button" onclick="removeIngredient(this)">X</button>'
+        cell2.innerHTML = '<button type="button" onclick="removeIngredient(this)">X</button>'
     }
 </script>
 

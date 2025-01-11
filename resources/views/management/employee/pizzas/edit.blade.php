@@ -10,7 +10,6 @@
     <table id="ingredientsTable">
         <tr>
             <th>ingredients</th>
-            <th>quantity (g)</th>
             <th>remove</th>
         </tr>
         @foreach($pizza->ingredients as $ingredient)
@@ -26,9 +25,6 @@
                                 @endif
                             @endforeach
                         </select>
-                    </td>
-                    <td>
-                        <input type="number" name="quantity[]" id="quantity[]" value="{{ $ingredient->pivot->quantity}}">
                     </td>
                 <td>
                     <button type="button" onclick="removeIngredient(this)">X</button>
@@ -59,8 +55,7 @@
         let table = document.getElementById('ingredientsTable')
         let newRow = table.insertRow(-1);
         let cell1 = newRow.insertCell(0);
-        let cell2 = newRow.insertCell(1);
-        let cell3 = newRow.insertCell(2);
+        let cell2 = newRow.insertCell(2);
         cell1.innerHTML = ''+
             '<select name="ingredient[]]" id="ingredient[]">' +
             options +
@@ -68,8 +63,7 @@
 
 
 
-        cell2.innerHTML = '<input type="number" name="quantity[]" id="quantity[]">'
-        cell3.innerHTML = '<button onclick="removeIngredient(1)">X</button>'
+        cell2.innerHTML = '<button onclick="removeIngredient(1)">X</button>'
     }
 </script>
 
