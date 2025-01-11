@@ -11,6 +11,7 @@ class DisplayMenuController extends Controller
     public function index()
     {
         $locale = App::getLocale();
+
         $pizzas = Pizza::query()
             ->with([
                 'ingredients.translations' => function ($query) use ($locale) {
@@ -18,14 +19,15 @@ class DisplayMenuController extends Controller
                 }
             ])
             ->get();
-        foreach ($pizzas as $pizza){
-            foreach($pizza->ingredients as $ingredient){
-                if($ingredient->quantityOnPizza > $ingredient->quantity){
+
+        foreach ($pizzas as $pizza) {
+            foreach ($pizza->ingredients as $ingredient) {
+                if ($ingredient->quantityOnPizza > $ingredient->quantity) {
                     $pizza->unavailable = true;
                 }
             }
-
         }
+
         return view('client.menu.index', compact('pizzas'));
     }
 
