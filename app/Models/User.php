@@ -7,8 +7,21 @@ namespace App\Models;
 use Illuminate\Contracts\Auth\CanResetPassword;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Carbon;
+
+/**
+ * @property int $id
+ * @property string $name
+ * @property string $email
+ * @property string $password
+ * @property Carbon $email_verified_at
+ * @property Carbon $created_at
+ * @property Carbon $updated_at
+ * @property Cart $cart
+ */
 
 class User extends Authenticatable implements MustVerifyEmail, CanResetPassword
 {
@@ -49,14 +62,20 @@ class User extends Authenticatable implements MustVerifyEmail, CanResetPassword
         ];
     }
 
-    public function hasRole($role)
+    public function hasRole($role): bool
     {
         return $this->role === $role;
     }
-    public function isAdmin(){
+    public function isAdmin(): bool
+    {
         return $this->role == 'admin';
     }
-    public function isEmployee(){
+    public function isEmployee(): bool
+    {
         return $this->role == 'employee' || $this->role == 'admin';
+    }
+    public function cart(): HasOne
+    {
+        return $this->hasOne(Cart::class);
     }
 }
