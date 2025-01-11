@@ -56,7 +56,7 @@ class CartController extends Controller
         $totalPrice = 0;
 
         if (!$user_id) {
-            return response()->json(['error' => 'Nie znaleziono użytkownika. Upewnij się, że jesteś zalogowany.'], 401);
+            return response()->json(['error' => 'Aby złożyć zamówienie musisz się zalogować.'], 401);
         }
 
         $cart = Cart::query()->where('user_id', $user_id)->first();
@@ -65,7 +65,7 @@ class CartController extends Controller
             ->get();
 
         if($cartItems->isEmpty()){
-            return response()->json(['error' => 'Twój koszyk jest pusty. Upewnij się, że jesteś zalogowany i koszyk nie jest pusty.']);
+            return response()->json(['error' => 'Twój koszyk jest pusty.']);
         }
 
         $order = Order::create([
@@ -74,124 +74,43 @@ class CartController extends Controller
             'total_price' => 0,
         ]);
 
-
         foreach ($cartItems as $cartItem){
             $totalPrice += $cartItem->price * $cartItem->quantity;
-            $itemData = [
-                'order_id' => $order->id,
-                'item_type' => $cartItem->item_type,
-                'item_id' => $cartItem->item_id,
-                'quantity' => $cartItem->quantity,
-                'price' => $cartItem->price
-            ];
 
-            OrderItem::create($itemData);
-
-        }
-
-
-        return view('client.orders.completed', compact('cartItems'));
-    }
-
-    public function order_old(Request $request, int $user_id, LogNewOrderAction $logNewOrderAction)
-    {
-
-        if (!$user_id) {
-            return response()->json(['error' => 'Nie znaleziono użytkownika. Upewnij się, że jesteś zalogowany.'], 401);
-        }
-
-        $cart = Cart::query()->where('user_id', $user_id)->first();
-
-        $cartItems = CartItem::query()
-            ->where('cart_id', $cart->id)
-            ->get();
-        $totalPrice = 0;
-        $data = [
-            'user_id' => $user_id,
-            'status' => 'pending',
-            'total_price' => 0,
-        ];
-        $order = Order::create($data);
-        if ($cartItems) {
-            foreach ($cartItems as $cartItem) {
-                $itemData = [
+            OrderItem::create(
+                [
                     'order_id' => $order->id,
                     'item_type' => $cartItem->item_type,
                     'item_id' => $cartItem->item_id,
                     'quantity' => $cartItem->quantity,
                     'price' => $cartItem->price
-                ];
-                $totalPrice += $cartItem->price * $cartItem->quantity;
-                OrderItem::create($itemData);
-                $ingredients = $cartItem->item->ingredients;
+                ]
+            );
 
-                if ($cartItem->item_type == 'EditedPizza') {
-                    $removedIngredients = [];
-                    foreach ($ingredients as $deletedIngredient) {
-                        if ($deletedIngredient->action == 'added') {
-                            $totalQuantity = $deletedIngredient->ingredient->quantityOnPizza * $cartItem->quantity;
-                            Ingredient::query()
-                                ->where('id', $deletedIngredient->ingredient_id)
-                                ->decrement('quantity', $totalQuantity);
-                            $dbIngredient = Ingredient::query()
-                                ->where('id', $deletedIngredient->ingredient_id)
-                                ->first();
-                            $this->checkLowStock($dbIngredient->quantity);
-                        } else {
-                            $removedIngredients[] = $deletedIngredient->ingredient_id;
-                        }
-                    }
-                    $baseIngredients = $cartItem->item->basePizza->ingredients;
-                    foreach ($baseIngredients as $baseIngredient) {
-                        if (!in_array($baseIngredient->id, $removedIngredients)) {
-                            $baseIngredientQuantity = $baseIngredient->quantityOnPizza;
-                            $totalQuantity = $baseIngredientQuantity * $cartItem->quantity;
-                            Ingredient::query()
-                                ->where('id', $baseIngredient->id)
-                                ->decrement('quantity', $totalQuantity);
-                            $dbIngredient = Ingredient::query()
-                                ->where('id', $baseIngredient->id)
-                                ->first();
-                            $this->checkLowStock($dbIngredient->quantity);
-                        }
-                    }
+            $ingredients = $cartItem->item->ingredients;
 
-                } elseif ($cartItem->item_type == 'Pizza') {
-                    foreach ($ingredients as $ingredient) {
-                        $totalQuantity = $ingredient->quantityOnPizza * $cartItem->quantity;
-                        Ingredient::query()
-                            ->where('id', $ingredient->id)
-                            ->decrement('quantity', $totalQuantity);
-                        $dbIngredient = Ingredient::query()
-                            ->where('id', $ingredient->id)
-                            ->first();
-                        $this->checkLowStock($dbIngredient->quantity);
-                    }
-
-                } else { // CustomPizza
-                    foreach ($ingredients as $ingredient) {
-                            $totalQuantity = $ingredient->quantityOnPizza * $cartItem->quantity;
-                            Ingredient::query()
-                                ->where('id', $ingredient->id)
-                                ->decrement('quantity', $totalQuantity);
-                            $dbIngredient = Ingredient::query()
-                                ->where('id', $ingredient->id)
-                                ->first();
-                            $this->checkLowStock($dbIngredient->quantity);
-                    }
-                }
+            foreach ($ingredients as $ingredient) {
+                $totalQuantity = $ingredient->quantityOnPizza * $cartItem->quantity;
+                Ingredient::query()
+                    ->where('id', $ingredient->id)
+                    ->decrement('quantity', $totalQuantity);
+                $dbIngredient = Ingredient::query()
+                    ->where('id', $ingredient->id)
+                    ->first();
+                $this->checkLowStock($dbIngredient->quantity);
             }
 
-            CartItem::query()
-                ->where('cart_id', $cart->id)
-                ->delete();
-            $order->update(['total_price' => $totalPrice]);
-
-            $logNewOrderAction->execute($user_id, ['cart_id' => $cart->id]);
-        } else {
-            return response()->json(['error' => 'Twój koszyk jest pusty. Upewnij się, że jesteś zalogowany i koszyk nie jest pusty.'],
-                401);
         }
+
+
+        CartItem::query()
+            ->where('cart_id', $cart->id)
+            ->delete();
+        $order->update(['total_price' => $totalPrice]);
+
+        $logNewOrderAction->execute($user_id, ['cart_id' => $cart->id]);
+
+
         return view('client.orders.completed', compact('cartItems'));
     }
 
