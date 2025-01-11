@@ -34,7 +34,7 @@
     }
     async function updateCart() {
         try{
-            const response = await fetch('cart/1', {
+            const response = await fetch('cart', {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json',
