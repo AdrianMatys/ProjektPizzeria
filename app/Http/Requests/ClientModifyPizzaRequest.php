@@ -21,7 +21,6 @@ class ClientModifyPizzaRequest extends FormRequest
      */
     public function rules(): array
     {
-
         return [
             'ingredient' => 'required|array|min:1',
             'ingredient.*' => 'required|exists:ingredients,id',
