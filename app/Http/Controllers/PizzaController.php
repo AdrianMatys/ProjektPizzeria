@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Actions\Carts\StoreCustomPizzaAction;
 use App\Http\Requests\ClientModifyPizzaRequest;
 use App\Http\Requests\UpdatePizzaRequest;
 use App\Models\Cart;
@@ -45,37 +46,14 @@ class PizzaController extends Controller
         return view('client.pizza.edit', compact('pizza', 'ingredients'));
     }
 
-    public function store(ClientModifyPizzaRequest $request, Pizza  $pizza){
-        $validated = $request->validated();
+    public function store(ClientModifyPizzaRequest $request, Pizza  $pizza, StoreCustomPizzaAction $storeCustomPizzaAction){
         $user_id = $request->user()->id;
 
         if (!$user_id) {
             return response()->json(['error' => 'Nie znaleziono użytkownika. Upewnij się, że jesteś zalogowany.'], 401);
         }
-        $cart = Cart::query()->firstOrCreate(['user_id' => $user_id]);
 
-        $customPizza = CustomPizza::create();
-        $newIngredients = $validated['ingredient'];
-        $totalPrice = 0;
-
-
-        foreach ($newIngredients as $ingredientId) {
-            $ingredient = Ingredient::query()->find($ingredientId);
-            CustomPizzaIngredient::create([
-                'custom_pizza_id' => $customPizza->id,
-                'ingredient_id' => $ingredientId,
-                'price' => $ingredient->price,
-            ]);
-            $totalPrice += $ingredient->price;
-        }
-
-        CartItem::query()->create([
-            'cart_id' => $cart->id,
-            'item_id' => $customPizza->id,
-            'item_type' => 'CustomPizza',
-            'quantity' => 1,
-            'price' => $totalPrice,
-        ]);
+        $storeCustomPizzaAction->execute($request);
 
         return redirect()->route('client.menu.index')->with('success', 'Dodano do koszyka własną pizze');
     }
