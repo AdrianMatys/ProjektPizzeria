@@ -2,7 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Actions\Carts\StoreCustomPizzaAction;
+use App\Actions\Carts\CreateCustomPizzaAction;
+use App\Actions\Carts\CreateEditedPizzaAction;
 use App\Http\Requests\ClientModifyPizzaRequest;
 use App\Http\Requests\UpdatePizzaRequest;
 use App\Models\Cart;
@@ -46,7 +47,7 @@ class PizzaController extends Controller
         return view('client.pizza.edit', compact('pizza', 'ingredients'));
     }
 
-    public function store(ClientModifyPizzaRequest $request, Pizza  $pizza, StoreCustomPizzaAction $storeCustomPizzaAction){
+    public function store(ClientModifyPizzaRequest $request, Pizza  $pizza, CreateCustomPizzaAction $storeCustomPizzaAction){
         $user_id = $request->user()->id;
 
         if (!$user_id) {
@@ -58,58 +59,19 @@ class PizzaController extends Controller
         return redirect()->route('client.menu.index')->with('success', 'Dodano do koszyka własną pizze');
     }
 
-    public function update(ClientModifyPizzaRequest $request, Pizza $pizza)
+    public function update(ClientModifyPizzaRequest $request, Pizza $pizza, CreateEditedPizzaAction $createEditedPizzaAction)
     {
-        $validated = $request->validated();
         $user_id = $request->user()->id;
 
         if (!$user_id) {
             return response()->json(['error' => 'Nie znaleziono użytkownika. Upewnij się, że jesteś zalogowany.'], 401);
         }
-        $cart = Cart::query()->firstOrCreate(['user_id' => $user_id]);
-
-        $editedPizza = EditedPizza::create([
-            'base_pizza_id' => $pizza->id,
-        ]);
-        $existingIngredients = $pizza->ingredients()->select('ingredients.id')->pluck('id')->toArray();
+        $validated = $request->validated();
         $newIngredients = $validated['ingredient'];
 
-        $addedIngredients = array_values(array_diff($newIngredients, $existingIngredients));
-        $removedIngredients = array_values(array_diff($existingIngredients, $newIngredients));
-
-        $totalPrice = $pizza->price;
-
-        foreach ($addedIngredients as $ingredientId) {
-            $ingredient = Ingredient::query()->find($ingredientId);
-            EditedPizzaIngredients::create([
-                'edited_pizza_id' => $editedPizza->id,
-                'ingredient_id' => $ingredientId,
-                'action' => 'added',
-                'price' => $ingredient->price,
-            ]);
-            $totalPrice += $ingredient->price;
-        }
-        foreach ($removedIngredients as $ingredientId) {
-            $ingredient = Ingredient::query()->find($ingredientId);
-            EditedPizzaIngredients::create([
-                'edited_pizza_id' => $editedPizza->id,
-                'ingredient_id' => $ingredientId,
-                'action' => 'removed',
-                'price' => $ingredient->price,
-            ]);
-            $totalPrice -= $ingredient->price;
-        }
-
-        CartItem::query()->create([
-            'cart_id' => $cart->id,
-            'item_id' => $editedPizza->id,
-            'item_type' => 'EditedPizza',
-            'quantity' => 1,
-            'price' => $totalPrice,
-        ]);
+        $createEditedPizzaAction->execute($newIngredients, $pizza);
 
         return redirect()->route('client.menu.index')->with('success', 'Dodano do koszyka zmodyfikowaną pizze');
     }
-
 
 }
