@@ -27,38 +27,31 @@ class PizzaSeeder extends Seeder
             [
                 'pizza_id' => 1,
                 'ingredient_id' => 1,
-                'quantity' => 300
             ],
             [
                 'pizza_id' => 1,
                 'ingredient_id' => 2,
-                'quantity' => 50
             ],
             [
                 'pizza_id' => 1,
                 'ingredient_id' => 6,
-                'quantity' => 20
             ],
             //salami
             [
                 'pizza_id' => 2,
                 'ingredient_id' => 1,
-                'quantity' => 300
             ],
             [
                 'pizza_id' => 2,
                 'ingredient_id' => 2,
-                'quantity' => 200
             ],
             [
                 'pizza_id' => 2,
                 'ingredient_id' => 4,
-                'quantity' => 40
             ],
             [
                 'pizza_id' => 2,
                 'ingredient_id' => 6,
-                'quantity' => 2
             ],
         ]);
     }
