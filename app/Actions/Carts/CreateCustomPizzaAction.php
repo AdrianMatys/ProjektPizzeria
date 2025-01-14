@@ -12,10 +12,10 @@ use App\Models\Ingredient;
 
 class CreateCustomPizzaAction
 {
-    public function execute(ClientModifyPizzaRequest $request, CreateCartItem $createCartItem): void
+    public function __construct(private CreateCartItem $createCartItem)
+    {}
+    public function execute(array $newIngredients): void
     {
-        $validated = $request->validated();
-        $newIngredients = $validated['ingredient'];
         $cart = Cart::query()->firstOrCreate(['user_id' => auth()->id()]);
 
         $customPizza = CustomPizza::create();
@@ -29,7 +29,7 @@ class CreateCustomPizzaAction
 
             $totalPrice += $ingredient->price;
         }
-        $createCartItem->execute($cart->id, $customPizza->id, 'CustomPizza', 1, $totalPrice);
+        $this->createCartItem->execute($cart->id, $customPizza->id, 'CustomPizza', 1, $totalPrice);
     }
 
     private function createCustomPizzaIngredient(Ingredient $ingredient, int $customPizzaId){

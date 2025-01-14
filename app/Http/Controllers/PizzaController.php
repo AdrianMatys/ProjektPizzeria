@@ -47,14 +47,16 @@ class PizzaController extends Controller
         return view('client.pizza.edit', compact('pizza', 'ingredients'));
     }
 
-    public function store(ClientModifyPizzaRequest $request, Pizza  $pizza, CreateCustomPizzaAction $storeCustomPizzaAction){
+    public function store(ClientModifyPizzaRequest $request, CreateCustomPizzaAction $createCustomPizzaAction){
         $user_id = $request->user()->id;
 
         if (!$user_id) {
             return response()->json(['error' => 'Nie znaleziono użytkownika. Upewnij się, że jesteś zalogowany.'], 401);
         }
 
-        $storeCustomPizzaAction->execute($request);
+        $validated = $request->validated();
+        $newIngredients = $validated['ingredient'];
+        $createCustomPizzaAction->execute($newIngredients);
 
         return redirect()->route('client.menu.index')->with('success', 'Dodano do koszyka własną pizze');
     }
