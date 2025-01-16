@@ -45,36 +45,52 @@
 </style>
 
 <div class="menu">
-    <div class="dropdown">
-        <button class="dropbtn">Client</button>
-        <div class="dropdown-content">
-            <a href="{{route('cart.index')}}">Cart</a>
-            <a href="{{route('client.menu.index')}}">Menu</a>
-            <a href="{{route('client.orders.index')}}">Orders</a>
-            <a href="{{route('profile.edit')}}">Profile</a>
-        </div>
-    </div>
 
-    <div class="dropdown">
-        <button class="dropbtn">Employee</button>
-        <div class="dropdown-content">
-            <a href="{{route('management.employee.ingredients.index')}}">Ingredients</a>
-            <a href="{{route('management.employee.orders.index')}}">Orders</a>
-            <a href="{{route('management.employee.pizzas.index')}}">Pizzas</a>
-            <a href="{{route('management.employee.translations.index')}}">Translations</a>
+    @if(auth()->user())
+        <div class="dropdown">
+            <button class="dropbtn">Client</button>
+            <div class="dropdown-content">
+                <a href="{{route('cart.index')}}">Cart</a>
+                <a href="{{route('client.menu.index')}}">Menu</a>
+                <a href="{{route('client.orders.index')}}">Orders</a>
+                <a href="{{route('profile.edit')}}">Profile</a>
+            </div>
         </div>
-    </div>
+    @else
+        <div class="dropdown">
+            <button class="dropbtn">Client</button>
+            <div class="dropdown-content">
+                <a href="{{route('client.menu.index')}}">Menu</a>
+                <a href="{{route('login')}}">Login</a>
+                <a href="{{route('register')}}">Register</a>
+            </div>
+        </div>
+    @endif
 
-    <div class="dropdown">
-        <button class="dropbtn">Administrator</button>
-        <div class="dropdown-content">
-            <a href="{{route('management.admin.employees.index')}}">Employees</a>
-            <a href="{{route('management.admin.logs.index')}}">Logs</a>
-            <a href="{{route('management.admin.pizzeria.index')}}">Pizzeria</a>
-            <a href="{{route('management.admin.statistics.index')}}">Statistics</a>
-            <a href="{{route('management.admin.tokens.index')}}">Tokens</a>
+    @if(auth()->user() && (auth()->user()->isEmployee() || auth()->user()->isAdmin()) )
+        <div class="dropdown">
+            <button class="dropbtn">Employee</button>
+            <div class="dropdown-content">
+                <a href="{{route('management.employee.ingredients.index')}}">Ingredients</a>
+                <a href="{{route('management.employee.orders.index')}}">Orders</a>
+                <a href="{{route('management.employee.pizzas.index')}}">Pizzas</a>
+                <a href="{{route('management.employee.translations.index')}}">Translations</a>
+            </div>
         </div>
-    </div>
+    @endif
+
+    @if(auth()->user() && auth()->user()->isAdmin() )
+        <div class="dropdown">
+            <button class="dropbtn">Administrator</button>
+            <div class="dropdown-content">
+                <a href="{{route('management.admin.employees.index')}}">Employees</a>
+                <a href="{{route('management.admin.logs.index')}}">Logs</a>
+                <a href="{{route('management.admin.pizzeria.index')}}">Pizzeria</a>
+                <a href="{{route('management.admin.statistics.index')}}">Statistics</a>
+                <a href="{{route('management.admin.tokens.index')}}">Tokens</a>
+            </div>
+        </div>
+    @endif
 
     <div class="dropdown">
         <button class="dropbtn">Language</button>
