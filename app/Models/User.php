@@ -72,7 +72,7 @@ class User extends Authenticatable implements MustVerifyEmail, CanResetPassword
     }
     public function isEmployee(): bool
     {
-        return $this->role == 'employee' || $this->role == 'admin';
+        return $this->role == 'employee';
     }
     public function cart(): HasOne
     {
