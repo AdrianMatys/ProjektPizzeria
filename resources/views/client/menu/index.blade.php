@@ -75,7 +75,7 @@
             <td>
                 {{--<a href="{{ route('cart.add', $pizza->id) }}">Add</a>--}}
                 @if($pizza->unavailable)
-                    unavaible
+                    unavailable
                 @else
                     <input type="button" value="Add" onclick="addToCart({{$pizza->id}}, 'Pizza', 1, 10.99)">
                 @endif
