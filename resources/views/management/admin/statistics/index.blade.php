@@ -5,7 +5,7 @@
         <th>name</th>
         <th>quantity</th>
     </tr>
-    @foreach($statistics['daily']['ingredients'] as $name => $quantity)
+    @foreach($dailyStatistics['ingredients'] as $name => $quantity)
         <tr>
             <td>{{$name}}</td>
             <td>{{$quantity}}</td>
@@ -18,7 +18,7 @@
         <th>name</th>
         <th>quantity</th>
     </tr>
-    @foreach($statistics['daily']['products']['pizza'] as $name => $quantity)
+    @foreach($dailyStatistics['pizzas'] as $name => $quantity)
         <tr>
             <td>{{$name}}</td>
             <td>{{$quantity}}</td>
@@ -26,11 +26,11 @@
     @endforeach
     <tr>
         <td>EditedPizza</td>
-        <td>{{$statistics['daily']['products']['EditedPizza']}}</td>
+        <td>{{$dailyStatistics['products']['EditedPizza'] ?? 0}}</td>
     </tr>
     <tr>
         <td>CustomPizza</td>
-        <td>{{$statistics['daily']['products']['CustomPizza']}}</td>
+        <td>{{$dailyStatistics['products']['CustomPizza'] ?? 0}}</td>
     </tr>
 </table>
 
@@ -41,7 +41,7 @@
         <th>name</th>
         <th>quantity</th>
     </tr>
-    @foreach($statistics['weekly']['ingredients'] as $name => $quantity)
+    @foreach($weeklyStatistics['ingredients'] as $name => $quantity)
         <tr>
             <td>{{$name}}</td>
             <td>{{$quantity}}</td>
@@ -55,7 +55,7 @@
         <th>name</th>
         <th>quantity</th>
     </tr>
-    @foreach($statistics['weekly']['products']['pizza'] as $name => $quantity)
+    @foreach($weeklyStatistics['pizzas'] as $name => $quantity)
         <tr>
             <td>{{$name}}</td>
             <td>{{$quantity}}</td>
@@ -63,11 +63,11 @@
     @endforeach
     <tr>
         <td>EditedPizza</td>
-        <td>{{$statistics['weekly']['products']['EditedPizza']}}</td>
+        <td>{{$weeklyStatistics['products']['EditedPizza'] ?? 0}}</td>
     </tr>
     <tr>
         <td>CustomPizza</td>
-        <td>{{$statistics['weekly']['products']['CustomPizza']}}</td>
+        <td>{{$weeklyStatistics['products']['CustomPizza'] ?? 0}}</td>
     </tr>
 </table>
 
@@ -78,7 +78,7 @@
         <th>name</th>
         <th>quantity</th>
     </tr>
-    @foreach($statistics['monthly']['ingredients'] as $name => $quantity)
+    @foreach($monthlyStatistics['ingredients'] as $name => $quantity)
         <tr>
             <td>{{$name}}</td>
             <td>{{$quantity}}</td>
@@ -91,7 +91,7 @@
         <th>name</th>
         <th>quantity</th>
     </tr>
-    @foreach($statistics['monthly']['products']['pizza'] as $name => $quantity)
+    @foreach($monthlyStatistics['pizzas'] as $name => $quantity)
         <tr>
             <td>{{$name}}</td>
             <td>{{$quantity}}</td>
@@ -99,11 +99,11 @@
     @endforeach
     <tr>
         <td>EditedPizza</td>
-        <td>{{$statistics['monthly']['products']['EditedPizza']}}</td>
+        <td>{{$monthlyStatistics['products']['EditedPizza'] ?? 0}}</td>
     </tr>
     <tr>
         <td>CustomPizza</td>
-        <td>{{$statistics['monthly']['products']['CustomPizza']}}</td>
+        <td>{{$monthlyStatistics['products']['CustomPizza'] ?? 0}}</td>
     </tr>
 </table>
 
