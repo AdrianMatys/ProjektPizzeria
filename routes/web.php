@@ -156,7 +156,7 @@ Route::patch('orders/{order}/cancel', [ClientOrdersController::class, 'cancelOrd
 
 Route::get('cart', [CartController::class, 'index'])->name('cart.index')
     ->middleware(['auth']);
-Route::get('cart/order', [CartController::class, 'order'])->name('cart.order')
+Route::post('cart/order', [CartController::class, 'order'])->name('cart.order')
     ->can("order", Cart::class)
     ->middleware(['auth']);
 

@@ -48,7 +48,7 @@ class CartController extends Controller
             ->where('user_id', auth()->id())
             ->first();
 
-        if (!$cart) {
+        if ($cart->items->isEmpty()) {
             return response()->json(['message' => 'Koszyk jest pusty']);
         }
 

@@ -100,5 +100,10 @@
 <hr>
 <div id="cart"></div>
 
+<form action="{{route('cart.order')}}" method="post">
+    @csrf
+    <button type="submit">Zamów</button>
+</form>
+
 
 
