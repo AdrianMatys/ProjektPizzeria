@@ -23,7 +23,7 @@ class GetStatisticsAction
             $quantity = $orderItem->quantity;
 
             $statistics = $this->countProducts($statistics, $item_type, $quantity);
-            $statistics['ingredients'] = $this->countIngredients($ingredients);
+            $statistics = $this->countIngredients($statistics, $ingredients);
 
             if ($item_type == 'Pizza') {
                 $statistics = $this->countPizzas($statistics, $orderItem->item->name, $quantity);
@@ -60,23 +60,24 @@ class GetStatisticsAction
         return $statistics;
     }
 
-    public function countIngredients(Collection $ingredients): array
+    public function countIngredients(array $statistics, Collection $ingredients): array
     {
-        $ingredientsUsage = [];
 
         foreach ($ingredients as $ingredient) {
             $ingredientName = $ingredient->name;
             $ingredientQuantity = $ingredient->quantityOnPizza;
 
-            if (isset($ingredientsUsage[$ingredientName])) {
-                $ingredientsUsage
-                [$ingredientName] += $ingredientQuantity;
+            if (isset($statistics['ingredients'][$ingredientName])) {
+                $statistics
+                    ['ingredients']
+                    [$ingredientName] += $ingredientQuantity;
             } else {
-                $ingredientsUsage
-                [$ingredientName] = $ingredientQuantity;
+                $statistics
+                    ['ingredients']
+                    [$ingredientName] = $ingredientQuantity;
             }
         }
 
-        return $ingredientsUsage;
+        return $statistics;
     }
 }
