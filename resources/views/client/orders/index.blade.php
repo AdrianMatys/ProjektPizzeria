@@ -1,4 +1,4 @@
-@include('shared.return-message')
+@include('shared.header')
 @foreach($groupedOrders as $status => $orders)
     {{ $status }} orders
     <table>

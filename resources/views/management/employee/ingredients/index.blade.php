@@ -1,4 +1,5 @@
-@include('shared.return-message')
+@include('shared.header')
+
 <td><a href={{ route("management.employee.ingredients.create") }}>Add new</a></td>
 <table>
     <tr>

@@ -1,4 +1,4 @@
-@include('shared.return-message')
+@include('shared.header')
 <a href="{{ route('client.orders.index') }}">Back to orders</a>
 <br><br>
 <table>

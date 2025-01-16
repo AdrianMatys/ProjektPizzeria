@@ -1,4 +1,4 @@
-@include('shared.return-message')
+@include('shared.header')
 <meta name="csrf-token" content="{{ csrf_token() }}">
 
 <script>

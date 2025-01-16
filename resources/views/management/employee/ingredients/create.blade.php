@@ -1,4 +1,5 @@
-@include('shared.return-message')
+@include('shared.header')
+
 <table>
     <tr>
         <th>name</th>

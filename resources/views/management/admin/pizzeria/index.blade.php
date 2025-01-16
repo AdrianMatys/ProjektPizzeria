@@ -1,3 +1,5 @@
+@include('shared.header')
+
 <table>
     <tr>
         <th>Name</th>

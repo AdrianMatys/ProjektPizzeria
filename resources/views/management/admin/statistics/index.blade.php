@@ -1,4 +1,5 @@
-@include('shared.return-message')
+@include('shared.header')
+
 <h1>DZIENNE ZUŻYCIE SKŁADNIKÓW</h1>
 <table>
     <tr>
