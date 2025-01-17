@@ -24,6 +24,6 @@ class ManageOrdersController extends Controller
     {
         $order->update(['status' => $request->validated()['status']]);
 
-        return redirect()->back()->with('success', 'Status zamówienia został zaktualizowany');
+        return redirect()->back()->with('success', __('employee.orderStatusUpdated'));
     }
 }

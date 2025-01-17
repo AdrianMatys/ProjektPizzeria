@@ -28,10 +28,10 @@ class ClientOrdersController extends Controller
     public function cancelOrder(CancelOrderRequest $request, Order $order)
     {
         if ($order->status != 'pending') {
-            return redirect()->back()->with('error', 'Możesz anulować tylko zamówienia posiadają status pending');
+            return redirect()->back()->with('error', __('client.cancelOnlyPending'));
         }
 
         $order->update(['status' => $request->validated()['status']]);
-        return redirect(route('client.orders.index'))->with('success', 'Twoje zamówienie zostało anulowane');
+        return redirect(route('client.orders.index'))->with('success', __('client.orderCanceled'));
     }
 }
