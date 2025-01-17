@@ -11,6 +11,7 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\DB;
 
 /**
  * @property int $id
@@ -77,5 +78,25 @@ class User extends Authenticatable implements MustVerifyEmail, CanResetPassword
     public function cart(): HasOne
     {
         return $this->hasOne(Cart::class);
+    }
+    public function forceLogout()
+    {
+        $this->remember_token = null;
+        DB::table('sessions')
+            ->where('user_id', $this->id)
+            ->delete();
+        $this->save();
+    }
+    public function isLoggedIn(): bool
+    {
+        if($this->remember_token) return true;
+
+        $session = DB::table('sessions')
+            ->where('user_id', $this->id)
+            ->first();
+
+        if($session) return true;
+
+        return false;
     }
 }

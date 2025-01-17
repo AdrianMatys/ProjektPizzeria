@@ -10,9 +10,10 @@ class EmployeesController extends Controller
 {
     public function index()
     {
-        $users = User::get();
+        $users = User::query()->where('role', 'user')->get();
+        $employees = User::query()->whereNot('role', 'user')->get();
 
-        return view('management.admin.employees.index', compact('users'));
+        return view('management.admin.employees.index', compact('users', 'employees'));
     }
 
     public function destroy($id, LogDismissalEmployeeAction $logDismissalEmployeeAction)
@@ -27,7 +28,10 @@ class EmployeesController extends Controller
         $logDismissalEmployeeAction->execute(auth()->id(), ['email' => $user->email]);
 
         $user->delete();
-
         return redirect()->route('management.admin.employees.index')->with('success', 'Użytkownik został usunięty');
+    }
+    public function forceLogout(User $user){
+        $user->forceLogout();
+        return redirect()->back()->with('success', "Użytkownik został wylogowany");
     }
 }

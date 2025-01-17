@@ -70,6 +70,9 @@ Route::resource('management/admin/employees', EmployeesController::class)
         'index' => 'management.admin.employees.index',
         'destroy' => 'management.admin.employees.destroy',
     ]);
+Route::post('management/admin/employees/{user}/forcelogout', [EmployeesController::class, 'forcelogout'])
+    ->name('management.admin.employees.forcelogout')
+    ->middleware(['auth', 'role:admin']);
 
 Route::resource('management/admin/statistics', StatisticsController::class)
     ->only(['index'])
