@@ -1,6 +1,11 @@
 @include('shared.header')
 
 @if($cart)
+
+    <form action="{{ route('client.cart.order')}}" method="POST">
+        @csrf
+        <button type="submit">Order</button>
+    </form>
     <table>
         @foreach($cart->items as $cartItem)
             <tr>
