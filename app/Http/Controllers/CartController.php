@@ -21,7 +21,8 @@ class CartController extends Controller
 {
     public function addToCart(AddItemToCartRequest $request, AddItemToCartAction $addItemToCartAction)
     {
-        $addItemToCartAction->execute($request);
+        $validated = $request->validated();
+        $addItemToCartAction->execute($validated);
 
         return response()->json(['success' => true, 'message' => 'Dodano do koszyka']);
     }
@@ -47,7 +48,7 @@ class CartController extends Controller
             ->where('user_id', auth()->id())
             ->first();
 
-        if (!$cart) {
+        if ($cart && $cart->items && $cart->items->isEmpty()) {
             return response()->json(['message' => 'Koszyk jest pusty']);
         }
 

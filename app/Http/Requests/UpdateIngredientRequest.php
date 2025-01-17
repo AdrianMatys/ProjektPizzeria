@@ -13,7 +13,7 @@ class UpdateIngredientRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return auth()->user()->isEmployee();
+        return auth()->user()->isEmployee() ||  auth()->user()->isAdmin();
     }
 
     /**

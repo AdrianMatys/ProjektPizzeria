@@ -13,12 +13,30 @@ class DatabaseSeeder extends Seeder
     public function run(): void
     {
 
-        User::factory()->create([
-            'name' => 'Administrator',
-            'email' => 'admin@pizzeria.com',
-            'password' => 'admin',
-            'role' => 'admin'
-        ]);
+        $usersData = [
+            [
+                'name' => 'Administrator',
+                'email' => 'admin@pizzeria.com',
+                'password' => 'admin',
+                'role' => 'admin'
+            ],
+            [
+                'name' => 'Employee',
+                'email' => 'employee@pizzeria.com',
+                'password' => 'employee',
+                'role' => 'employee'
+            ],
+            [
+                'name' => 'User',
+                'email' => 'user@pizzeria.com',
+                'password' => 'user',
+                'role' => 'user'
+            ]
+        ];
+
+        foreach ($usersData as $userData) {
+            User::factory()->create($userData);
+        }
 
 
         $this->call([

@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Actions\Logs\LogDeletedPizzaAction;
 use App\Actions\Logs\LogNewPizzaAction;
 use App\Actions\Logs\LogUpdatePizzaAction;
+use App\Actions\Pizzas\CreatePizzaAsEmployeeAction;
+use App\Actions\Pizzas\UpdatePizzaAsEmployeeAction;
 use App\Http\Requests\UpdatePizzaRequest;
 use App\Http\Requests\UpdatePizzeriaRequest;
 use App\Models\Ingredient;
@@ -23,8 +25,6 @@ class PizzasController extends Controller
             ->get();
         return view('management.employee.pizzas.index', compact('pizzas'));
     }
-
-
 
     public function create(Pizza $pizza)
     {
@@ -58,30 +58,19 @@ class PizzasController extends Controller
         return redirect()->route('management.employee.pizzas.index')->with('success', 'Pizza została usunięta');
     }
 
-    public function update(UpdatePizzaRequest $request, Pizza  $pizza, LogUpdatePizzaAction $logUpdatePizzaAction){
+    public function update(UpdatePizzaRequest $request, Pizza  $pizza, LogUpdatePizzaAction $logUpdatePizzaAction, UpdatePizzaAsEmployeeAction $updatePizzaAsEmployeeAction){
         $validated = $request->validated();
-        $pizza->update($validated);
-        $pizza->ingredients()->detach();
 
-
-        foreach ($validated['ingredient'] as $index=>$ingredientId){
-            $pizza->ingredients()->attach($ingredientId, [
-                'quantity' => $validated['quantity'][$index],
-            ]);
-        }
+        $updatePizzaAsEmployeeAction->execute($validated, $pizza);
         $logUpdatePizzaAction->execute(auth()->id(), ['pizza' => $validated]);
 
         return redirect()->route('management.employee.pizzas.index')->with('success', 'Zaktualizowano pizze');
     }
 
-    public function store(UpdatePizzaRequest $request, Pizza  $pizza, LogNewPizzaAction $logNewPizzaAction){
+    public function store(UpdatePizzaRequest $request, Pizza  $pizza, LogNewPizzaAction $logNewPizzaAction, CreatePizzaAsEmployeeAction $createPizzaAsEmployeeAction){
         $validated = $request->validated();
-        $pizza = Pizza::create($validated);
 
-        foreach ($validated['ingredient'] as $index=>$ingredientId){
-            $pizza->ingredients()->attach($ingredientId);
-        }
-
+        $createPizzaAsEmployeeAction->execute($validated);
         $logNewPizzaAction->execute(auth()->id(), ['pizza' => $validated]);
 
         return redirect()->route('management.employee.pizzas.index')->with('success', 'Dodano nową pizze');

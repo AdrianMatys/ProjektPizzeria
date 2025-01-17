@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\ClientOrdersController;
 use App\Http\Controllers\DisplayMenuController;
@@ -21,16 +22,11 @@ use Illuminate\Support\Facades\Session;
 use Inertia\Inertia;
 
 Route::get('/', function () {
-    return Inertia::render('Welcome', [
-        'canLogin' => Route::has('login'),
-        'canRegister' => Route::has('register'),
-        'laravelVersion' => Application::VERSION,
-        'phpVersion' => PHP_VERSION,
-    ]);
+    return view('welcome');
 });
 
 Route::get('/dashboard', function () {
-    return Inertia::render('Dashboard');
+    return view('welcome');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {
@@ -75,6 +71,9 @@ Route::resource('management/admin/employees', EmployeesController::class)
         'index' => 'management.admin.employees.index',
         'destroy' => 'management.admin.employees.destroy',
     ]);
+Route::post('management/admin/employees/{user}/forcelogout', [EmployeesController::class, 'forcelogout'])
+    ->name('management.admin.employees.forcelogout')
+    ->middleware(['auth', 'role:admin']);
 
 Route::resource('management/admin/statistics', StatisticsController::class)
     ->only(['index'])
@@ -86,6 +85,8 @@ Route::resource('management/admin/statistics', StatisticsController::class)
 Route::get('management/admin/logs', [LogsController::class, 'index'])->name('management.admin.logs.index')
     ->middleware(['auth', 'role:admin']);
 Route::get('management/admin/logs/{log}', [LogsController::class, 'show'])->name('management.admin.logs.show')
+    ->middleware(['auth', 'role:admin']);
+Route::post('management/admin/logout', [AuthenticatedSessionController::class, 'destroy'])->name('management.admin.logout')
     ->middleware(['auth', 'role:admin']);
 
 Route::resource('management/employee/ingredients', IngredientsController::class)
@@ -156,7 +157,7 @@ Route::patch('orders/{order}/cancel', [ClientOrdersController::class, 'cancelOrd
 
 Route::get('cart', [CartController::class, 'index'])->name('cart.index')
     ->middleware(['auth']);
-Route::get('cart/order', [CartController::class, 'order'])->name('cart.order')
+Route::post('cart/order', [CartController::class, 'order'])->name('cart.order')
     ->can("order", Cart::class)
     ->middleware(['auth']);
 

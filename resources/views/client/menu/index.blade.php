@@ -1,4 +1,4 @@
-@include('shared.return-message')
+@include('shared.header')
 <meta name="csrf-token" content="{{ csrf_token() }}">
 
 <script>
@@ -75,7 +75,7 @@
             <td>
                 {{--<a href="{{ route('cart.add', $pizza->id) }}">Add</a>--}}
                 @if($pizza->unavailable)
-                    unavaible
+                    unavailable
                 @else
                     <input type="button" value="Add" onclick="addToCart({{$pizza->id}}, 'Pizza', 1, 10.99)">
                 @endif
@@ -99,6 +99,11 @@
 <h1>KOSZYK</h1>
 <hr>
 <div id="cart"></div>
+
+<form action="{{route('cart.order')}}" method="post">
+    @csrf
+    <button type="submit">Zamów</button>
+</form>
 
 
 

@@ -1,4 +1,5 @@
-@include('shared.return-message')
+@include('shared.header')
+
 <button onclick="addNewIngredient()">Add new ingredient</button>
 <form action="{{ route('management.employee.pizzas.store', $pizza) }}" method="post">
     @csrf

@@ -16,9 +16,6 @@
         @vite(['resources/js/app.jsx', "resources/js/Pages/{$page['component']}.jsx"])
         @inertiaHead
     </head>
-    <a href="{{ route('set-locale', ['locale' => 'en']) }}">English</a>
-    <a href="{{ route('set-locale', ['locale' => 'pl']) }}">Polski</a>
-    <br>Test języku <b>do usunięcia</b>: {{__('pagination.next')}}
     <body class="font-sans antialiased">
         @inertia
     </body>

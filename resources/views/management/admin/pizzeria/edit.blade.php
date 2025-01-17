@@ -1,4 +1,4 @@
-@include('shared.return-message')
+@include('shared.header')
 
 <form action="{{ route('management.admin.pizzeria.update', $pizzeria->id) }}" method="post">
     @csrf

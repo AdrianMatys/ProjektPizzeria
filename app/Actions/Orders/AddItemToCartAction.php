@@ -9,28 +9,28 @@ use App\Services\LoggerService;
 
 class AddItemToCartAction
 {
-    public function execute(AddItemToCartRequest $request): void
+    public function execute(array $item): void
     {
         $cart = Cart::query()->firstOrCreate(['user_id' => auth()->id()]);
 
         $cartItem = CartItem::query()->where(
             [
                 'cart_id' => $cart->id,
-                'item_id' => $request->item_id,
-                'item_type' => $request->item_type,
+                'item_id' => $item['item_id'],
+                'item_type' => $item['item_type'],
             ])
             ->first();
 
         if ($cartItem) {
-            $cartItem->quantity += $request->quantity;
+            $cartItem->quantity += $item['quantity'];
             $cartItem->save();
         } else {
             CartItem::query()->create([
                 'cart_id' => $cart->id,
-                'item_id' => $request->item_id,
-                'item_type' => $request->item_type,
-                'quantity' => $request->quantity,
-                'price' => $request->price,
+                'item_id' => $item['item_id'],
+                'item_type' => $item['item_type'],
+                'quantity' => $item['quantity'],
+                'price' => $item['price'],
             ]);
         }
     }

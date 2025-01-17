@@ -1,4 +1,4 @@
-@include('shared.return-message')
+@include('shared.header')
 <button onclick="addNewIngredient()">Add new ingredient</button>
 <form action="{{ route('client.pizza.update', $pizza) }}" method="post">
     @csrf

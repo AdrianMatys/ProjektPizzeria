@@ -1,4 +1,5 @@
-@include('shared.return-message')
+@include('shared.header')
+
 <a href="{{ route('management.employee.orders.index') }}">Back to orders</a>
 <br><br>
 <table>

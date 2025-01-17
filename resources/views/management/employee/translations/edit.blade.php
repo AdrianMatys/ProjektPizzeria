@@ -1,4 +1,5 @@
-@include('shared.return-message')
+@include('shared.header')
+
 <form action="{{ route('management.employee.translations.update', $translation) }}" method="post">
     @csrf
     @method('put')

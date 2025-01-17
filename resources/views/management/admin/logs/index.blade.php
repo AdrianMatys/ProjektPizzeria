@@ -1,4 +1,4 @@
-@include('shared.return-message')
+@include('shared.header')
 
 <table>
     <tr>
@@ -10,7 +10,7 @@
     </tr>
     @foreach($logs as $log)
         <tr>
-            <td>{{ $log->user->email }}</td>
+            <td>{{ $log->user ? $log->user->email : '---' }}</td>
             <td>{{ $log->type->category->name }}</td>
             <td>{{ $log->type->name }}</td>
             <td>{{ $log->created_at }}</td>

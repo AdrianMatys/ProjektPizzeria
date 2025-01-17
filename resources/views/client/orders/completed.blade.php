@@ -1,2 +1,5 @@
+@include('shared.header')
+
 Twoje zamówienie zostało złożone!
-@dd($cartItems)
+<br>
+{{$cartItems}}

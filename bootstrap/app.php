@@ -25,13 +25,14 @@ return Application::configure(basePath: dirname(__DIR__))
         //
     })
     ->withExceptions(function (Exceptions $exceptions) {
-        $exceptions->respond(function (Response $response, Exception $expection) {
-            if ($expection->getMessage() === 'emptyCart') {
-                return redirect(route('client.menu.index'))->with([
-                    'error' => "Twój koszyk jest pusty",
-                ]);
+        $exceptions->respond(function (mixed $response, mixed $expection) {
+            if ($expection instanceof Exception) {
+                if ($expection->getMessage() === 'emptyCart') {
+                    return redirect(route('client.menu.index'))->with([
+                        'error' => "Twój koszyk jest pusty",
+                    ]);
+                }
             }
-
             return $response;
         });
     })->create();

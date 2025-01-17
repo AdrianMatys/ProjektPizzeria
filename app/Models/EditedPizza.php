@@ -28,7 +28,12 @@ class EditedPizza extends Model
     {
         return $this->hasMany(EditedPizzaIngredients::class);
     }
-
+    public function ingredients(): Attribute
+    {
+        return Attribute::get(
+            fn(): string => "Edited Pizza (" . $this->basePizza->name . ')',
+        );
+    }
     public function getingredientsAttribute()
     {
         $ingredients = $this->editedIingredients;
@@ -48,4 +53,42 @@ class EditedPizza extends Model
 
         return $finalIngredients;
     }
+
+
+
+
+//  $addedIngredients= Ingredient::query()->whereIn('id', $newIngredients)->whereNot('id', $existingIngredients)->sum('price');
+
+    public function chuj()
+    {
+
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 }
