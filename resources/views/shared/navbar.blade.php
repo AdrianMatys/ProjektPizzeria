@@ -51,7 +51,7 @@
         <div class="dropdown">
             <button class="dropbtn">Client</button>
             <div class="dropdown-content">
-                <a href="{{route('cart.index')}}">Cart</a>
+                <a href="{{route('client.cart.index')}}">Cart</a>
                 <a href="{{route('client.menu.index')}}">Menu</a>
                 <a href="{{route('client.orders.index')}}">Orders</a>
                 <a href="{{route('profile.edit')}}">Profile</a>
