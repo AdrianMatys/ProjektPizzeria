@@ -78,5 +78,18 @@ class CartController extends Controller
         $cartItem->delete();
         return redirect()->route('client.cart.index')->with('success', 'Produkt został usunięty z koszyka');
     }
+    public function patchQuantity(Request $request, $cartItemId)
+    {
+        $cartItem = CartItem::query()->find($cartItemId);
+
+        if (!$cartItem) {
+            return redirect()->route('client.cart.index')->with('error', 'Nie udało się usunąć przedmiotu z koszyka');
+        }
+
+        $validated = $request->validate(['quantity' => ['required', 'integer', 'min:1']]);
+        $cartItem->update(['quantity' => $validated['quantity']]);
+
+        return redirect()->route('client.cart.index')->with('success', 'Ilość produktu została zaktualizowana');
+    }
 
 }

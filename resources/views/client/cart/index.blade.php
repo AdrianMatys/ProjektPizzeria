@@ -14,7 +14,15 @@
                         @endforeach
                     </table>
                 </td>
-                <td>Quantity: {{$cartItem->quantity}}</td>
+                <td>
+                    <form action="{{ route('client.cart.patchQuantity', $cartItem->id )}}" method="POST">
+                        @csrf
+                        @method('PATCH')
+                        <label for="quantity">Quantity</label>
+                        <input type="number" min="0" name="quantity" id="quantity" value="{{$cartItem->quantity}}">
+                        <button type="submit">Update quantity</button>
+                    </form>
+                </td>
                 <td>
                     <form action="{{ route('client.cart.destroyitem', $cartItem->id )}}" method="POST">
                         @csrf
@@ -31,7 +39,7 @@
 
 <style>
     table, tr, td, th {
-        bcart: 1px solid black;
+        border: 1px solid black;
         text-align: center;
     }
 </style>

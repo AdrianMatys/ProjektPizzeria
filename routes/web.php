@@ -157,6 +157,9 @@ Route::patch('orders/{order}/cancel', [ClientOrdersController::class, 'cancelOrd
 Route::delete('cart/item/{id}', [CartController::class, 'destroyItem'])
     ->name('client.cart.destroyitem')
     ->middleware(['auth']);;
+Route::patch('cart/item/{id}', [CartController::class, 'patchQuantity'])
+    ->name('client.cart.patchQuantity')
+    ->middleware(['auth']);;
 Route::get('cart/json', [CartController::class, 'getJson'])
     ->name('client.cart.json')
     ->middleware(['auth']);
