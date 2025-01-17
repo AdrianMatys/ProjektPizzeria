@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\ClientOrdersController;
 use App\Http\Controllers\DisplayMenuController;
@@ -84,6 +85,8 @@ Route::resource('management/admin/statistics', StatisticsController::class)
 Route::get('management/admin/logs', [LogsController::class, 'index'])->name('management.admin.logs.index')
     ->middleware(['auth', 'role:admin']);
 Route::get('management/admin/logs/{log}', [LogsController::class, 'show'])->name('management.admin.logs.show')
+    ->middleware(['auth', 'role:admin']);
+Route::post('management/admin/logout', [AuthenticatedSessionController::class, 'destroy'])->name('management.admin.logout')
     ->middleware(['auth', 'role:admin']);
 
 Route::resource('management/employee/ingredients', IngredientsController::class)

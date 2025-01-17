@@ -39,7 +39,8 @@
     .dropdown:hover .dropbtn {
         background-color: #191919;
     }
-    .menu{
+
+    .menu {
         display: flex;
     }
 </style>
@@ -79,7 +80,7 @@
         </div>
     @endif
 
-    @if(auth()->user() && auth()->user()->isAdmin() )
+    @if(auth()->user() && auth()->user()->isAdmin())
         <div class="dropdown">
             <button class="dropbtn">Administrator</button>
             <div class="dropdown-content">
@@ -99,6 +100,12 @@
             <a href="{{ route('set-locale', ['locale' => 'pl']) }}">Polski</a>
         </div>
     </div>
+    @if(auth()->user() && (auth()->user()->isEmployee() || auth()->user()->isAdmin()))
+        <form action="{{route('management.admin.logout')}}" method="post" class="dropdown" style="padding: 2px;">
+            @csrf
+            <button type="submit" style="height: 53px;background-color: #2b2b2b; color:white; border: 0">Logout</button>
+        </form>
+    @endif
 
 
 </div>
