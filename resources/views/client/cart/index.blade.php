@@ -25,6 +25,7 @@
                         @method('PATCH')
                         <label for="quantity">Quantity</label>
                         <input type="number" min="0" name="quantity" id="quantity" value="{{$cartItem->quantity}}">
+                        <br>
                         <button type="submit">Update quantity</button>
                     </form>
                 </td>
