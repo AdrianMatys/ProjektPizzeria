@@ -41,7 +41,7 @@ class CartController extends Controller
         return view('client.orders.completed', ['cartItems' => $user->cart->items]);
     }
 
-    public function index()
+    public function getJson()
     {
         $cart = Cart::query()
             ->with('items.item')
@@ -53,6 +53,30 @@ class CartController extends Controller
         }
 
         return response()->json(['cart' => $cart]);
+    }
+
+    public function index()
+    {
+        $cart = Cart::query()
+            ->with('items.item')
+            ->where('user_id', auth()->id())
+            ->first();
+
+        if (!$cart || !$cart->items || $cart->items->isEmpty()) {
+            return view('client.cart.index', ['cart' => []]);
+        }
+        return view('client.cart.index', ['cart' => $cart]);
+    }
+    public function destroyItem($cartItemId)
+    {
+        $cartItem = CartItem::query()->find($cartItemId);
+
+        if (!$cartItem) {
+            return redirect()->route('client.cart.index')->with('error', 'Nie udało się usunąć przedmiotu z koszyka');
+        }
+
+        $cartItem->delete();
+        return redirect()->route('client.cart.index')->with('success', 'Produkt został usunięty z koszyka');
     }
 
 }

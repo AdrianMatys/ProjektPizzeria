@@ -34,7 +34,7 @@
     }
     async function updateCart() {
         try{
-            const response = await fetch('cart', {
+            const response = await fetch('cart/json', {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json',
@@ -100,7 +100,7 @@
 <hr>
 <div id="cart"></div>
 
-<form action="{{route('cart.order')}}" method="post">
+<form action="{{route('client.cart.order')}}" method="post">
     @csrf
     <button type="submit">Zamów</button>
 </form>

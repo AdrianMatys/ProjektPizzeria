@@ -154,14 +154,22 @@ Route::patch('orders/{order}/cancel', [ClientOrdersController::class, 'cancelOrd
     ->middleware(['auth'])
     ->name('client.orders.cancelOrder');
 
-
-Route::get('cart', [CartController::class, 'index'])->name('cart.index')
+Route::delete('cart/item/{id}', [CartController::class, 'destroyItem'])
+    ->name('client.cart.destroyitem')
+    ->middleware(['auth']);;
+Route::get('cart/json', [CartController::class, 'getJson'])
+    ->name('client.cart.json')
     ->middleware(['auth']);
-Route::post('cart/order', [CartController::class, 'order'])->name('cart.order')
+Route::get('cart', [CartController::class, 'index'])
+    ->name('client.cart.index')
+    ->middleware(['auth']);
+Route::post('cart/order', [CartController::class, 'order'])
+    ->name('client.cart.order')
     ->can("order", Cart::class)
     ->middleware(['auth']);
 
-Route::post('cart/add', [CartController::class, 'addToCart'])->name('cart.add')
+Route::post('cart/add', [CartController::class, 'addToCart'])
+    ->name('cart.add')
     ->middleware(['auth']);
 
 Route::resource('pizza', PizzaController::class)
