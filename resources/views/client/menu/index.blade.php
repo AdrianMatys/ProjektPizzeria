@@ -44,9 +44,10 @@
             console.log(response)
             if(response.ok){
                 const data = await response.json()
-                console.log('Dane koszyka: ', data)
+                let itemsLength = 0
+                if(data?.cart?.items) itemsLength = data.cart.items.length
                 let cart = document.getElementById('cart')
-                    cart.innerHTML = JSON.stringify(data)
+                    cart.innerHTML =  "W koszyku znajdują się " + itemsLength + " produkty"
             }else{
                 console.log('Wystąpił błąd 1_1')
             }
@@ -54,7 +55,6 @@
             console.error("Wystąpił błąd 2_2: ", error)
         }
     }
-    //addToCart(1, 'pizzas', 1, 10.99)
     updateCart()
 </script>
 <table>
@@ -73,7 +73,6 @@
                 @endforeach
             </td>
             <td>
-                {{--<a href="{{ route('cart.add', $pizza->id) }}">Add</a>--}}
                 @if($pizza->unavailable)
                     unavailable
                 @else
@@ -96,14 +95,8 @@
 </style>
 
 <hr>
-<h1>KOSZYK</h1>
-<hr>
 <div id="cart"></div>
 
-<form action="{{route('client.cart.order')}}" method="post">
-    @csrf
-    <button type="submit">Zamów</button>
-</form>
 
 
 
