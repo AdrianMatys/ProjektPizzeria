@@ -2,11 +2,11 @@
 
 <table>
     <tr>
-        <th>User</th>
-        <th>Category</th>
-        <th>Type</th>
-        <th>Date</th>
-        <th>Details</th>
+        <th>{{__('admin.userName')}}</th>
+        <th>{{__('admin.category')}}</th>
+        <th>{{__('admin.type')}}</th>
+        <th>{{__('admin.date')}}</th>
+        <th>{{__('admin.details')}}</th>
     </tr>
     @foreach($logs as $log)
         <tr>
@@ -15,7 +15,7 @@
             <td>{{ $log->type->name }}</td>
             <td>{{ $log->created_at }}</td>
             <td>
-                <a href="{{route('management.admin.logs.show', $log)}}">Show details</a>
+                <a href="{{route('management.admin.logs.show', $log)}}">{{__('admin.showDetails')}}</a>
             </td>
         </tr>
     @endforeach

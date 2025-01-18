@@ -2,11 +2,11 @@
 
 <table>
     <tr>
-        <th>User</th>
-        <th>Category</th>
-        <th>Type</th>
-        <th>Details</th>
-        <th>Date</th>
+        <th>{{__('admin.userName')}}</th>
+        <th>{{__('admin.category')}}</th>
+        <th>{{__('admin.type')}}</th>
+        <th>{{__('admin.details')}}</th>
+        <th>{{__('admin.date')}}</th>
     </tr>
         <tr>
             <td>{{ $log->user ? $log->user->email : '---' }}</td>

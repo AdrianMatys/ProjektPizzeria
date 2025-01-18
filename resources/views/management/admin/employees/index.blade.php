@@ -3,12 +3,12 @@
 <h1>Employees</h1>
 <table>
     <tr>
-        <th>name</th>
-        <th>email</th>
-        <th>role</th>
-        <th>created at</th>
-        <th>delete</th>
-        <th>force logout</th>
+        <th>{{__('admin.userName')}}</th>
+        <th>{{__('admin.email')}}</th>
+        <th>{{__('admin.role')}}</th>
+        <th>{{__('admin.createdAt')}}</th>
+        <th>{{__('admin.delete')}}</th>
+        <th>{{__('admin.forceLogOut')}}</th>
     </tr>
     @foreach($employees as $employee)
         <tr>
@@ -27,12 +27,12 @@
                 <form action="{{ route('management.admin.employees.forcelogout', $employee) }}" method="post">
                     @csrf
                     @if(Auth::user()->id == $employee->id)
-                        <button type="submit" disabled>Logout</button>
+                        <button type="submit" disabled>{{__('admin.logOut')}}</button>
                     @else
                         @if($employee->isLoggedIn())
-                            <button type="submit">Logout</button>
+                            <button type="submit">{{__('admin.logOut')}}</button>
                         @else
-                            <button type="submit" disabled>Logged out</button>
+                            <button type="submit" disabled>{{__('admin.loggedOut')}}</button>
                         @endif
                     @endif
                 </form>
@@ -43,12 +43,12 @@
 <h1>Users</h1>
 <table>
     <tr>
-        <th>name</th>
-        <th>email</th>
-        <th>role</th>
-        <th>created at</th>
-        <th>delete</th>
-        <th>force logout</th>
+        <th>{{__('admin.userName')}}</th>
+        <th>{{__('admin.email')}}</th>
+        <th>{{__('admin.role')}}</th>
+        <th>{{__('admin.createdAt')}}</th>
+        <th>{{__('admin.delete')}}</th>
+        <th>{{__('admin.forceLogOut')}}</th>
     </tr>
         @foreach($users as $user)
             <tr>
@@ -67,12 +67,12 @@
                     <form action="{{ route('management.admin.employees.forcelogout', $user) }}" method="post">
                         @csrf
                         @if(Auth::user()->id == $user->id)
-                            <button type="submit" disabled>Logout</button>
+                            <button type="submit" disabled>{{__('admin.logOut')}}</button>
                         @else
                             @if($user->isLoggedIn())
-                                <button type="submit">Logout</button>
+                                <button type="submit">{{__('admin.logOut')}}</button>
                             @else
-                                <button type="submit" disabled>Logged out</button>
+                                <button type="submit" disabled>{{__('admin.loggedOut')}}</button>
                             @endif
                         @endif
                     </form>
