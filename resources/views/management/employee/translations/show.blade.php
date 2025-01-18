@@ -1,14 +1,14 @@
 @include('shared.header')
 
-<a href="{{ route('management.employee.translations.index') }}">Back to translations</a>
+<a href="{{ route('management.employee.translations.index') }}">{{__('employee.backToTranslations')}}</a>
 <br><br>
 <table>
     <tr>
-        <th>Ingredient name</th>
-        <th>Translation</th>
-        <th>Language</th>
-        <th>Edit</th>
-        <th>Delete</th>
+        <th>{{__('employee.ingredientName')}}</th>
+        <th>{{__('employee.translatedName')}}</th>
+        <th>{{__('employee.languageCode')}}</th>
+        <th>{{__('employee.edit')}}</th>
+        <th>{{__('employee.delete')}}</th>
     </tr>
     @foreach($translations as $translation)
         <tr>
@@ -22,7 +22,7 @@
                 {{ $translation->language_code }}
             </td>
             <td>
-                <a href="{{route('management.employee.translations.edit', $translation)}}">Edit translation</a>
+                <a href="{{route('management.employee.translations.edit', $translation)}}">{{__('employee.editTranslation')}}</a>
             </td>
             <td>
                 <form action="{{ route('management.employee.translations.destroy', $translation->id) }}" method="post">

@@ -1,4 +1,5 @@
 @include('shared.header')
+<a href="{{ route('management.employee.translations.index') }}">{{__('employee.backToTranslations')}}</a>
 
 <form action="{{ route('management.employee.translations.update', $translation) }}" method="post">
     @csrf
@@ -6,9 +7,9 @@
 
     <table id="ingredientsTable">
         <tr>
-            <th>Ingredient name</th>
-            <th>Language code</th>
-            <th>Name</th>
+            <th>{{__('employee.ingredient')}}</th>
+            <th>{{__('employee.languageCode')}}</th>
+            <th>{{__('employee.translatedName')}}</th>
         </tr>
         <tr>
             <td>
@@ -22,7 +23,7 @@
             </td>
         </tr>
     </table>
-    <button type="submit">Save translation</button>
+    <button type="submit">{{__('employee.saveTranslation')}}</button>
 </form>
 <style>
     table, tr, td, th {
