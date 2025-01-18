@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Zarządzanie Pracownikami Pizzerii</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="icon" href="assets/pizza_icon.png" type="image/x-icon">
+    <style>
+        body {
+            font-family: 'Roboto', Arial, sans-serif;
+            background-color: #FFF8E7;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            margin: 0;
+            padding: 20px;
+        }
+
+        h1 {
+            color: #D32F2F;
+            text-align: center;
+            margin-bottom: 30px;
+            font-weight: bold;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+        }
+
+        footer {
+            margin-top: auto;
+            text-align: center;
+            padding: 20px;
+            background-color: #D32F2F;
+            color: white;
+        }
+        .container {
+            flex: 1;
+        }
+        .employee-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 25px;
+        }
+        .employee-card {
+            background-color: white;
+            border-radius: 12px;
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+            padding: 25px;
+            transition: all 0.3s ease;
+        }
+
+        .employee-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 24px rgba(0, 0, 0, 0.15);
+        }
+        .avatar {
+            width: 100px;
+            height: 100px;
+            margin: 0 auto 20px;
+            background-color: #FFA000;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+        }
+        .employee-card:hover .avatar {
+            transform: scale(1.1);
+        }
+        .avatar i {
+            font-size: 50px;
+            color: #fff;
+        }
+        .employee-name {
+            font-size: 1.3em;
+            font-weight: bold;
+            text-align: center;
+            margin-bottom: 10px;
+            color: #D32F2F;
+        }
+        .employee-position {
+            text-align: center;
+            color: #6c757d;
+            margin-bottom: 20px;
+            font-style: italic;
+        }
+        .employee-actions {
+            display: flex;
+            justify-content: space-around;
+        }
+        .modal-content {
+            background-color: #fefefe;
+            margin: 10% auto;
+            padding: 30px;
+            border: none;
+            border-radius: 15px;
+            width: 90%;
+            max-width: 500px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+        }
+
+        .close {
+            position: absolute;
+            top: -15px;
+            right: -15px;
+            color: #fff;
+            font-size: 24px;
+            font-weight: bold;
+            cursor: pointer;
+            background: #D32F2F;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+            transition: all 0.3s ease;
+        }
+
+        .close:hover,
+        .close:focus {
+            background-color: #B71C1C;
+            transform: scale(1.1);
+        }
+        .employee-details {
+            background-color: #f8f9fa;
+            border-radius: 8px;
+            padding: 20px;
+            margin-top: 20px;
+        }
+        .employee-details p {
+            margin-bottom: 10px;
+            font-size: 16px;
+            line-height: 1.5;
+        }
+        .employee-details strong {
+            color: #D32F2F;
+        }
+        #modalTitle {
+            color: #D32F2F;
+            margin-bottom: 20px;
+        }
+        .btn-primary {
+            background-color: #FFA000;
+            border-color: #FFA000;
+            transition: all 0.3s ease;
+        }
+        .btn-primary:hover {
+            background-color: #FF8F00;
+            border-color: #FF8F00;
+            transform: translateY(-2px);
+        }
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-bottom: 20px;
+            border-bottom: 1px solid #dee2e6;
+            position: relative;
+        }
+
+        .employee-info-line {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+            padding: 10px;
+            background-color: #f1f3f5;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+        }
+        .employee-info-line:hover {
+            background-color: #e9ecef;
+        }
+        #searchInput {
+            border-radius: 20px;
+            border: 2px solid #FFA000;
+            padding: 10px 20px;
+            font-size: 16px;
+            width: 100%;
+            max-width: 400px;
+            transition: all 0.3s ease;
+        }
+        #searchInput:focus {
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(255, 160, 0, 0.25);
+        }
+        #addEmployeeBtn {
+            background-color: #4CAF50;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 20px;
+            font-weight: bold;
+            transition: all 0.3s ease;
+        }
+        #addEmployeeBtn:hover {
+            background-color: #45a049;
+            transform: translateY(-2px);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1><i class="fas fa-pizza-slice me-2"></i>Zarządzanie Pracownikami Pizzerii</h1>
+        
+        <div class="mb-4 d-flex justify-content-between align-items-center">
+            <input type="text" id="searchInput" class="form-control" placeholder="Szukaj pracownika...">
+            <button id="addEmployeeBtn" class="btn btn-success">
+                <i class="fas fa-user-plus me-2"></i>Dodaj Pracownika
+            </button>
+        </div>
+        
+        <div id="employeeGrid" class="employee-grid">
+        </div>
+    </div>
+    
+    <div id="employeeModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 id="modalTitle">Szczegóły Pracownika</h2>
+                <span class="close">&times;</span>
+            </div>
+            <div id="employeeDetails" class="employee-details"></div>
+            <form id="employeeForm" style="display: none;">
+                <div class="mb-3">
+                    <input type="text" class="form-control" id="employeeFirstName" placeholder="Imię" required>
+                </div>
+                <div class="mb-3">
+                    <input type="text" class="form-control" id="employeeLastName" placeholder="Nazwisko" required>
+                </div>
+                <div class="mb-3">
+                    <input type="number" class="form-control" id="employeeBirthYear" placeholder="Rok urodzenia" required>
+                </div>
+                <div class="mb-3">
+                    <input type="tel" class="form-control" id="employeePhone" placeholder="Numer telefonu" required>
+                </div>
+                <div class="mb-3">
+                    <input type="text" class="form-control" id="employeePosition" placeholder="Stanowisko" required>
+                </div>
+                <div class="mb-3">
+                    <input type="number" class="form-control" id="employeeHourlyRate" placeholder="Stawka godzinowa" required>
+                </div>
+                <button type="submit" class="btn btn-primary w-100">Zapisz</button>
+            </form>
+        </div>
+    </div>
+    
+    <footer>
+        © 2024 Pizzeria Pracownicza. Wszystkie prawa zastrzeżone.
+    </footer>
+    
+    <script>
+        let employees = [
+            { id: 1, firstName: 'Jan', lastName: 'Kowalski', birthYear: 1990, phone: '123-456-789', position: 'Kucharz', hourlyRate: 25 },
+            { id: 2, firstName: 'Anna', lastName: 'Nowak', birthYear: 1995, phone: '987-654-321', position: 'Kelnerka', hourlyRate: 20 },
+            { id: 3, firstName: 'Piotr', lastName: 'Wiśniewski', birthYear: 1988, phone: '111-222-333', position: 'Dostawca', hourlyRate: 18 },
+        ];
+
+        function renderEmployees(employeesToRender = employees) {
+            const grid = document.getElementById('employeeGrid');
+            grid.innerHTML = '';
+            employeesToRender.forEach(employee => {
+                let icon = '';
+                switch(employee.position.toLowerCase()) {
+                    case 'kucharz':
+                        icon = 'fa-utensils'; 
+                        break;
+                    case 'kelnerka':
+                    case 'kelner':
+                        icon = 'fa-user-tie'; 
+                        break;
+                    case 'dostawca':
+                        icon = 'fa-motorcycle'; 
+                        break;
+                    default:
+                        icon = 'fa-user';
+                }
+                const card = `
+                    <div class="employee-card">
+                        <div class="avatar">
+                            <i class="fas ${icon}"></i>
+                        </div>
+                        <div class="employee-name">${employee.firstName} ${employee.lastName}</div>
+                        <div class="employee-position">${employee.position}</div>
+                        <div class="employee-actions">
+                            <button class="btn btn-info btn-sm" onclick="showEmployeeDetails(${employee.id})">
+                                <i class="fas fa-info-circle me-1"></i>Szczegóły
+                            </button>
+                            <button class="btn btn-warning btn-sm" onclick="editEmployee(${employee.id})">
+                                <i class="fas fa-edit me-1"></i>Edytuj
+                            </button>
+                            <button class="btn btn-danger btn-sm" onclick="deleteEmployee(${employee.id})">
+                                <i class="fas fa-trash-alt me-1"></i>Usuń
+                            </button>
+                        </div>
+                    </div>
+                `;
+                grid.innerHTML += card;
+            });
+        }
+
+        function showEmployeeDetails(id) {
+            const employee = employees.find(emp => emp.id === id);
+            if (employee) {
+                const modal = document.getElementById('employeeModal');
+                const detailsDiv = document.getElementById('employeeDetails');
+                const form = document.getElementById('employeeForm');
+                const modalTitle = document.getElementById('modalTitle');
+
+                modalTitle.textContent = `${employee.firstName} ${employee.lastName}`;
+                detailsDiv.innerHTML = `
+                    <div class="employee-info-line"><strong>Stanowisko:</strong> ${employee.position}</div>
+                    <div class="employee-info-line"><strong>Urodzony/a w:</strong> ${employee.birthYear} roku</div>
+                    <div class="employee-info-line"><strong>Wiek:</strong> ${new Date().getFullYear() - employee.birthYear} lat</div>
+                    <div class="employee-info-line"><strong>Telefon:</strong> ${employee.phone}</div>
+                    <div class="employee-info-line"><strong>Stawka godzinowa:</strong> ${employee.hourlyRate} złotych</div>
+                `;
+                detailsDiv.style.display = 'block';
+                form.style.display = 'none';
+                modal.style.display = 'block';
+            }
+        }
+
+        function editEmployee(id) {
+            const employee = employees.find(emp => emp.id === id);
+            if (employee) {
+                showEmployeeModal(employee);
+            }
+        }
+
+        function showEmployeeModal(employee = null) {
+            const modal = document.getElementById('employeeModal');
+            const form = document.getElementById('employeeForm');
+            const detailsDiv = document.getElementById('employeeDetails');
+            const modalTitle = document.getElementById('modalTitle');
+
+            if (employee) {
+                modalTitle.textContent = 'Edytuj Pracownika';
+                form.elements.employeeFirstName.value = employee.firstName;
+                form.elements.employeeLastName.value = employee.lastName;
+                form.elements.employeeBirthYear.value = employee.birthYear;
+                form.elements.employeePhone.value = employee.phone;
+                form.elements.employeePosition.value = employee.position;
+                form.elements.employeeHourlyRate.value = employee.hourlyRate;
+                form.dataset.employeeId = employee.id;
+            } else {
+                modalTitle.textContent = 'Dodaj Nowego Pracownika';
+                form.reset();
+                form.dataset.employeeId = '';
+            }
+
+            detailsDiv.style.display = 'none';
+            form.style.display = 'block';
+            modal.style.display = 'block';
+        }
+
+        function hideEmployeeModal() {
+            const modal = document.getElementById('employeeModal');
+            modal.style.display = 'none';
+        }
+
+        function addOrUpdateEmployee(event) {
+            event.preventDefault();
+            const form = event.target;
+            const employeeData = {
+                firstName: form.elements.employeeFirstName.value,
+                lastName: form.elements.employeeLastName.value,
+                birthYear: parseInt(form.elements.employeeBirthYear.value),
+                phone: form.elements.employeePhone.value,
+                position: form.elements.employeePosition.value,
+                hourlyRate: parseFloat(form.elements.employeeHourlyRate.value)
+            };
+
+            if (form.dataset.employeeId) {
+                const index = employees.findIndex(emp => emp.id === parseInt(form.dataset.employeeId));
+                if (index !== -1) {
+                    employees[index] = { ...employees[index], ...employeeData };
+                }
+            } else {
+                const newEmployee = {
+                    id: employees.length + 1,
+                    ...employeeData
+                };
+                employees.push(newEmployee);
+            }
+
+            renderEmployees();
+            hideEmployeeModal();
+        }
+        function deleteEmployee(id) {
+            if (confirm(`Czy na pewno chcesz usunąć tego pracownika?`)) {
+                employees = employees.filter(employee => employee.id !== id);
+                renderEmployees();
+            }
+        }
+        function searchEmployees() {
+            const searchTerm = document.getElementById('searchInput').value.toLowerCase();
+            const filteredEmployees = employees.filter(employee => 
+                employee.firstName.toLowerCase().includes(searchTerm) ||
+                employee.lastName.toLowerCase().includes(searchTerm) ||
+                employee.position.toLowerCase().includes(searchTerm)
+            );
+            renderEmployees(filteredEmployees);
+        }
+        document.getElementById('addEmployeeBtn').addEventListener('click', () => showEmployeeModal());
+        document.getElementById('employeeForm').addEventListener('submit', addOrUpdateEmployee);
+        document.getElementById('searchInput').addEventListener('input', searchEmployees);
+
+        const modal = document.getElementById('employeeModal');
+        const span = document.getElementsByClassName('close')[0];
+
+        span.onclick = hideEmployeeModal;
+        window.onclick = function(event) {
+            if (event.target == modal) {
+                hideEmployeeModal();
+            }
+        }
+        renderEmployees();
+    </script>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

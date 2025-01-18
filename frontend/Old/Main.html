@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pyszna Pizza</title>
+  <style>
+    body, html {
+      margin: 0;
+      padding: 0;
+      height: 100%;
+      font-family: Arial, sans-serif;
+      background-image:url('myImage.gif');
+      background-repeat:repeat;
+    }
+    .main {
+      position: relative;
+      min-height: 100vh;
+    }
+    .content {
+      position: relative;
+      z-index: 10;
+    }
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 1rem;
+      padding-top: 4rem;
+    }
+    .title {
+      font-size: 2.25rem;
+      font-weight: bold;
+      color: #f97316;
+      text-align: center;
+      margin-bottom: 5rem;
+      text-shadow: 2px 2px 4px rgba(110, 108, 108, 0.5);
+    }
+    .card {
+      max-width: 28rem;
+      margin: 0 auto;
+      background-color: rgba(0, 0, 0, 0.7);
+      border-radius: 1.5rem;
+      padding: 2rem;
+      text-align: center;
+      backdrop-filter: blur(4px);
+    }
+    .icon-wrapper {
+      display: flex;
+      justify-content: center;
+      margin-bottom: 1rem;
+    }
+    .icon-bg {
+      background-color: #f97316;
+      padding: 0.75rem;
+      border-radius: 50%;
+    }
+    .icon {
+      width: 32px;
+      height: 32px;
+      color: white;
+    }
+    .card-title {
+      font-size: 1.875rem;
+      font-weight: bold;
+      color: white;
+      margin-bottom: 0.25rem; /* Reduced from 0.5rem */
+    }
+    .card-subtitle {
+      font-size: 1.25rem;
+      color: rgba(255, 255, 255, 0.9);
+      margin-bottom: 1.75rem; /* Increased from 1.5rem to balance the layout */
+    }
+    .button {
+      background-color: #f97316;
+      color: white;
+      padding: 1.5rem 2rem;
+      font-size: 1.125rem;
+      border-radius: 9999px;
+      text-decoration: none;
+      display: inline-block;
+    }
+    .button:hover {
+      background-color: #ea580c;
+    }
+    @media (min-width: 768px) {
+      .title {
+        font-size: 3.75rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="main">
+    <div class="content">
+      <div class="container">
+        <h1 class="title">
+          PYSZNA PIZZA, NIEZAPOMNIANE CHWILE!
+        </h1>
+        
+        <div class="card">
+          <div class="icon-wrapper">
+            <div class="icon-bg">
+              <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon">
+                <path d="M15 11h.01"></path>
+                <path d="M11 15h.01"></path>
+                <path d="M16 16h.01"></path>
+                <path d="m2 16 20 6-6-20A20 20 0 0 0 2 16"></path>
+                <path d="M5.71 17.11a17.04 17.04 0 0 1 11.4-11.4"></path>
+              </svg>
+            </div>
+          </div>
+          <h2 class="card-title">
+            Witamy w Pizzerii
+          </h2>
+          <p class="card-subtitle">
+            Najlepsza w Twoim mieście
+          </p>
+          <a href="#" class="button">
+            Zamów
+          </a>
+        </div>
+      </div>
+    </div>
+  </main>
+</body>
+</html>

@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profil Użytkownika Pizzerii "Smaczna Margherita"</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="icon" type="image/x-icon" href="/assets/pizza_icon.png">
+    <style>
+        body {
+            background: linear-gradient(135deg, #FFF3E0, #FFE0B2);
+            color: #E65100;
+            font-family: 'Poppins', sans-serif;
+        }
+        .profile-header {
+            background: linear-gradient(to right, #FF9800, #FF5722);
+            padding: 40px 0;
+            border-radius: 0 0 50px 50px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        .order-history {
+            margin-top: 30px;
+        }
+        .avatar {
+            width: 180px;
+            height: 180px;
+            border-radius: 50%;
+            background: linear-gradient(45deg, #FFA000, #FF6F00);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 90px;
+            color: #FFFFFF;
+            margin: 0 auto 20px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            box-shadow: 0 0 20px rgba(255,255,255,0.3);
+        }
+        .avatar:hover {
+            transform: scale(1.05) rotate(5deg);
+            box-shadow: 0 0 25px rgba(255,255,255,0.5);
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        .fade-in {
+            animation: fadeIn 1s ease-in;
+        }
+        @keyframes slideIn {
+            from { transform: translateY(20px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+        .slide-in {
+            animation: slideIn 0.5s ease-out;
+        }
+        .btn-primary {
+            background: linear-gradient(to right, #FF9800, #FF5722);
+            border: none;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+        }
+        .btn-primary:hover {
+            background: linear-gradient(to right, #F57C00, #E64A19);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+        }
+        .list-group-item {
+            background-color: rgba(255, 243, 224, 0.7);
+            border-color: #FFB74D;
+            transition: all 0.3s ease;
+        }
+        .list-group-item:hover {
+            background-color: rgba(255, 224, 178, 0.9);
+            transform: translateX(5px);
+        }
+        .table {
+            background-color: rgba(255, 248, 225, 0.7);
+            border-radius: 15px;
+            overflow: hidden;
+        }
+        .table thead {
+            background-color: #FF9800;
+            color: #FFFFFF;
+        }
+        .table tbody tr {
+            transition: all 0.3s ease;
+        }
+        .table tbody tr:hover {
+            background-color: rgba(255, 224, 178, 0.9);
+        }
+        .form-control, .input-group-text {
+            border-color: #FFB74D;
+        }
+        .form-control:focus {
+            border-color: #FF9800;
+            box-shadow: 0 0 0 0.2rem rgba(255, 152, 0, 0.25);
+        }
+        h2 {
+            color: #E65100;
+            border-bottom: 2px solid #FF9800;
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+        }
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0,0,0,0.4);
+        }
+        .modal-content {
+            background: linear-gradient(135deg, #FFF3E0, #FFE0B2);
+            margin: 15% auto;
+            padding: 20px;
+            border: 1px solid #FF9800;
+            width: 90%;
+            max-width: 400px;
+            border-radius: 15px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        .close {
+            position: absolute;
+            top: 10px;
+            right: 15px;
+            color: #E65100;
+            font-size: 24px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: color 0.3s ease;
+            background: none;
+            border: none;
+            padding: 0;
+        }
+        .close:hover,
+        .close:focus {
+            color: #FF5722;
+            text-decoration: none;
+        }
+        .modal-header {
+            position: relative;
+            padding-right: 40px;
+            border-bottom: 2px solid #FF9800;
+            padding-bottom: 10px;
+            margin-bottom: 15px;
+        }
+        .modal-body {
+            max-height: 300px;
+            overflow-y: auto;
+        }
+        .modal-footer {
+            border-top: 2px solid #FF9800;
+            padding-top: 10px;
+            margin-top: 15px;
+            text-align: right;
+        }
+        .order-id {
+            font-size: 0.9em;
+            color: #888;
+        }
+    </style>
+</head>
+<body>
+    <div class="container fade-in">
+        <div class="profile-header text-center text-white">
+            <div class="avatar">
+                <i class="fas fa-pizza-slice"></i>
+            </div>
+            <h1 id="userName" class="slide-in mb-0"><i class="fas fa-pizza-slice me-2"></i><span></span></h1>
+            <p id="userEmail" class="slide-in mb-0"></p>
+        </div>
+
+        <div class="row mt-5">
+            <div class="col-md-6 slide-in">
+                <h2><i class="fas fa-user-edit me-2"></i>Dane Pizzożercy</h2>
+                <form id="profileForm">
+                    <div class="mb-3">
+                        <label for="name" class="form-label">Imię i Nazwisko</label>
+                        <input type="text" class="form-control" id="name" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="email" class="form-label">Email</label>
+                        <input type="email" class="form-control" id="email" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="phone" class="form-label">Telefon</label>
+                        <input type="tel" class="form-control" id="phone">
+                    </div>
+                    <div class="mb-3">
+                        <label for="address" class="form-label">Adres</label>
+                        <textarea class="form-control" id="address" rows="3"></textarea>
+                    </div>
+                    <div class="mb-3">
+                        <label for="favoritePizza" class="form-label">Ulubione Pizze</label>
+                        <div id="favoritePizzasList"></div>
+                        <div class="input-group mb-3">
+                            <input type="text" class="form-control" id="newFavoritePizza" placeholder="Dodaj ulubioną pizzę">
+                            <button class="btn btn-outline-primary" type="button" id="addFavoritePizza">
+                                <i class="fas fa-plus me-1"></i>Dodaj
+                            </button>
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-primary w-100">
+                        <i class="fas fa-save me-2"></i>Aktualizuj Profil
+                    </button>
+                </form>
+            </div>
+            <div class="col-md-6 slide-in">
+                <h2><i class="fas fa-history me-2"></i>Twoje Ostatnie Zamówienia</h2>
+                <ul id="recentOrders" class="list-group">
+                    <li class="list-group-item">
+                        <i class="fas fa-pizza-slice me-2"></i> Margherita - 32 cm
+                    </li>
+                    <li class="list-group-item">
+                        <i class="fas fa-pizza-slice me-2"></i> Pepperoni - 42 cm
+                    </li>
+                    <li class="list-group-item">
+                        <i class="fas fa-pizza-slice me-2"></i> Capricciosa - 32 cm
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="order-history slide-in mt-5">
+            <h2><i class="fas fa-receipt me-2"></i>Twoja Historia Zamówień</h2>
+            <div class="table-responsive">
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th>ID Zamówienia</th>
+                            <th>Data</th>
+                            <th>Suma</th>
+                            <th>Status</th>
+                            <th>Szczegóły</th>
+                        </tr>
+                    </thead>
+                    <tbody id="orderHistory">
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <div id="orderModal" class="modal">
+        <div class="modal-content">
+            <button class="close">&times;</button>
+            <div class="modal-header">
+                <h3>Szczegóły Zamówienia</h3>
+                <p class="order-id">ID zamówienia: <span id="modalOrderId"></span></p>
+            </div>
+            <div class="modal-body">
+                <p><strong>Data:</strong> <span id="modalOrderDate"></span></p>
+                <p><strong>Status:</strong> <span id="modalOrderStatus"></span></p>
+                <h4>Zamówione produkty:</h4>
+                <ul id="modalOrderItems" class="list-group"></ul>
+            </div>
+            <div class="modal-footer">
+                <p><strong>Suma:</strong> <span id="modalOrderTotal"></span></p>
+            </div>
+        </div>
+    </div>
+
+
+    <script>
+        const user = {
+            name: "Jan Kowalski",
+            email: "jan.kowalski@przyklad.pl",
+            phone: "+48 123 456 789",
+            address: "ul. Pizzowa 123, 00-001 Warszawa",
+            favoritePizzas: ["Margherita", "Pepperoni"]
+        };
+
+        const orders = [
+            {
+                id: "ZAM001",
+                date: "2023-06-01",
+                total: "99,99 zł",
+                status: "Dostarczone",
+                items: [
+                    { name: "Margherita", quantity: 2, price: "49,99 zł" },
+                    { name: "Cola", quantity: 1, price: "5,00 zł" }
+                ]
+            },
+            {
+                id: "ZAM002",
+                date: "2023-05-28",
+                total: "129,50 zł",
+                status: "Dostarczone",
+                items: [
+                    { name: "Pepperoni", quantity: 1, price: "59,99 zł" },
+                    { name: "Hawajska", quantity: 1, price: "54,99 zł" },
+                    { name: "Woda", quantity: 2, price: "7,00 zł" }
+                ]
+            },
+            {
+                id: "ZAM003",
+                date: "2023-05-20",
+                total: "69,75 zł",
+                status: "Dostarczone",
+                items: [
+                    { name: "Vegetariana", quantity: 1, price: "54,99 zł" },
+                    { name: "Sok pomarańczowy", quantity: 1, price: "8,00 zł" }
+                ]
+            }
+        ];
+
+        function fillUserInfo() {
+            document.querySelector('#userName span').textContent = user.name;
+            document.getElementById('userEmail').textContent = user.email;
+            document.getElementById('name').value = user.name;
+            document.getElementById('email').value = user.email;
+            document.getElementById('phone').value = user.phone;
+            document.getElementById('address').value = user.address;
+            updateFavoritePizzasList();
+        }
+
+        function updateFavoritePizzasList() {
+            const favoritePizzasList = document.getElementById('favoritePizzasList');
+            favoritePizzasList.innerHTML = '';
+            user.favoritePizzas.forEach((pizza, index) => {
+                const pizzaElement = document.createElement('div');
+                pizzaElement.className = 'input-group mb-2';
+                pizzaElement.innerHTML = `
+                    <input type="text" class="form-control" value="${pizza}" readonly>
+                    <button class="btn btn-outline-danger" type="button" onclick="removeFavoritePizza(${index})">
+                        <i class="fas fa-trash-alt"></i>
+                    </button>
+                `;
+                favoritePizzasList.appendChild(pizzaElement);
+            });
+        }
+
+        function removeFavoritePizza(index) {
+            user.favoritePizzas.splice(index, 1);
+            updateFavoritePizzasList();
+        }
+
+        function fillOrderHistory() {
+            const orderHistoryElement = document.getElementById('orderHistory');
+            orderHistoryElement.innerHTML = ''; 
+            orders.forEach(order => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${order.id}</td>
+                    <td>${order.date}</td>
+                    <td>${order.total}</td>
+                    <td><span class="badge bg-success">${order.status}</span></td>
+                    <td><button class="btn btn-primary btn-sm" onclick="showOrderDetails('${order.id}')">Szczegóły</button></td>
+                `;
+                orderHistoryElement.appendChild(row);
+            });
+        }
+
+        function showOrderDetails(orderId) {
+            const order = orders.find(o => o.id === orderId);
+            if (order) {
+                document.getElementById('modalOrderId').textContent = order.id;
+                document.getElementById('modalOrderDate').textContent = order.date;
+                document.getElementById('modalOrderStatus').textContent = order.status;
+                document.getElementById('modalOrderTotal').textContent = order.total;
+
+                const modalOrderItems = document.getElementById('modalOrderItems');
+                modalOrderItems.innerHTML = '';
+                order.items.forEach(item => {
+                    const li = document.createElement('li');
+                    li.className = 'list-group-item d-flex justify-content-between align-items-center';
+                    li.innerHTML = `
+                        ${item.name}
+                        <span>
+                            <span class="badge bg-primary rounded-pill me-2">${item.quantity}</span>
+                            ${item.price}
+                        </span>
+                    `;
+                    modalOrderItems.appendChild(li);
+                });
+
+                document.getElementById('orderModal').style.display = 'block';
+            }
+        }
+
+        // Закрытие модального окна
+        document.querySelector('.close').onclick = function() {
+            document.getElementById('orderModal').style.display = 'none';
+        }
+
+        window.onclick = function(event) {
+            if (event.target == document.getElementById('orderModal')) {
+                document.getElementById('orderModal').style.display = 'none';
+            }
+        }
+
+
+        document.getElementById('profileForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            user.name = document.getElementById('name').value;
+            user.email = document.getElementById('email').value;
+            user.phone = document.getElementById('phone').value;
+            user.address = document.getElementById('address').value;
+
+            fillUserInfo();
+
+            alert('Profil zaktualizowany pomyślnie!');
+        });
+
+        document.getElementById('addFavoritePizza').addEventListener('click', function() {
+            const newPizza = document.getElementById('newFavoritePizza').value.trim();
+            if (newPizza && !user.favoritePizzas.includes(newPizza)) {
+                user.favoritePizzas.push(newPizza);
+                updateFavoritePizzasList();
+                document.getElementById('newFavoritePizza').value = '';
+            }
+        });
+
+        document.addEventListener('DOMContentLoaded', function() {
+            fillUserInfo();
+            fillOrderHistory();
+        });
+    </script>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+

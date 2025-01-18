@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Efekt topienia przycisku</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f0f0f0;
+        }
+
+        .melting-button {
+            background-color: #ff6347;
+            color: white;
+            padding: 15px 30px;
+            font-size: 18px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.5s ease-in-out;
+        }
+
+        .melting-button:hover {
+            animation: melt 1s forwards;
+        }
+
+        @keyframes melt {
+            0% {
+                transform: scale(1);
+                border-radius: 8px;
+            }
+            50% {
+                transform: scale(1.05) translateY(10px);
+                border-radius: 50%;
+            }
+            100% {
+                transform: scale(1.1) translateY(20px);
+                border-radius: 50% 50% 80% 80%;
+                opacity: 0.9;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<button class="melting-button">Kliknij mnie</button>
+
+</body>
+</html>

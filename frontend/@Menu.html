@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/x-icon" href="/assets/pizza_icon.png">
+    <link rel="stylesheet" href="style.css">
+    <title>Menu</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #FFF5E6;
+            color: #4A4A4A;
+        }
+        .container {
+        display: flex;
+        min-height: 100%;
+        }
+        .sidebar {
+            width: 250px;
+            background-color: #FF9800;
+            padding: 20px;
+            box-shadow: 2px 0 5px rgba(0,0,0,0.1);
+        }
+        .content {
+            flex: 1;
+            padding: 20px;
+        }
+        .filters h2 {
+            color: #FFFFFF;
+            margin-bottom: 20px;
+        }
+        .filter-section {
+            background-color: #FFFFFF;
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.08);
+            margin-bottom: 20px;
+        }
+        .filter-section h3 {
+            margin-top: 0;
+            margin-bottom: 15px;
+            font-size: 1.1em;
+        }
+        .price-sliders {
+            position: relative;
+            height: 30px;
+            margin: 15px 0;
+        }
+        .price-slider-wrapper {
+            position: absolute;
+            width: 100%;
+        }
+        .price-display {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 10px;
+        }
+        .price-slider {
+            position: absolute;
+            width: 100%;
+            pointer-events: none;
+        }
+        .price-slider::-webkit-slider-thumb {
+            pointer-events: auto;
+        }
+        .price-box {
+            background-color: #FFA726;
+            color: #FFFFFF;
+            padding: 8px 12px;
+            border-radius: 6px;
+            font-weight: 500;
+        }
+        .checkbox-group {
+            display: flex;
+            flex-direction: column;
+        }
+        .checkbox-item {
+            margin-bottom: 10px;
+        }
+        .checkbox-item label {
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+        }
+        .checkbox-item input[type="checkbox"] {
+            margin-right: 10px;
+        }
+        .products {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 20px;
+        }
+        .product {
+            background-color: #FFFFFF;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.08);
+            transition: all 0.3s ease;
+        }
+        .product:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 15px rgba(0,0,0,0.1);
+        }
+        .product a {
+            text-decoration: none;
+            color: inherit;
+        }
+        .product img {
+            width: 100%;
+            height: 180px;
+            object-fit: cover;
+            border-bottom: 1px solid #f0f0f0;
+        }
+        .product-info {
+            padding: 20px;
+        }
+        .product-title {
+            font-size: 1.1em;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+        .product-description {
+            font-size: 0.9em;
+            color: #666;
+            margin-bottom: 15px;
+            line-height: 1.4;
+        }
+        .product-price {
+            font-weight: 600;
+            color: #FF5722;
+            font-size: 1.2em;
+        }
+        .no-products-message {
+            grid-column: 1 / -1;
+            text-align: center;
+            padding: 20px;
+            background-color: #FFFFFF;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            font-size: 1.2em;
+            color: #FF5722;
+        }
+    </style>
+</head>
+<body>
+    <div id="header-placeholder"></div>
+    <div class="container">
+        <div class="sidebar">
+            <div class="filters">
+                <h2>FILTRY</h2>
+                <div class="filter-section">
+                    <h3>CENA</h3>
+                    <div class="price-sliders">
+                        <div class="price-slider-wrapper">
+                            <input type="range" id="minPriceSlider" class="price-slider" min="0" max="100" value="0">
+                        </div>
+                        <div class="price-slider-wrapper">
+                            <input type="range" id="maxPriceSlider" class="price-slider" min="0" max="100" value="100">
+                        </div>
+                    </div>
+                    <div class="price-display">
+                        <div class="price-box" id="minPrice">0 zł</div>
+                        <div class="price-box" id="maxPrice">100 zł</div>
+                    </div>
+                </div>
+                <div class="filter-section">
+                    <h3>ROZMIAR</h3>
+                    <div class="checkbox-group" id="sizeFilter">
+                        <div class="checkbox-item">
+                            <label><input type="checkbox" value="small" checked> Mała</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <label><input type="checkbox" value="medium" checked> Średnia</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <label><input type="checkbox" value="large" checked> Duża</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="filter-section">
+                    <h3>TYP CIASTA</h3>
+                    <div class="checkbox-group" id="crustFilter">
+                        <div class="checkbox-item">
+                            <label><input type="checkbox" value="thin" checked> Cienkie</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <label><input type="checkbox" value="thick" checked> Grube</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <label><input type="checkbox" value="stuffed" checked> Nadziewane</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="filter-section">
+                    <h3>DOSTAWA</h3>
+                    <div class="checkbox-group" id="deliveryFilter">
+                        <div class="checkbox-item">
+                            <label><input type="checkbox" value="delivery" checked> Dostawa</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <label><input type="checkbox" value="pickup" checked> Odbiór osobisty</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="content">
+            <div class="products" id="productContainer">
+                <!-- Produkty będą dodawane dynamicznie przez JavaScript -->
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function loadHeader() {
+    fetch('/components/Header2.html')
+        .then(response => response.text())
+        .then(data => {
+            // Wyodrębniamy tylko zawartość body
+            const tempDiv = document.createElement('div');
+            tempDiv.innerHTML = data;
+            const headerContent = tempDiv.querySelector('header').outerHTML;
+            const headerStyles = tempDiv.querySelector('style').outerHTML;
+            
+            // Wstawiamy style i zawartość headera
+            document.head.insertAdjacentHTML('beforeend', headerStyles);
+            document.getElementById('header-placeholder').innerHTML = headerContent;
+        })
+        .catch(error => console.error('Błąd ładowania nagłówka:', error));
+} 
+
+        const products = [
+            { title: "Margherita", description: "Sos pomidorowy, mozzarella, bazylia", price: 25, image: "https://via.placeholder.com/200x200.png?text=Margherita", size: "medium", crust: "thin", delivery: ["delivery", "pickup"] },
+            { title: "Pepperoni", description: "Sos pomidorowy, mozzarella, pepperoni", price: 30, image: "https://via.placeholder.com/200x200.png?text=Pepperoni", size: "large", crust: "thick", delivery: ["delivery"] },
+            { title: "Vegetariana", description: "Sos pomidorowy, mozzarella, warzywa", price: 28, image: "https://via.placeholder.com/200x200.png?text=Vegetariana", size: "medium", crust: "thin", delivery: ["delivery", "pickup"] },
+            { title: "Quattro Formaggi", description: "Cztery rodzaje sera", price: 32, image: "https://via.placeholder.com/200x200.png?text=Quattro+Formaggi", size: "large", crust: "stuffed", delivery: ["pickup"] },
+            { title: "Hawajska", description: "Sos pomidorowy, mozzarella, szynka, ananas", price: 29, image: "https://via.placeholder.com/200x200.png?text=Hawajska", size: "small", crust: "thin", delivery: ["delivery", "pickup"] },
+            { title: "Diavola", description: "Sos pomidorowy, mozzarella, ostre salami", price: 31, image: "https://via.placeholder.com/200x200.png?text=Diavola", size: "medium", crust: "thick", delivery: ["delivery"] }
+        ];
+
+        const productContainer = document.getElementById('productContainer');
+        const minPriceSlider = document.getElementById('minPriceSlider');
+        const maxPriceSlider = document.getElementById('maxPriceSlider');
+        const minPriceDisplay = document.getElementById('minPrice');
+        const maxPriceDisplay = document.getElementById('maxPrice');
+        const sizeFilter = document.getElementById('sizeFilter');
+        const crustFilter = document.getElementById('crustFilter');
+        const deliveryFilter = document.getElementById('deliveryFilter');
+
+        function renderProducts() {
+            const minPrice = parseInt(minPriceSlider.value);
+            const maxPrice = parseInt(maxPriceSlider.value);
+            const selectedSizes = Array.from(sizeFilter.querySelectorAll('input:checked')).map(input => input.value);
+            const selectedCrusts = Array.from(crustFilter.querySelectorAll('input:checked')).map(input => input.value);
+            const selectedDelivery = Array.from(deliveryFilter.querySelectorAll('input:checked')).map(input => input.value);
+
+            productContainer.innerHTML = '';
+            let productsFound = false;
+
+            products.forEach(product => {
+                if (product.price >= minPrice && product.price <= maxPrice &&
+                    selectedSizes.includes(product.size) &&
+                    selectedCrusts.includes(product.crust) &&
+                    product.delivery.some(d => selectedDelivery.includes(d))) {
+                    productsFound = true;
+                    const productElement = document.createElement('div');
+                    productElement.className = 'product';
+                    productElement.innerHTML = `
+                        <a href="#">
+                            <img src="${product.image}" alt="${product.title}">
+                            <div class="product-info">
+                                <div class="product-title">${product.title}</div>
+                                <div class="product-description">${product.description}</div>
+                                <div class="product-price">${product.price} zł</div>
+                            </div>
+                        </a>
+                    `;
+                    productContainer.appendChild(productElement);
+                }
+            });
+
+            if (!productsFound) {
+                const noProductsMessage = document.createElement('div');
+                noProductsMessage.className = 'no-products-message';
+                noProductsMessage.textContent = 'Brak pizz spełniających wybrane kryteria.';
+                productContainer.appendChild(noProductsMessage);
+            }
+        }
+
+        // Kontrola suwaków ceny
+        minPriceSlider.addEventListener('input', function() {
+            const minVal = parseInt(minPriceSlider.value);
+            const maxVal = parseInt(maxPriceSlider.value);
+            
+            if (minVal > maxVal) {
+                minPriceSlider.value = maxVal;
+                return;
+            }
+            
+            minPriceDisplay.textContent = `${minVal} zł`;
+            renderProducts();
+        });
+
+        maxPriceSlider.addEventListener('input', function() {
+            const minVal = parseInt(minPriceSlider.value);
+            const maxVal = parseInt(maxPriceSlider.value);
+            
+            if (maxVal < minVal) {
+                maxPriceSlider.value = minVal;
+                return;
+            }
+            
+            maxPriceDisplay.textContent = `${maxVal} zł`;
+            renderProducts();
+        });
+
+        // Nasłuchiwanie zmian w filtrach
+        sizeFilter.addEventListener('change', renderProducts);
+        crustFilter.addEventListener('change', renderProducts);
+        deliveryFilter.addEventListener('change', renderProducts);
+
+        
+        renderProducts();
+        document.addEventListener('DOMContentLoaded', loadHeader);
+    </script>
+</body>
+</html>
+
