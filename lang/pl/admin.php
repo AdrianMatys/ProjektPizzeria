@@ -55,5 +55,10 @@ return [
 
     'employeesManagement' => 'Zarządzanie Pracownikami',
     'employees' => 'Pracownicy',
-    'users' => 'Użytkownicy'
+    'users' => 'Użytkownicy',
+    'changeRole' => 'Zmień role',
+    'administrator' => 'Administrator',
+    'employee' => 'Pracownik',
+    'user' => 'Użytkownik',
+    'userRoleUpdated' => 'Rola użytkownika została zaktualizowana',
 ];

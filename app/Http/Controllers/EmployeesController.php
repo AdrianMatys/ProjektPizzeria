@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Actions\Logs\LogDismissalEmployeeAction;
+use App\Http\Requests\UpdateUserRoleRequest;
 use App\Models\User;
 use Illuminate\Http\Request;
 
@@ -30,8 +31,17 @@ class EmployeesController extends Controller
         $user->delete();
         return redirect()->route('management.admin.employees.index')->with('success', __('admin.userDeleted'));
     }
+
     public function forceLogout(User $user){
         $user->forceLogout();
         return redirect()->back()->with('success', __('admin.userLoggedOut'));
+    }
+
+    public function changeRole(UpdateUserRoleRequest $request, User $user)
+    {
+        $validated = $request->validated();
+        $user->role = $validated['role'];
+        $user->save();
+        return redirect()->route('management.admin.employees.index')->with('success', __('admin.userRoleUpdated'));
     }
 }

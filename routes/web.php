@@ -74,6 +74,9 @@ Route::resource('management/admin/employees', EmployeesController::class)
 Route::post('management/admin/employees/{user}/forcelogout', [EmployeesController::class, 'forcelogout'])
     ->name('management.admin.employees.forcelogout')
     ->middleware(['auth', 'role:admin']);
+Route::post('management/admin/employees/{user}/changeRole', [EmployeesController::class, 'changeRole'])
+    ->name('management.admin.employees.changeRole')
+    ->middleware(['auth', 'role:admin']);
 
 Route::resource('management/admin/statistics', StatisticsController::class)
     ->only(['index'])

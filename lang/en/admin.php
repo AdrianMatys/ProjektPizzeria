@@ -56,4 +56,9 @@ return [
     'employeesManagement' =>'Employees Management',
     'employees' => 'Employees',
     'users' => 'Users',
+    'changeRole' => 'Change Role',
+    'administrator' => 'Administrator',
+    'employee' => 'Employee',
+    'user' => 'User',
+    'userRoleUpdated' => 'User role has been updated',
 ];
