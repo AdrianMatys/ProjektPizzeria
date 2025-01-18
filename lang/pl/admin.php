@@ -52,6 +52,8 @@ return [
 
     'token' => 'Token',
     'addNewUser' => 'Dodaj nowego użytkownika',
+
+    'employeesManagement' => 'Zarządzanie Pracownikami',
     'employees' => 'Pracownicy',
-    'users' => 'Użytkownicy',
+    'users' => 'Użytkownicy'
 ];
