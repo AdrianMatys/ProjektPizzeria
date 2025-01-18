@@ -1,9 +1,10 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Client;
 
 use App\Actions\Carts\CreateCustomPizzaAction;
 use App\Actions\Carts\CreateEditedPizzaAction;
+use App\Http\Controllers\Controller;
 use App\Http\Requests\ClientModifyPizzaRequest;
 use App\Http\Requests\UpdatePizzaRequest;
 use App\Models\Cart;
@@ -51,14 +52,14 @@ class PizzaController extends Controller
         $user_id = $request->user()->id;
 
         if (!$user_id) {
-            return response()->json(['error' => 'Nie znaleziono użytkownika. Upewnij się, że jesteś zalogowany.'], 401);
+            return response()->json(['error' => __('client.userNotFound')], 401);
         }
 
         $validated = $request->validated();
         $newIngredients = $validated['ingredient'];
         $createCustomPizzaAction->execute($newIngredients);
 
-        return redirect()->route('client.menu.index')->with('success', 'Dodano do koszyka własną pizze');
+        return redirect()->route('client.menu.index')->with('success', __('client.addedCustomPizza'));
     }
 
     public function update(ClientModifyPizzaRequest $request, Pizza $pizza, CreateEditedPizzaAction $createEditedPizzaAction)
@@ -66,14 +67,14 @@ class PizzaController extends Controller
         $user_id = $request->user()->id;
 
         if (!$user_id) {
-            return response()->json(['error' => 'Nie znaleziono użytkownika. Upewnij się, że jesteś zalogowany.'], 401);
+            return response()->json(['error' => __('client.userNotFound')], 401);
         }
         $validated = $request->validated();
         $newIngredients = $validated['ingredient'];
 
         $createEditedPizzaAction->execute($newIngredients, $pizza);
 
-        return redirect()->route('client.menu.index')->with('success', 'Dodano do koszyka zmodyfikowaną pizze');
+        return redirect()->route('client.menu.index')->with('success', __('client.addedEditedPizza'));
     }
 
 }

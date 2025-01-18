@@ -20,49 +20,46 @@
                     price: price,
                 }),
             })
-            console.log(response)
             if(response.ok){
                 const data = await response.json()
-                console.log('Dodano do koszyka: ', data)
                 updateCart(data)
             }else{
-                console.log('Wystąpił błąd 1', response)
+                console.log('error 1', response)
             }
         }catch (error){
-            console.error("Wystąpił błąd 2: ", error)
+            console.error("error 2: ", error)
         }
     }
     async function updateCart() {
         try{
-            const response = await fetch('cart', {
+            const response = await fetch('cart/json', {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json',
                     'Authorization': 'Bearer ' + localStorage.getItem('token')
                 },
             })
-            console.log(response)
             if(response.ok){
                 const data = await response.json()
-                console.log('Dane koszyka: ', data)
+                let itemsLength = 0
+                if(data?.cart?.items) itemsLength = data.cart.items.length
                 let cart = document.getElementById('cart')
-                    cart.innerHTML = JSON.stringify(data)
+                    cart.innerHTML =  itemsLength + " {{__('client.productsInCart')}}"
             }else{
-                console.log('Wystąpił błąd 1_1')
+                console.log('Error 1.1')
             }
         }catch (error){
-            console.error("Wystąpił błąd 2_2: ", error)
+            console.error("error 2.2: ", error)
         }
     }
-    //addToCart(1, 'pizzas', 1, 10.99)
     updateCart()
 </script>
 <table>
     <tr>
-        <th>name</th>
-        <th>ingredients</th>
-        <th>Add to cart</th>
-        <th>Modify Pizza</th>
+        <th>{{__('client.name')}}</th>
+        <th>{{__('client.ingredients')}}</th>
+        <th>{{__('client.addToCart')}}</th>
+        <th>{{__('client.modifyPizza')}}</th>
     </tr>
     @foreach($pizzas as $pizza)
         <tr>
@@ -73,21 +70,20 @@
                 @endforeach
             </td>
             <td>
-                {{--<a href="{{ route('cart.add', $pizza->id) }}">Add</a>--}}
                 @if($pizza->unavailable)
-                    unavailable
+                    {{__('client.unavailable')}}
                 @else
-                    <input type="button" value="Add" onclick="addToCart({{$pizza->id}}, 'Pizza', 1, 10.99)">
+                    <input type="button" value="{{__('client.add')}}" onclick="addToCart({{$pizza->id}}, 'Pizza', 1, 10.99)">
                 @endif
             </td>
             <td>
-                <a href={{ route("client.pizza.edit", $pizza) }}>Modify</a>
+                <a href={{ route("client.pizza.edit", $pizza) }}>{{__('client.modify')}}</a>
             </td>
         </tr>
     @endforeach
 </table>
 
-<a href={{ route("client.pizza.create", $pizza) }}>Custom pizza</a>
+<a href={{ route("client.pizza.create", $pizza) }}>{{__('client.createCustomPizza')}}</a>
 <style>
     table, tr, td, th{
         border:1px solid black;
@@ -96,14 +92,8 @@
 </style>
 
 <hr>
-<h1>KOSZYK</h1>
-<hr>
 <div id="cart"></div>
 
-<form action="{{route('cart.order')}}" method="post">
-    @csrf
-    <button type="submit">Zamów</button>
-</form>
 
 
 

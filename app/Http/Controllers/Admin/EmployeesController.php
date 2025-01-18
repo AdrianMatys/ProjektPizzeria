@@ -1,8 +1,10 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
 use App\Actions\Logs\LogDismissalEmployeeAction;
+use App\Http\Controllers\Controller;
+use App\Http\Requests\UpdateUserRoleRequest;
 use App\Models\User;
 use Illuminate\Http\Request;
 
@@ -21,17 +23,26 @@ class EmployeesController extends Controller
         $user = User::find($id);
 
         if (!$user) {
-            return redirect()->route('management.admin.employees.index')->with('error',
-                'Nie udało się usunąć użytkownika');
+            return redirect()->route('management.admin.employees.index')
+                ->with('error', __('admin.failedDeleteUser'));
         }
 
         $logDismissalEmployeeAction->execute(auth()->id(), ['email' => $user->email]);
 
         $user->delete();
-        return redirect()->route('management.admin.employees.index')->with('success', 'Użytkownik został usunięty');
+        return redirect()->route('management.admin.employees.index')->with('success', __('admin.userDeleted'));
     }
+
     public function forceLogout(User $user){
         $user->forceLogout();
-        return redirect()->back()->with('success', "Użytkownik został wylogowany");
+        return redirect()->back()->with('success', __('admin.userLoggedOut'));
+    }
+
+    public function changeRole(UpdateUserRoleRequest $request, User $user)
+    {
+        $validated = $request->validated();
+        $user->role = $validated['role'];
+        $user->save();
+        return redirect()->route('management.admin.employees.index')->with('success', __('admin.userRoleUpdated'));
     }
 }

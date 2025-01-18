@@ -1,5 +1,6 @@
 @include('shared.header')
 
-Twoje zamówienie zostało złożone!
+<h1>
+    {{__('client.orderPlaced')}}
+</h1>
 <br>
-{{$cartItems}}

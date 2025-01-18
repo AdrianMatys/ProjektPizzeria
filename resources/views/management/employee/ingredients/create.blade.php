@@ -2,9 +2,10 @@
 
 <table>
     <tr>
-        <th>name</th>
-        <th>quantity</th>
-        <th>unit</th>
+        <th>{{__('employee.ingredientName')}}</th>
+        <th>{{__('employee.ingredientQuantity')}}</th>
+        <th>{{__('employee.unit')}}</th>
+        <th>{{__('employee.add')}}</th>
     </tr>
     <tr>
         <form action="{{ route('management.employee.ingredients.store', $ingredient) }}" method="post">
@@ -16,7 +17,7 @@
                     <option value="g">g</option>
                 </select>
             <td>
-                <button type="submit">Add</button>
+                <button type="submit">{{__('employee.addButton')}}</button>
             </td>
         </form>
     </tr>

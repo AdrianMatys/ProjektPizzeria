@@ -1,10 +1,10 @@
 @include('shared.header')
 
-<h1>DZIENNE ZUŻYCIE SKŁADNIKÓW</h1>
+<h1>{{__('admin.dailyIngredientUsage')}}</h1>
 <table>
     <tr>
-        <th>name</th>
-        <th>quantity</th>
+        <th>{{__('admin.name')}}</th>
+        <th>{{__('admin.quantity')}}</th>
     </tr>
     @foreach($dailyStatistics['ingredients'] as $name => $quantity)
         <tr>
@@ -13,11 +13,11 @@
         </tr>
     @endforeach
 </table>
-<h1>DZIENNE ZAMÓWIENIA PIZZY</h1>
+<h1>{{__('admin.dailyPizzaOrders')}}</h1>
 <table>
     <tr>
-        <th>name</th>
-        <th>quantity</th>
+        <th>{{__('admin.name')}}</th>
+        <th>{{__('admin.quantity')}}</th>
     </tr>
     @foreach($dailyStatistics['pizzas'] as $name => $quantity)
         <tr>
@@ -26,21 +26,21 @@
         </tr>
     @endforeach
     <tr>
-        <td>EditedPizza</td>
+        <td>{{__('admin.editedPizza')}}</td>
         <td>{{$dailyStatistics['products']['EditedPizza'] ?? 0}}</td>
     </tr>
     <tr>
-        <td>CustomPizza</td>
+        <td>{{__('admin.customPizza')}}</td>
         <td>{{$dailyStatistics['products']['CustomPizza'] ?? 0}}</td>
     </tr>
 </table>
 
 
-<h1>TYGODNIOWE ZUŻYCIE SKŁADNIKÓW</h1>
+<h1>{{__('admin.weeklyIngredientUsage')}}</h1>
 <table>
     <tr>
-        <th>name</th>
-        <th>quantity</th>
+        <th>{{__('admin.name')}}</th>
+        <th>{{__('admin.quantity')}}</th>
     </tr>
     @foreach($weeklyStatistics['ingredients'] as $name => $quantity)
         <tr>
@@ -50,11 +50,11 @@
     @endforeach
 </table>
 
-<h1>TYGODNIOWE ZAMÓWIENIA PIZZY</h1>
+<h1>{{__('admin.weeklyPizzaOrders')}}</h1>
 <table>
     <tr>
-        <th>name</th>
-        <th>quantity</th>
+        <th>{{__('admin.name')}}</th>
+        <th>{{__('admin.quantity')}}</th>
     </tr>
     @foreach($weeklyStatistics['pizzas'] as $name => $quantity)
         <tr>
@@ -63,21 +63,21 @@
         </tr>
     @endforeach
     <tr>
-        <td>EditedPizza</td>
+        <td>{{__('admin.editedPizza')}}</td>
         <td>{{$weeklyStatistics['products']['EditedPizza'] ?? 0}}</td>
     </tr>
     <tr>
-        <td>CustomPizza</td>
+        <td>{{__('admin.customPizza')}}</td>
         <td>{{$weeklyStatistics['products']['CustomPizza'] ?? 0}}</td>
     </tr>
 </table>
 
 
-<h1>MIESIĘCZNE ZUŻYCIE SKŁADNIKÓW</h1>
+<h1>{{__('admin.monthlyIngredientUsage')}}</h1>
 <table>
     <tr>
-        <th>name</th>
-        <th>quantity</th>
+        <th>{{__('admin.name')}}</th>
+        <th>{{__('admin.quantity')}}</th>
     </tr>
     @foreach($monthlyStatistics['ingredients'] as $name => $quantity)
         <tr>
@@ -86,11 +86,11 @@
         </tr>
     @endforeach
 </table>
-<h1>MIESIĘCZNE ZAMÓWIENIA PIZZY</h1>
+<h1>{{__('admin.monthlyPizzaOrders')}}</h1>
 <table>
     <tr>
-        <th>name</th>
-        <th>quantity</th>
+        <th>{{__('admin.name')}}</th>
+        <th>{{__('admin.quantity')}}</th>
     </tr>
     @foreach($monthlyStatistics['pizzas'] as $name => $quantity)
         <tr>
@@ -99,11 +99,11 @@
         </tr>
     @endforeach
     <tr>
-        <td>EditedPizza</td>
+        <td>{{__('admin.editedPizza')}}</td>
         <td>{{$monthlyStatistics['products']['EditedPizza'] ?? 0}}</td>
     </tr>
     <tr>
-        <td>CustomPizza</td>
+        <td>{{__('admin.customPizza')}}</td>
         <td>{{$monthlyStatistics['products']['CustomPizza'] ?? 0}}</td>
     </tr>
 </table>

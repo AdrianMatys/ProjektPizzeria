@@ -49,52 +49,51 @@
 
     @if(auth()->user())
         <div class="dropdown">
-            <button class="dropbtn">Client</button>
+            <button class="dropbtn">{{__('navbar.client')}}</button>
             <div class="dropdown-content">
-                <a href="{{route('cart.index')}}">Cart</a>
-                <a href="{{route('client.menu.index')}}">Menu</a>
-                <a href="{{route('client.orders.index')}}">Orders</a>
-                <a href="{{route('profile.edit')}}">Profile</a>
+                <a href="{{route('client.cart.index')}}">{{__('navbar.cart')}}</a>
+                <a href="{{route('client.menu.index')}}">{{__('navbar.menu')}}</a>
+                <a href="{{route('client.orders.index')}}">{{__('navbar.orders')}}</a>
             </div>
         </div>
     @else
         <div class="dropdown">
-            <button class="dropbtn">Client</button>
+            <button class="dropbtn">{{__('navbar.client')}}</button>
             <div class="dropdown-content">
-                <a href="{{route('client.menu.index')}}">Menu</a>
-                <a href="{{route('login')}}">Login</a>
-                <a href="{{route('register')}}">Register</a>
+                <a href="{{route('client.menu.index')}}">{{__('navbar.menu')}}</a>
+                <a href="{{route('login')}}">{{__('navbar.login')}}</a>
+                <a href="{{route('register')}}">{{__('navbar.register')}}</a>
             </div>
         </div>
     @endif
 
     @if(auth()->user() && (auth()->user()->isEmployee() || auth()->user()->isAdmin()) )
         <div class="dropdown">
-            <button class="dropbtn">Employee</button>
+            <button class="dropbtn">{{__('navbar.employee')}}</button>
             <div class="dropdown-content">
-                <a href="{{route('management.employee.ingredients.index')}}">Ingredients</a>
-                <a href="{{route('management.employee.orders.index')}}">Orders</a>
-                <a href="{{route('management.employee.pizzas.index')}}">Pizzas</a>
-                <a href="{{route('management.employee.translations.index')}}">Translations</a>
+                <a href="{{route('management.employee.ingredients.index')}}">{{__('navbar.ingredients')}}</a>
+                <a href="{{route('management.employee.orders.index')}}">{{__('navbar.orders')}}</a>
+                <a href="{{route('management.employee.pizzas.index')}}">{{__('navbar.pizzas')}}</a>
+                <a href="{{route('management.employee.translations.index')}}">{{__('navbar.translations')}}</a>
             </div>
         </div>
     @endif
 
     @if(auth()->user() && auth()->user()->isAdmin())
         <div class="dropdown">
-            <button class="dropbtn">Administrator</button>
+            <button class="dropbtn">{{__('navbar.administrator')}}</button>
             <div class="dropdown-content">
-                <a href="{{route('management.admin.employees.index')}}">Employees</a>
-                <a href="{{route('management.admin.logs.index')}}">Logs</a>
-                <a href="{{route('management.admin.pizzeria.index')}}">Pizzeria</a>
-                <a href="{{route('management.admin.statistics.index')}}">Statistics</a>
-                <a href="{{route('management.admin.tokens.index')}}">Tokens</a>
+                <a href="{{route('management.admin.employees.index')}}">{{__('navbar.employees')}}</a>
+                <a href="{{route('management.admin.logs.index')}}">{{__('navbar.logs')}}</a>
+                <a href="{{route('management.admin.pizzeria.index')}}">{{__('navbar.pizzeria')}}</a>
+                <a href="{{route('management.admin.statistics.index')}}">{{__('navbar.statistics')}}</a>
+                <a href="{{route('management.admin.tokens.index')}}">{{__('navbar.tokens')}}</a>
             </div>
         </div>
     @endif
 
     <div class="dropdown">
-        <button class="dropbtn">Language</button>
+        <button class="dropbtn">{{__('navbar.languages')}}</button>
         <div class="dropdown-content">
             <a href="{{ route('set-locale', ['locale' => 'en']) }}">English</a>
             <a href="{{ route('set-locale', ['locale' => 'pl']) }}">Polski</a>
@@ -103,7 +102,7 @@
     @if(auth()->user() && (auth()->user()->isEmployee() || auth()->user()->isAdmin()))
         <form action="{{route('management.admin.logout')}}" method="post" class="dropdown" style="padding: 2px;">
             @csrf
-            <button type="submit" style="height: 53px;background-color: #2b2b2b; color:white; border: 0">Logout</button>
+            <button type="submit" style="height: 53px;background-color: #2b2b2b; color:white; border: 0">{{__('navbar.logout')}}</button>
         </form>
     @endif
 

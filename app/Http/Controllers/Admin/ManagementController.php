@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
 use App\Actions\Logs\LogUpdatePizzeriaAction;
 use App\Http\Controllers\Controller;
@@ -30,6 +30,7 @@ class ManagementController extends Controller
 
         $logUpdatePizzeriaAction->execute(auth()->id(), ['pizzeria' => $validated]);
 
-        return redirect()->route('management.admin.pizzeria.index')->with('success', 'Zaktualizowano dane pizzerii');
+        return redirect()->route('management.admin.pizzeria.index')
+            ->with('success', __('admin.pizzeriaInfoUpdate'));
     }
 }

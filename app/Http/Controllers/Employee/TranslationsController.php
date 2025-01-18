@@ -1,10 +1,11 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Employee;
 
 use App\Actions\Logs\LogCreateTranslationAction;
 use App\Actions\Logs\LogDeleteTranslationAction;
 use App\Actions\Logs\LogUpdateTranslationAction;
+use App\Http\Controllers\Controller;
 use App\Http\Requests\CreateTranslationRequest;
 use App\Http\Requests\UpdateTranslationRequest;
 use App\Models\Ingredient;

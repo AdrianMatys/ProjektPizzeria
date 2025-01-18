@@ -2,10 +2,10 @@
 
 <table>
     <tr>
-        <th>email</th>
-        <th>token</th>
-        <th>created at</th>
-        <th>Usuń</th>
+        <th>{{__('admin.email')}}</th>
+        <th>{{__('admin.token')}}</th>
+        <th>{{__('admin.createdAt')}}</th>
+        <th>{{__('admin.delete')}}</th>
     @foreach ($tokens as $token)
         <tr>
             <td>{{ $token->email  }}</td>
@@ -21,7 +21,7 @@
         </tr>
     @endforeach
 </table>
-<a href="{{ route('management.admin.tokens.create') }}">Dodaj nowego pracownika</a>
+<a href="{{ route('management.admin.tokens.create') }}">{{__('admin.addNewUser')}}}</a>
 
 
 <style>

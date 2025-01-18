@@ -1,20 +1,20 @@
 <?php
 
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
-use App\Http\Controllers\CartController;
-use App\Http\Controllers\ClientOrdersController;
-use App\Http\Controllers\DisplayMenuController;
-use App\Http\Controllers\EmployeesController;
-use App\Http\Controllers\IngredientsController;
-use App\Http\Controllers\LogsController;
-use App\Http\Controllers\ManagementController;
-use App\Http\Controllers\ManageOrdersController;
-use App\Http\Controllers\PizzaController;
-use App\Http\Controllers\PizzasController;
+use App\Http\Controllers\Client\CartController;
+use App\Http\Controllers\Client\ClientOrdersController;
+use App\Http\Controllers\Client\DisplayMenuController;
+use App\Http\Controllers\Admin\EmployeesController;
+use App\Http\Controllers\Employee\IngredientsController;
+use App\Http\Controllers\Admin\LogsController;
+use App\Http\Controllers\Admin\ManagementController;
+use App\Http\Controllers\Employee\ManageOrdersController;
+use App\Http\Controllers\Client\PizzaController;
+use App\Http\Controllers\Employee\PizzasController;
 use App\Http\Controllers\ProfileController;
-use App\Http\Controllers\StatisticsController;
-use App\Http\Controllers\TokensController;
-use App\Http\Controllers\TranslationsController;
+use App\Http\Controllers\Admin\StatisticsController;
+use App\Http\Controllers\Admin\TokensController;
+use App\Http\Controllers\Employee\TranslationsController;
 use App\Models\Cart;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
@@ -73,6 +73,9 @@ Route::resource('management/admin/employees', EmployeesController::class)
     ]);
 Route::post('management/admin/employees/{user}/forcelogout', [EmployeesController::class, 'forcelogout'])
     ->name('management.admin.employees.forcelogout')
+    ->middleware(['auth', 'role:admin']);
+Route::post('management/admin/employees/{user}/changeRole', [EmployeesController::class, 'changeRole'])
+    ->name('management.admin.employees.changeRole')
     ->middleware(['auth', 'role:admin']);
 
 Route::resource('management/admin/statistics', StatisticsController::class)
@@ -154,14 +157,25 @@ Route::patch('orders/{order}/cancel', [ClientOrdersController::class, 'cancelOrd
     ->middleware(['auth'])
     ->name('client.orders.cancelOrder');
 
-
-Route::get('cart', [CartController::class, 'index'])->name('cart.index')
+Route::delete('cart/item/{id}', [CartController::class, 'destroyItem'])
+    ->name('client.cart.destroyitem')
+    ->middleware(['auth']);;
+Route::patch('cart/item/{id}', [CartController::class, 'patchQuantity'])
+    ->name('client.cart.patchQuantity')
+    ->middleware(['auth']);;
+Route::get('cart/json', [CartController::class, 'getJson'])
+    ->name('client.cart.json')
     ->middleware(['auth']);
-Route::post('cart/order', [CartController::class, 'order'])->name('cart.order')
+Route::get('cart', [CartController::class, 'index'])
+    ->name('client.cart.index')
+    ->middleware(['auth']);
+Route::post('cart/order', [CartController::class, 'order'])
+    ->name('client.cart.order')
     ->can("order", Cart::class)
     ->middleware(['auth']);
 
-Route::post('cart/add', [CartController::class, 'addToCart'])->name('cart.add')
+Route::post('cart/add', [CartController::class, 'addToCart'])
+    ->name('cart.add')
     ->middleware(['auth']);
 
 Route::resource('pizza', PizzaController::class)
