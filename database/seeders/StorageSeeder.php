@@ -18,36 +18,70 @@ class StorageSeeder extends Seeder
                 'quantity' => '5000',
                 'unit' => "g",
                 'price' => 10,
+                'quantityOnPizza' => 250
             ],
             [
-                'name' => "Tomato pizza sauce",
+                'name' => "San marzano tomato sauce",
                 'quantity' => '3000',
                 'unit' => "g",
                 'price' => 2,
+                'quantityOnPizza' => 100
             ],
             [
-                'name' => "Ham",
+                'name' => "Prosciutto Cotto",
                 'quantity' => '4000',
                 'unit' => "g",
                 'price' => 4.99,
+                'quantityOnPizza' => 70
             ],
             [
-                'name' => "Salami",
+                'name' => "Salami picante",
                 'quantity' => '5000',
                 'unit' => "g",
                 'price' => 7.99,
+                'quantityOnPizza' => 60
             ],
             [
-                'name' => "Oregano",
+                'name' => "Basil",
                 'quantity' => '800',
                 'unit' => "g",
                 'price' => 0.99,
+                'quantityOnPizza' =>3
             ],
             [
-                'name' => "Cheese",
+                'name' => "Mozzarella FiorDiLatte",
                 'quantity' => '4000',
                 'unit' => "g",
                 'price' => 5.99,
+                'quantityOnPizza' => 200
+            ],
+            [
+                'name' => "Champignons",
+                'quantity' => '4000',
+                'unit' => "g",
+                'price' => 5.99,
+                'quantityOnPizza' => 100
+            ],
+            [
+                'name' => "Gorgonzola",
+                'quantity' => '4000',
+                'unit' => "g",
+                'price' => 5.99,
+                'quantityOnPizza' => 50
+            ],
+            [
+                'name' => "Grana padano",
+                'quantity' => '4000',
+                'unit' => "g",
+                'price' => 5.99,
+                'quantityOnPizza' => 20
+            ],
+            [
+                'name' => "Pecorino romano",
+                'quantity' => '4000',
+                'unit' => "g",
+                'price' => 5.99,
+                'quantityOnPizza' => 20
             ]
         ]);
         DB::table('translations')->insert([
@@ -59,12 +93,22 @@ class StorageSeeder extends Seeder
             [
                 'ingredient_id' => 2,
                 'language_code' => 'pl',
-                'name' => "Sos pomidorowy",
+                'name' => "Sos z pomidorów san marzano",
+            ],
+            [
+                'ingredient_id' => 3,
+                'language_code' => 'pl',
+                'name' => "Szynka prosciutto cotto",
             ],
             [
                 'ingredient_id' => 5,
-                'language_code' => 'es',
-                'name' => "orégano",
+                'language_code' => 'pl',
+                'name' => "Bazylia",
+            ],
+            [
+                'ingredient_id' => 7,
+                'language_code' => 'pl',
+                'name' => "Pieczarki",
             ],
         ]);
     }
