@@ -22,7 +22,7 @@ class DatabaseSeeder extends Seeder
             ],
             [
                 'name' => env('SEED_EMPLOYEE_NAME', 'Employee'),
-                'email' => env('SEED_EMPLOYEE_NAME', 'employee@test.com'),
+                'email' => env('SEED_EMPLOYEE_EMAIL', 'employee@test.com'),
                 'password' => env('SEED_EMPLOYEE_PASSWORD', 'employee'),
                 'role' => 'employee'
             ],
