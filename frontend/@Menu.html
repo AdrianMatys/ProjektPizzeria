@@ -209,7 +209,7 @@
         </div>
         <div class="content">
             <div class="products" id="productContainer">
-                <!-- Produkty będą dodawane dynamicznie przez JavaScript -->
+                
             </div>
         </div>
     </div>
@@ -219,13 +219,13 @@
     fetch('/components/Header2.html')
         .then(response => response.text())
         .then(data => {
-            // Wyodrębniamy tylko zawartość body
+            
             const tempDiv = document.createElement('div');
             tempDiv.innerHTML = data;
             const headerContent = tempDiv.querySelector('header').outerHTML;
             const headerStyles = tempDiv.querySelector('style').outerHTML;
             
-            // Wstawiamy style i zawartość headera
+            
             document.head.insertAdjacentHTML('beforeend', headerStyles);
             document.getElementById('header-placeholder').innerHTML = headerContent;
         })
@@ -317,7 +317,7 @@
             renderProducts();
         });
 
-        // Nasłuchiwanie zmian w filtrach
+        
         sizeFilter.addEventListener('change', renderProducts);
         crustFilter.addEventListener('change', renderProducts);
         deliveryFilter.addEventListener('change', renderProducts);
@@ -328,4 +328,3 @@
     </script>
 </body>
 </html>
-

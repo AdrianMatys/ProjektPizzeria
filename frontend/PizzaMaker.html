@@ -58,7 +58,7 @@
             <div class="row">
                 <div class="col-lg-8 mb-4">
                     <div class="p-5 rounded-3 orange-bg pizza-container">
-                        <img src="/assets/Margherita.png" alt="Pizza" width="500" height="500" class="rounded-circle mb-4" id="pizzaImage">
+                        <img src="/frontend/assets/Margherita.png" alt="Pizza" width="500" height="500" class="rounded-circle mb-4" id="pizzaImage">
                     </div>
                     <div class="add-button-container">
                         <button class="btn btn-warning btn-lg rounded-pill px-4 light-orange-bg me-3">
@@ -160,7 +160,7 @@
                             <div>
                                 <h2 class="h5 fw-bold mb-3">Wybierz składniki</h2>
                                 <div class="d-flex flex-column gap-2" id="ingredients">
-                                    <!-- Ingredients will be dynamically added here -->
+                                    
                                 </div>
                             </div>
                         </div>
@@ -172,7 +172,7 @@
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script>
-        fetch('/components/Header.html')
+        fetch('/frontend/components/Header.html')
             .then(response => response.text())
             .then(data => {
                 document.getElementById('header-placeholder').innerHTML = data;
@@ -189,21 +189,21 @@
         const ingredientCounts = {};
 
         const ingredientImages = {
-            'Ciasto': '/assets/Składniki/dough.png',
-            'Sos pomidorowy': '/assets/Składniki/ketchup.png',
-            'Mozzarella': '/assets/Składniki/mozzarella.png',
-            'Salami': '/assets/Składniki/salami.png',
-            'Pieczarki': '/assets/Składniki/mushroom.png',
-            'Cebula': '/assets/Składniki/onion.png',
-            'Oliwki': '/assets/Składniki/olives.png',
-            'Papryka': '/assets/Składniki/peppers.png',
-            'Szynka': '/assets/Składniki/ham.png',
-            'Ananas': '/assets/Składniki/pineapple.png',
-            'Kukurydza': '/assets/Składniki/corn.png',
-            'Oregano': '/assets/Składniki/oregano.png',
-            'Jalapeno': '/assets/Składniki/jalapeno.png',
-            'Pomidorki koktajlowe': '/assets/Składniki/tomato.png',
-            'Ogórek kiszony': '/assets/Składniki/pickle.png'
+            'Ciasto': '/frontend/assets/Składniki/dough.png',
+            'Sos pomidorowy': '/frontend/assets/Składniki/ketchup.png',
+            'Mozzarella': '/frontend/assets/Składniki/mozzarella.png',
+            'Salami': '/frontend/assets/Składniki/salami.png',
+            'Pieczarki': '/frontend/assets/Składniki/mushroom.png',
+            'Cebula': '/frontend/assets/Składniki/onion.png',
+            'Oliwki': '/frontend/assets/Składniki/olives.png',
+            'Papryka': '/frontend/assets/Składniki/peppers.png',
+            'Szynka': '/frontend/assets/Składniki/ham.png',
+            'Ananas': '/frontend/assets/Składniki/pineapple.png',
+            'Kukurydza': '/frontend/assets/Składniki/corn.png',
+            'Oregano': '/frontend/assets/Składniki/oregano.png',
+            'Jalapeno': '/frontend/assets/Składniki/jalapeno.png',
+            'Pomidorki koktajlowe': '/frontend/assets/Składniki/tomato.png',
+            'Ogórek kiszony': '/frontend/assets/Składniki/pickle.png'
         };
 
         function initializeIngredients() {
@@ -250,16 +250,16 @@
             // Update pizza image
             switch(pizza) {
                 case 'Margherita':
-                    pizzaImage.src = "/assets/Pizza/Margherita.png";
+                    pizzaImage.src = "/frontend/assets/Pizza/Margherita.png";
                     break;
                 case 'Pepperoni':
-                    pizzaImage.src = "/assets/Pizza/Pepperoni.png";
+                    pizzaImage.src = "/frontend/assets/Pizza/Pepperoni.png";
                     break;
                 case 'Hawaiian':
-                    pizzaImage.src = "/assets/Pizza/Hawaiian.png";
+                    pizzaImage.src = "/frontend/assets/Pizza/Hawaiian.png";
                     break;
                 default:
-                    pizzaImage.src = "/assets/Pizza/Basic.png";
+                    pizzaImage.src = "/frontend/assets/Pizza/Basic.png";
             }
 
             // Clear all options
