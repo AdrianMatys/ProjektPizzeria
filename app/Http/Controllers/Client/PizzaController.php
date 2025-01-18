@@ -1,9 +1,10 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Client;
 
 use App\Actions\Carts\CreateCustomPizzaAction;
 use App\Actions\Carts\CreateEditedPizzaAction;
+use App\Http\Controllers\Controller;
 use App\Http\Requests\ClientModifyPizzaRequest;
 use App\Http\Requests\UpdatePizzaRequest;
 use App\Models\Cart;

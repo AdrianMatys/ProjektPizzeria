@@ -1,9 +1,10 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Employee;
 
 use App\Actions\Logs\LogNewPizzaAction;
 use App\Actions\Logs\LogUpdateIngredientAction;
+use App\Http\Controllers\Controller;
 use App\Http\Requests\UpdateIngredientRequest;
 use App\Models\Ingredient;
 use Illuminate\Http\Request;

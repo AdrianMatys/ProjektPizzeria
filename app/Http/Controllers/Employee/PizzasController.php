@@ -1,12 +1,13 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Employee;
 
 use App\Actions\Logs\LogDeletedPizzaAction;
 use App\Actions\Logs\LogNewPizzaAction;
 use App\Actions\Logs\LogUpdatePizzaAction;
 use App\Actions\Pizzas\CreatePizzaAsEmployeeAction;
 use App\Actions\Pizzas\UpdatePizzaAsEmployeeAction;
+use App\Http\Controllers\Controller;
 use App\Http\Requests\UpdatePizzaRequest;
 use App\Http\Requests\UpdatePizzeriaRequest;
 use App\Models\Ingredient;

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Client;
 
 use App\Actions\Orders\AddItemToCartAction;
 use App\Actions\Logs\LogNewOrderAction;
