@@ -33,7 +33,7 @@
                     <form action="{{ route('client.cart.destroyitem', $cartItem->id )}}" method="POST">
                         @csrf
                         @method('DELETE')
-                        <button type="submit">Delete</button>
+                        <button type="submit">X</button>
                     </form>
                 </td>
             </tr>
