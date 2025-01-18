@@ -1,20 +1,20 @@
 <?php
 
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
-use App\Http\Controllers\CartController;
-use App\Http\Controllers\ClientOrdersController;
-use App\Http\Controllers\DisplayMenuController;
-use App\Http\Controllers\EmployeesController;
-use App\Http\Controllers\IngredientsController;
-use App\Http\Controllers\LogsController;
-use App\Http\Controllers\ManagementController;
-use App\Http\Controllers\ManageOrdersController;
-use App\Http\Controllers\PizzaController;
-use App\Http\Controllers\PizzasController;
+use App\Http\Controllers\Client\CartController;
+use App\Http\Controllers\Client\ClientOrdersController;
+use App\Http\Controllers\Client\DisplayMenuController;
+use App\Http\Controllers\Admin\EmployeesController;
+use App\Http\Controllers\Employee\IngredientsController;
+use App\Http\Controllers\Admin\LogsController;
+use App\Http\Controllers\Admin\ManagementController;
+use App\Http\Controllers\Employee\ManageOrdersController;
+use App\Http\Controllers\Client\PizzaController;
+use App\Http\Controllers\Employee\PizzasController;
 use App\Http\Controllers\ProfileController;
-use App\Http\Controllers\StatisticsController;
-use App\Http\Controllers\TokensController;
-use App\Http\Controllers\TranslationsController;
+use App\Http\Controllers\Admin\StatisticsController;
+use App\Http\Controllers\Admin\TokensController;
+use App\Http\Controllers\Employee\TranslationsController;
 use App\Models\Cart;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
@@ -73,6 +73,9 @@ Route::resource('management/admin/employees', EmployeesController::class)
     ]);
 Route::post('management/admin/employees/{user}/forcelogout', [EmployeesController::class, 'forcelogout'])
     ->name('management.admin.employees.forcelogout')
+    ->middleware(['auth', 'role:admin']);
+Route::post('management/admin/employees/{user}/changeRole', [EmployeesController::class, 'changeRole'])
+    ->name('management.admin.employees.changeRole')
     ->middleware(['auth', 'role:admin']);
 
 Route::resource('management/admin/statistics', StatisticsController::class)

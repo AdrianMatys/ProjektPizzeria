@@ -1,10 +1,11 @@
 @include('shared.header')
+<a href="{{ route('management.employee.translations.index') }}">{{__('employee.backToTranslations')}}</a>
 
 <table>
     <tr>
-        <th>Ingredient</th>
-        <th>Language code</th>
-        <th>Translated name</th>
+        <th>{{__('employee.ingredient')}}</th>
+        <th>{{__('employee.languageCode')}}</th>
+        <th>{{__('employee.translatedName')}}</th>
     </tr>
     <tr>
         <form action="{{ route('management.employee.translations.store') }}" method="post">

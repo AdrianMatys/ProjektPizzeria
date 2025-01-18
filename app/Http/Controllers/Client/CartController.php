@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Client;
 
 use App\Actions\Orders\AddItemToCartAction;
 use App\Actions\Logs\LogNewOrderAction;
@@ -24,7 +24,7 @@ class CartController extends Controller
         $validated = $request->validated();
         $addItemToCartAction->execute($validated);
 
-        return response()->json(['success' => true, 'message' => 'Dodano do koszyka']);
+        return response()->json(['success' => true, 'message' => __('client.addedToCart')]);
     }
 
     public function order(
@@ -49,7 +49,7 @@ class CartController extends Controller
             ->first();
 
         if ($cart && $cart->items && $cart->items->isEmpty()) {
-            return response()->json(['message' => 'Koszyk jest pusty']);
+            return response()->json(['message' => __('client.emptyCart')]);
         }
 
         return response()->json(['cart' => $cart]);
@@ -72,24 +72,24 @@ class CartController extends Controller
         $cartItem = CartItem::query()->find($cartItemId);
 
         if (!$cartItem) {
-            return redirect()->route('client.cart.index')->with('error', 'Nie udało się usunąć przedmiotu z koszyka');
+            return redirect()->route('client.cart.index')->with('error', __('client.couldntRemoveItemFromCart'));
         }
 
         $cartItem->delete();
-        return redirect()->route('client.cart.index')->with('success', 'Produkt został usunięty z koszyka');
+        return redirect()->route('client.cart.index')->with('success', __('client.deletedFromCart'));
     }
     public function patchQuantity(Request $request, $cartItemId)
     {
         $cartItem = CartItem::query()->find($cartItemId);
 
         if (!$cartItem) {
-            return redirect()->route('client.cart.index')->with('error', 'Nie udało się usunąć przedmiotu z koszyka');
+            return redirect()->route('client.cart.index')->with('error', __('client.couldntUpdateItemFromCart'));
         }
 
         $validated = $request->validate(['quantity' => ['required', 'integer', 'min:1']]);
         $cartItem->update(['quantity' => $validated['quantity']]);
 
-        return redirect()->route('client.cart.index')->with('success', 'Ilość produktu została zaktualizowana');
+        return redirect()->route('client.cart.index')->with('success', __('client.productQuantityUpdated'));
     }
 
 }

@@ -1,22 +1,25 @@
 @include('shared.header')
 @foreach($groupedOrders as $status => $orders)
-    {{ $status }} orders
     <table>
         <tr>
-            <th>ID</th>
-            <th>Client</th>
-            <th>Status</th>
-            <th>created at</th>
-            <th>Details</th>
+            <th>{{__('client.orderId')}}</th>
+            <th>{{__('client.status')}}</th>
+            <th>{{__('client.createdAt')}}</th>
+            <th>{{__('client.details')}}</th>
         </tr>
         @foreach($orders as $order)
             <tr>
                 <td>{{ $order->id }}</td>
-                <td>{{ $order->user->name }}</td>
-                <td>{{ $order->status }}</td>
+                <td>
+                    @if($order->status == 'pending')
+                        {{ __('client.pending') }}
+                    @else
+                        {{ __('client.inProgress') }}
+                    @endif
+                </td>
                 <td>{{ $order->created_at }}</td>
                 <td>
-                    <a href="{{route('client.orders.show', $order)}}">Show details</a>
+                    <a href="{{route('client.orders.show', $order)}}">{{__('client.showDetails')}}</a>
                 </td>
             </tr>
         @endforeach

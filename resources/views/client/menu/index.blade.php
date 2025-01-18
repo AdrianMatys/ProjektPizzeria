@@ -109,16 +109,14 @@
                     price: price,
                 }),
             })
-            console.log(response)
             if(response.ok){
                 const data = await response.json()
-                console.log('Dodano do koszyka: ', data)
                 updateCart(data)
             }else{
-                console.log('Wystąpił błąd 1', response)
+                console.log('error 1', response)
             }
         }catch (error){
-            console.error("Wystąpił błąd 2: ", error)
+            console.error("error 2: ", error)
         }
     }
     async function updateCart() {
@@ -130,28 +128,27 @@
                     'Authorization': 'Bearer ' + localStorage.getItem('token')
                 },
             })
-            console.log(response)
             if(response.ok){
                 const data = await response.json()
                 let itemsLength = 0
                 if(data?.cart?.items) itemsLength = data.cart.items.length
                 let cart = document.getElementById('cart')
-                    cart.innerHTML =  "W koszyku znajdują się " + itemsLength + " produkty"
+                    cart.innerHTML =  itemsLength + " {{__('client.productsInCart')}}"
             }else{
-                console.log('Wystąpił błąd 1_1')
+                console.log('Error 1.1')
             }
         }catch (error){
-            console.error("Wystąpił błąd 2_2: ", error)
+            console.error("error 2.2: ", error)
         }
     }
     updateCart()
 </script>
 <table>
     <tr>
-        <th>name</th>
-        <th>ingredients</th>
-        <th>Add to cart</th>
-        <th>Modify Pizza</th>
+        <th>{{__('client.name')}}</th>
+        <th>{{__('client.ingredients')}}</th>
+        <th>{{__('client.addToCart')}}</th>
+        <th>{{__('client.modifyPizza')}}</th>
     </tr>
     @foreach($pizzas as $pizza)
         <tr>
@@ -163,41 +160,28 @@
             </td>
             <td>
                 @if($pizza->unavailable)
-                    unavailable
+                    {{__('client.unavailable')}}
                 @else
-                    <input type="button" value="Add" onclick="addToCart({{$pizza->id}}, 'Pizza', 1, 10.99)">
+                    <input type="button" value="{{__('client.add')}}" onclick="addToCart({{$pizza->id}}, 'Pizza', 1, 10.99)">
                 @endif
             </td>
             <td>
-                <a href={{ route("client.pizza.edit", $pizza) }}>Modify</a>
+                <a href={{ route("client.pizza.edit", $pizza) }}>{{__('client.modify')}}</a>
             </td>
         </tr>
-        @foreach($pizzas as $pizza)
-            <tr>
-                <td>{{ $pizza->name }}</td>
-                <td>
-                    @foreach($pizza->ingredients as $ingredient)
-                        {{ $ingredient->translations->first()->name ?? $ingredient->name }} ({{ $ingredient->quantityOnPizza}} g)
-                    @endforeach
-                </td>
-                <td>
-                    @if($pizza->unavailable)
-                        {{__('client.unavailable')}}
-                    @else
-                        <input type="button" class="btn" value="{{__('client.add')}}" onclick="addToCart({{$pizza->id}}, 'Pizza', 1, 10.99)">
-                    @endif
-                </td>
-                <td>
-                    <a href={{ route("client.pizza.edit", $pizza) }} class="modify-link">{{__('client.modify')}}</a>
-                </td>
-            </tr>
-        @endforeach
-    </table>
+    @endforeach
+</table>
 
-    <a href={{ route("client.pizza.create", $pizza) }} class="create-pizza-link">{{__('client.createCustomPizza')}}</a>
-    
-    <div id="cart"></div>
-</div>
+<a href={{ route("client.pizza.create", $pizza) }}>{{__('client.createCustomPizza')}}</a>
+<style>
+    table, tr, td, th{
+        border:1px solid black;
+        text-align: center;
+    }
+</style>
+
+<hr>
+<div id="cart"></div>
 
 
 

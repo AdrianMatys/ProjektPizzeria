@@ -1,19 +1,20 @@
 @include('shared.header')
-
-<button onclick="addNewIngredient()">Add new ingredient</button>
+<div>
+    <button onclick="addNewIngredient()">{{__('employee.addNewIngredient')}}</button>
+</div>
 <form action="{{ route('management.employee.pizzas.store', $pizza) }}" method="post">
     @csrf
     <br>
-    <label for="name">Name:</label><br>
+    <label for="name">{{__('employee.pizzaName')}}:</label><br>
     <input type="text" name="name" id="name"><br><br>
 
     <table id="ingredientsTable">
         <tr>
-            <th>ingredients</th>
-            <th>remove</th>
+            <th>{{__('employee.ingredients')}}</th>
+            <th>{{__('employee.remove')}}</th>
         </tr>
     </table>
-    <button type="submit">Save pizza</button>
+    <button type="submit">{{__('employee.savePizza')}}</button>
 </form>
 <style>
     table, tr, td, th {

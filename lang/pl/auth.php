@@ -15,5 +15,11 @@ return [
     'failed' => 'Te dane uwierzytelniające nie pasują do naszych rekordów.',
     'password' => 'Podane hasło jest nieprawidłowe.',
     'throttle' => 'Zbyt wiele prób logowania. Spróbuj ponownie za :seconds sekund.',
+    'passwordInput' => 'Hasło',
+    'confirmPasswordInput' => 'Potwierdź hasło',
+    'loginButton' => 'Zaloguj się',
+    'nameInput' => 'Nazwa',
+    'registerationToken' => 'Token rejestracyjny',
+    'registerButton' => 'Zarejestruj się',
 
 ];

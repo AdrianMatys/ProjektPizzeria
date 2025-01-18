@@ -1,22 +1,31 @@
 @include('shared.header')
-<a href="{{ route('client.orders.index') }}">Back to orders</a>
+<a href="{{ route('client.orders.index') }}">{{__('client.backToOrders')}}</a>
 <br><br>
 <table>
     <tr>
-        <th>ID</th>
-        <th>Client</th>
-        <th>Status</th>
-        <th>created at</th>
-        <th>items</th>
-        <th>Change status</th>
+        <th>{{__('client.orderId')}}</th>
+        <th>{{__('client.status')}}</th>
+        <th>{{__('client.createdAt')}}</th>
+        <th>{{__('client.products')}}</th>
+        <th>{{__('client.changeStatus')}}</th>
     </tr>
         <tr>
             <td>{{ $order->id }}</td>
-            <td>{{ $order->user->name }}</td>
-            <td>{{ $order->status }}</td>
+            <td>
+                @if($order->status == 'pending')
+                    {{ __('client.pending') }}
+                @else
+                    {{ __('client.inProgress') }}
+                @endif
+            </td>
             <td>{{ $order->created_at }}</td>
             <td>
                 <table>
+                    <tr>
+                        <th>{{__('client.name')}}</th>
+                        <th>{{__('client.ingredients')}}</th>
+                        <th>{{__('client.quantity')}}</th>
+                    </tr>
                     @foreach($order->orderItems as $orderItem)
                         <tr>
                             <td>{{$orderItem->item->name}}</td>
@@ -29,7 +38,7 @@
                                     @endforeach
                                 </table>
                             </td>
-                            <td>Quantity: {{$orderItem->quantity}}</td>
+                            <td>{{$orderItem->quantity}}</td>
                         </tr>
                     @endforeach
                 </table>
@@ -40,7 +49,7 @@
                     @csrf
                     @method('PATCH')
                     <input type="hidden" name="status" value="cancelled">
-                    <button type="submit">Cancel order</button>
+                    <button type="submit">{{__('client.cancelOrder')}}</button>
                 </form>
             </td>
         </tr>

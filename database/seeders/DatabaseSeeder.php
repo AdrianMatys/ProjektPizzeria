@@ -15,23 +15,23 @@ class DatabaseSeeder extends Seeder
 
         $usersData = [
             [
-                'name' => 'Administrator',
-                'email' => 'admin@pizzeria.com',
-                'password' => 'admin',
+                'name' => env('SEED_ADMIN_NAME', 'Administrator'),
+                'email' => env('SEED_ADMIN_EMAIL', 'admin@test.com'),
+                'password' => env('SEED_ADMIN_PASSWORD', 'admin'),
                 'role' => 'admin'
             ],
             [
-                'name' => 'Employee',
-                'email' => 'employee@pizzeria.com',
-                'password' => 'employee',
+                'name' => env('SEED_EMPLOYEE_NAME', 'Employee'),
+                'email' => env('SEED_EMPLOYEE_EMAIL', 'employee@test.com'),
+                'password' => env('SEED_EMPLOYEE_PASSWORD', 'employee'),
                 'role' => 'employee'
             ],
             [
-                'name' => 'User',
-                'email' => 'user@pizzeria.com',
-                'password' => 'user',
+                'name' => env('SEED_USER_NAME', 'User'),
+                'email' => env('SEED_USER_EMAIL', 'user@test.com'),
+                'password' => env('SEED_USER_PASSWORD', 'user'),
                 'role' => 'user'
-            ]
+            ],
         ];
 
         foreach ($usersData as $userData) {

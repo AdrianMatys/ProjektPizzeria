@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Employee;
 
+use App\Http\Controllers\Controller;
 use App\Http\Requests\UpdateOrderStatusRequest;
 use App\Models\Order;
 use Illuminate\Http\Request;
@@ -24,6 +25,6 @@ class ManageOrdersController extends Controller
     {
         $order->update(['status' => $request->validated()['status']]);
 
-        return redirect()->back()->with('success', 'Status zamówienia został zaktualizowany');
+        return redirect()->back()->with('success', __('employee.orderStatusUpdated'));
     }
 }

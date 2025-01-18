@@ -1,12 +1,12 @@
 @include('shared.header')
 
-<td><a href={{ route("management.employee.translations.create") }}>Add new</a></td>
+<td><a href={{ route("management.employee.translations.create") }}>{{__('employee.addNewTranslation')}}</a></td>
 <br><br>
 <table>
     <tr>
-        <th>Ingredient name</th>
-        <th>Available languages</th>
-        <th>Details</th>
+        <th>{{__('employee.ingredientName')}}</th>
+        <th>{{__('employee.availableLanguages')}}</th>
+        <th>{{__('employee.details')}}</th>
     </tr>
     @foreach($translations as $translation)
         <tr>
@@ -17,7 +17,7 @@
                 @endforeach
             </td>
             <td>
-                <a href="{{route('management.employee.translations.show', $translation)}}">Show details</a>
+                <a href="{{route('management.employee.translations.show', $translation)}}">{{__('employee.showDetails')}}</a>
             </td>
         </tr>
     @endforeach

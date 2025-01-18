@@ -1,8 +1,9 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
 use App\Actions\Statistics\GetStatisticsAction;
+use App\Http\Controllers\Controller;
 use App\Models\CartItem;
 use App\Models\Ingredient;
 use App\Models\Order;

@@ -1,12 +1,13 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Employee;
 
 use App\Actions\Logs\LogDeletedPizzaAction;
 use App\Actions\Logs\LogNewPizzaAction;
 use App\Actions\Logs\LogUpdatePizzaAction;
 use App\Actions\Pizzas\CreatePizzaAsEmployeeAction;
 use App\Actions\Pizzas\UpdatePizzaAsEmployeeAction;
+use App\Http\Controllers\Controller;
 use App\Http\Requests\UpdatePizzaRequest;
 use App\Http\Requests\UpdatePizzeriaRequest;
 use App\Models\Ingredient;
@@ -51,11 +52,11 @@ class PizzasController extends Controller
     public function destroy($id, LogDeletedPizzaAction $logDeletedPizzaAction){
         $pizza = Pizza::query()->find($id);
         if(!$pizza)
-            return redirect()->route('management.employee.pizzas.index')->with('error', 'Nie udało się usunąć pizzy');
+            return redirect()->route('management.employee.pizzas.index')->with('error', __('employee.failedRemovePizza'));
 
         $logDeletedPizzaAction->execute(auth()->id(), ['pizza' => $pizza]);
         $pizza->delete();
-        return redirect()->route('management.employee.pizzas.index')->with('success', 'Pizza została usunięta');
+        return redirect()->route('management.employee.pizzas.index')->with('success', __('employee.pizzaRemoved'));
     }
 
     public function update(UpdatePizzaRequest $request, Pizza  $pizza, LogUpdatePizzaAction $logUpdatePizzaAction, UpdatePizzaAsEmployeeAction $updatePizzaAsEmployeeAction){
@@ -64,7 +65,7 @@ class PizzasController extends Controller
         $updatePizzaAsEmployeeAction->execute($validated, $pizza);
         $logUpdatePizzaAction->execute(auth()->id(), ['pizza' => $validated]);
 
-        return redirect()->route('management.employee.pizzas.index')->with('success', 'Zaktualizowano pizze');
+        return redirect()->route('management.employee.pizzas.index')->with('success', __('employee.pizzaUpdated'));
     }
 
     public function store(UpdatePizzaRequest $request, Pizza  $pizza, LogNewPizzaAction $logNewPizzaAction, CreatePizzaAsEmployeeAction $createPizzaAsEmployeeAction){
@@ -73,6 +74,6 @@ class PizzasController extends Controller
         $createPizzaAsEmployeeAction->execute($validated);
         $logNewPizzaAction->execute(auth()->id(), ['pizza' => $validated]);
 
-        return redirect()->route('management.employee.pizzas.index')->with('success', 'Dodano nową pizze');
+        return redirect()->route('management.employee.pizzas.index')->with('success', __('employee.pizzaAdded'));
     }
 }
