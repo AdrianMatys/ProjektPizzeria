@@ -1,6 +1,6 @@
 @include('shared.header')
 
-<h1>Employees</h1>
+<h1>{{__('admin.employees')}}</h1>
 <table>
     <tr>
         <th>{{__('admin.userName')}}</th>
@@ -40,7 +40,7 @@
         </tr>
     @endforeach
 </table>
-<h1>Users</h1>
+<h1>{{__('admin.users')}}</h1>
 <table>
     <tr>
         <th>{{__('admin.userName')}}</th>
