@@ -1,17 +1,19 @@
 @include('shared.header')
 
-<button onclick="addNewIngredient()">Add new ingredient</button>
+<div>
+    <button onclick="addNewIngredient()">{{__('employee.addNewIngredient')}}</button>
+</div>
 <form action="{{ route('management.employee.pizzas.update', $pizza) }}" method="post">
     @csrf
     @method('put')
     <br>
-    <label for="name">Name:</label><br>
+    <label for="name">{{__('employee.pizzaName')}}:</label><br>
     <input type="text" name="name" id="name" value="{{$pizza->name}}"><br><br>
 
     <table id="ingredientsTable">
         <tr>
-            <th>ingredients</th>
-            <th>remove</th>
+            <th>{{__('employee.ingredients')}}</th>
+            <th>{{__('employee.remove')}}</th>
         </tr>
         @foreach($pizza->ingredients as $ingredient)
             <tr>
@@ -33,7 +35,7 @@
             </tr>
         @endforeach
     </table>
-    <button type="submit">Save pizza</button>
+    <button type="submit">{{__('employee.savePizza')}}</button>
 </form>
 <style>
     table, tr, td, th {

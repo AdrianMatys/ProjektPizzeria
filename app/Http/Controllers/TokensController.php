@@ -26,8 +26,8 @@ class TokensController extends Controller
 
         Token::create($validated);
 
-        return redirect()->route('management.admin.tokens.index')->with('success',
-            'Token rejestracyjny pracownika został stworzony');
+        return redirect()->route('management.admin.tokens.index')
+            ->with('success', __('admin.tokenCreated'));
     }
 
     public function destroy($email)
@@ -35,12 +35,13 @@ class TokensController extends Controller
         $token = Token::find($email);
 
         if (!$token) {
-            return redirect()->route('management.admin.tokens.index')->with('error', 'Nie udało usunąć się tokenu');
+            return redirect()->route('management.admin.tokens.index')
+                ->with('error', __('admin.failedDeleteToken'));
         }
 
         $token->delete();
 
-        return redirect()->route('management.admin.tokens.index')->with('success',
-            'Token rejestracyjny pracownika został usunięty');
+        return redirect()->route('management.admin.tokens.index')
+            ->with('success', __('admin.tokenDeleted'));
     }
 }

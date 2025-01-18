@@ -42,14 +42,14 @@ class IngredientsController extends Controller
         $ingredient = Ingredient::query()->find($id);
 
         if (!$ingredient) {
-            return redirect()->route('management.employee.ingredients.index')->with('error',
-                'Nie udało się usunąć składnika');
+            return redirect()->route('management.employee.ingredients.index')
+                ->with('error', __('employee.failedRemoveIngredient'));
         }
 
         $logDeletedIngredientAction->execute(auth()->id(), ['ingredientName' => $ingredient->name]);
         $ingredient->delete();
 
-        return redirect()->route('management.employee.ingredients.index')->with('success', 'Składnik został usunięty');
+        return redirect()->route('management.employee.ingredients.index')->with('success', __('employee.ingredientRemoved'));
     }
 
     public function update(
@@ -62,7 +62,8 @@ class IngredientsController extends Controller
 
         $logUpdateIngredientAction->execute(auth()->id(), ['ingredientName' => $ingredient->name]);
 
-        return redirect()->route('management.employee.ingredients.index')->with('success', 'Zaktualizowano składnik');
+        return redirect()->route('management.employee.ingredients.index')
+            ->with('success', __('employee.ingredientUpdated'));
 
     }
 
@@ -73,7 +74,8 @@ class IngredientsController extends Controller
 
         $logNewIngredientAction->execute(auth()->id(), ['ingredientName' => $ingredient->name]);
 
-        return redirect()->route('management.employee.ingredients.index')->with('success', 'Dodano nowy składnik');
+        return redirect()->route('management.employee.ingredients.index')
+            ->with('success', __('employee.ingredientAdded'));
 
     }
 

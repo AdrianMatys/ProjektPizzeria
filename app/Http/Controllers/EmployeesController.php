@@ -21,17 +21,17 @@ class EmployeesController extends Controller
         $user = User::find($id);
 
         if (!$user) {
-            return redirect()->route('management.admin.employees.index')->with('error',
-                'Nie udało się usunąć użytkownika');
+            return redirect()->route('management.admin.employees.index')
+                ->with('error', __('admin.failedDeleteUser'));
         }
 
         $logDismissalEmployeeAction->execute(auth()->id(), ['email' => $user->email]);
 
         $user->delete();
-        return redirect()->route('management.admin.employees.index')->with('success', 'Użytkownik został usunięty');
+        return redirect()->route('management.admin.employees.index')->with('success', __('admin.userDeleted'));
     }
     public function forceLogout(User $user){
         $user->forceLogout();
-        return redirect()->back()->with('success', "Użytkownik został wylogowany");
+        return redirect()->back()->with('success', __('admin.userLoggedOut'));
     }
 }

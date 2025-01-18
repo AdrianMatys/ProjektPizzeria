@@ -1,13 +1,13 @@
 @include('shared.header')
 
-<td><a href={{ route("management.employee.ingredients.create") }}>Add new</a></td>
+<td><a href={{ route("management.employee.ingredients.create") }}>{{__('employee.addNewIngredient')}}</a></td>
 <table>
     <tr>
-        <th>name</th>
-        <th>quantity</th>
-        <th>unit</th>
-        <th>delete</th>
-        <th>edit</th>
+        <th>{{__('employee.ingredientName')}}</th>
+        <th>{{__('employee.ingredientQuantity')}}</th>
+        <th>{{__('employee.unit')}}</th>
+        <th>{{__('employee.delete')}}</th>
+        <th>{{__('employee.edit')}}</th>
     </tr>
     @foreach($ingredients as $ingredient)
         <tr>
@@ -21,7 +21,7 @@
                     <button type="submit">X</button>
                 </form>
             </td>
-            <td><a href={{ route("management.employee.ingredients.edit", $ingredient) }}>Edit</a></td>
+            <td><a href={{ route("management.employee.ingredients.edit", $ingredient) }}>{{__('employee.edit')}}</a></td>
         </tr>
     @endforeach
 </table>

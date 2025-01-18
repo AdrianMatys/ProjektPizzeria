@@ -1,13 +1,13 @@
 @include('shared.header')
-<button onclick="addNewIngredient()">Add new ingredient</button>
+<button onclick="addNewIngredient()">{{__('client.addNewIngredient')}}</button>
 <form action="{{ route('client.pizza.update', $pizza) }}" method="post">
     @csrf
     @method('put')
 
     <table id="ingredientsTable">
         <tr>
-            <th>ingredients</th>
-            <th>remove</th>
+            <th>{{__('client.ingredients')}}</th>
+            <th>{{__('client.remove')}}</th>
         </tr>
         @foreach($pizza->ingredients as $ingredient)
             <tr>
@@ -29,8 +29,8 @@
             </tr>
         @endforeach
     </table>
-    <button type="submit">Add to cart</button>
-    <a href={{ route("client.menu.index") }}>Cancel</a>
+    <button type="submit">{{__('client.addToCart')}}</button>
+    <a href={{ route("client.menu.index") }}>{{__('client.cancel')}}</a>
 </form>
 <style>
     table, tr, td, th {

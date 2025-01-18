@@ -1,15 +1,15 @@
 @include('shared.header')
 
-<a href="{{ route('management.employee.orders.index') }}">Back to orders</a>
+<a href="{{ route('management.employee.orders.index') }}">{{__('employee.backToOrders')}}</a>
 <br><br>
 <table>
     <tr>
-        <th>ID</th>
-        <th>Client</th>
-        <th>Status</th>
-        <th>created at</th>
-        <th>items</th>
-        <th>Change status</th>
+        <th>{{__('employee.orderId')}}</th>
+        <th>{{__('employee.client')}}</th>
+        <th>{{__('employee.status')}}</th>
+        <th>{{__('employee.createdAt')}}</th>
+        <th>{{__('employee.products')}}</th>
+        <th>{{__('employee.changeStatus')}}</th>
     </tr>
         <tr>
             <td>{{ $order->id }}</td>
@@ -18,6 +18,11 @@
             <td>{{ $order->created_at }}</td>
             <td>
                 <table>
+                    <tr>
+                        <th>{{__('employee.name')}}</th>
+                        <th>{{__('employee.ingredients')}}</th>
+                        <th>{{__('employee.quantity')}}</th>
+                    </tr>
                     @foreach($order->orderItems as $orderItem)
                         <tr>
                             <td>{{$orderItem->item->name}}</td>
@@ -30,7 +35,7 @@
                                     @endforeach
                                 </table>
                             </td>
-                            <td>Quantity: {{$orderItem->quantity}}</td>
+                            <td>{{$orderItem->quantity}}</td>
                         </tr>
                     @endforeach
                 </table>
@@ -40,25 +45,25 @@
                     @csrf
                     @method('PATCH')
                     <input type="hidden" name="status" value="pending">
-                    <button type="submit">Pending</button>
+                    <button type="submit">{{__('employee.pending')}}</button>
                 </form>
                 <form action="{{ route('management.employee.orders.updateStatus', $order->id )}}" method="POST">
                     @csrf
                     @method('PATCH')
                     <input type="hidden" name="status" value="in_progress">
-                    <button type="submit">In Progress</button>
+                    <button type="submit">{{__('employee.inProgress')}}</button>
                 </form>
                 <form action="{{ route('management.employee.orders.updateStatus', $order->id )}}" method="POST">
                     @csrf
                     @method('PATCH')
                     <input type="hidden" name="status" value="completed">
-                    <button type="submit">Completed</button>
+                    <button type="submit">{{__('employee.completed')}}</button>
                 </form>
                 <form action="{{ route('management.employee.orders.updateStatus', $order->id )}}" method="POST">
                     @csrf
                     @method('PATCH')
                     <input type="hidden" name="status" value="cancelled">
-                    <button type="submit">Cancelled</button>
+                    <button type="submit">{{__('employee.cancelled')}}</button>
                 </form>
             </td>
         </tr>

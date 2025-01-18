@@ -5,12 +5,12 @@
     @method('put')
     <table>
         <tr>
-            <th>Name</th>
-            <th>Address</th>
-            <th>City</th>
-            <th>Phone number</th>
-            <th>Delivery available</th>
-            <th>max delivery radius</th>
+            <th>{{__('admin.pizzeriaName')}}</th>
+            <th>{{__('admin.address')}}</th>
+            <th>{{__('admin.city')}}</th>
+            <th>{{__('admin.phoneNumber')}}</th>
+            <th>{{__('admin.deliveryAvailable')}}</th>
+            <th>{{__('admin.deliveryRadius')}}</th>
         </tr>
         <tr>
             <td><input type="text" name="name" id="name" value="{{ $pizzeria->name }}"></td>
@@ -24,7 +24,7 @@
             <td><input type="text" name="max_delivery_radius" id="max_delivery_radius" value="{{ $pizzeria->max_delivery_radius }}"></td>
         </tr>
     </table>
-    <button type="submit">Aktualizuj dane pracownika</button>
+    <button type="submit">{{__('admin.updatePizzeria')}}</button>
 </form>
 <style>
     table, tr, td, th{
