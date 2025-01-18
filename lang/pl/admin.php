@@ -52,4 +52,6 @@ return [
 
     'token' => 'Token',
     'addNewUser' => 'Dodaj nowego użytkownika',
+    'employees' => 'Pracownicy',
+    'users' => 'Użytkownicy',
 ];
