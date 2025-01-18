@@ -13,4 +13,36 @@ return [
     'addedCustomPizza' => 'Dodano do koszyka własną pizze',
     'addedEditedPizza' => 'Dodano do koszyka zmodyfikowaną pizze',
 
+    'orderButton' => 'Zamów',
+    'quantity' => 'Ilość',
+    'updateQuantity' => 'Aktualizuj ilość',
+
+    'name' => 'Nazwa',
+    'ingredients' => 'Składniki',
+    'addToCart' => 'Dodaj do koszyka',
+    'add' => 'Dodaj',
+    'modifyPizza' => 'Modyfikuj pizze',
+    'modify' => 'Modyfikuj',
+    'unavailable' => 'Niedostępna',
+    'createCustomPizza' => 'Stwórz własną pizze',
+    'productsInCart' => 'produktów w koszyku',
+
+    'orderPlaced' => 'Twoje zamówienie zostało złożone!',
+
+    'orderId' => 'Numer zamówienia',
+    'status' => 'Status',
+    'details' => 'Szczegóły',
+    'pending' => 'Oczekujące',
+    'inProgress' => 'W trakcie realizacji',
+    'createdAt' => 'Data zamówienia',
+    'showDetails' => 'Pokaż więcej',
+    'changeStatus' => 'Zmień status',
+    'cancelOrder' => 'Anuluj zamówienie',
+    'products' => 'Produkty',
+    'backToOrders' => 'Wróć do zamówień',
+
+    'addNewIngredient' => 'Dodaj nowy składnik',
+    'remove' => 'Usuń składnik',
+    'cancel' => 'Anuluj',
+
 ];

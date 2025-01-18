@@ -4,7 +4,7 @@
 
     <form action="{{ route('client.cart.order')}}" method="POST">
         @csrf
-        <button type="submit">Order</button>
+        <button type="submit">{{__('client.orderButton')}}</button>
     </form>
     <table>
         @foreach($cart->items as $cartItem)
@@ -23,10 +23,10 @@
                     <form action="{{ route('client.cart.patchQuantity', $cartItem->id )}}" method="POST">
                         @csrf
                         @method('PATCH')
-                        <label for="quantity">Quantity</label>
+                        <label for="quantity">{{__('client.quantity')}}</label>
                         <input type="number" min="0" name="quantity" id="quantity" value="{{$cartItem->quantity}}">
                         <br>
-                        <button type="submit">Update quantity</button>
+                        <button type="submit">{{__('client.updateQuantity')}}</button>
                     </form>
                 </td>
                 <td>
@@ -40,7 +40,7 @@
         @endforeach
     </table>
 @else
-    <h2>Brak produktów w koszyku</h2>
+    <h2>{{__('client.emptyCart')}}</h2>
 @endif
 
 <style>
