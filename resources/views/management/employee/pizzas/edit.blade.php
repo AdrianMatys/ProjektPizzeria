@@ -47,7 +47,7 @@
 <script>
     let options = ''
     @foreach($ingredients as $ingredient)
-        options += '<option value="{{$ingredient->id}}">{{ $ingredient->translations->first()->name ?? $ingredient->name }}</option>'
+        options += '<option value="{{$ingredient->id}}">{{ $ingredient->translatedName }}</option>'
     @endforeach
     function removeIngredient(button) {
         let row = button.parentNode.parentNode;

@@ -11,7 +11,7 @@
     </tr>
     @foreach($ingredients as $ingredient)
         <tr>
-            <td>{{ $ingredient->translations->first()->name ?? $ingredient->name }}</td>
+            <td>{{ $ingredient->translatedName }}</td>
             <td>{{ $ingredient->quantity }}</td>
             <td>{{ $ingredient->unit }}</td>
             <td>
