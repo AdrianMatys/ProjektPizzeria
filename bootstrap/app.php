@@ -25,9 +25,9 @@ return Application::configure(basePath: dirname(__DIR__))
         //
     })
     ->withExceptions(function (Exceptions $exceptions) {
-        $exceptions->respond(function (mixed $response, mixed $expection) {
-            if ($expection instanceof Exception) {
-                if ($expection->getMessage() === 'emptyCart') {
+        $exceptions->respond(function (mixed $response, mixed $exception) {
+            if ($exception instanceof Exception) {
+                if ($exception->getMessage() === 'emptyCart') {
                     return redirect(route('client.menu.index'))->with([
                         'error' => "Twój koszyk jest pusty",
                     ]);
