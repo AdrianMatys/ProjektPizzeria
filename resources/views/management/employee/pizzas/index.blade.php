@@ -13,7 +13,7 @@
             <td>{{ $pizza->name }}</td>
             <td>
             @foreach($pizza->ingredients as $ingredient)
-                    {{ $ingredient->translations->first()->name ?? $ingredient->name }} ({{ $ingredient->quantityOnPizza}} g)
+                    {{ $ingredient->translatedName }} ({{ $ingredient->quantityOnPizza}} g)
             @endforeach
             </td>
             <td>

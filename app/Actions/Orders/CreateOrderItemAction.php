@@ -11,9 +11,11 @@ use App\Models\OrderItem;
 use App\Services\LoggerService;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Facades\Artisan;
+use Illuminate\Support\Facades\Cache;
 
 class CreateOrderItemAction
 {
+    private bool $isNotifyOnCooldown = false;
     public function execute(CartItem $cartItem, int $orderId): void
     {
         OrderItem::create(
@@ -32,20 +34,26 @@ class CreateOrderItemAction
             $this->usingUpIngredients($ingredient, $cartItem->quantity);
             $this->checkLowStock($ingredient->id);
         }
+        $isNotifyOnCooldown = false;
     }
 
     private function checkLowStock(int $ingredientId): void
     {
-        $dbIngredient = Ingredient::query()
+        $Ingredient = Ingredient::query()
             ->where('id', $ingredientId)
             ->first();
 
-        if ($dbIngredient->quantity > 1000) {
-            Artisan::call('notify:low-stock');
-        }
-    }
+        if ($Ingredient->quantity < 1000) return;
+        if($this->isNotifyOnCooldown($Ingredient->id)) return;
 
-    private function usingUpIngredients(Ingredient $ingredient, int $cartItemQuantity)
+        Artisan::call('notify:low-stock');
+        $isNotifyOnCooldown = true;
+    }
+    private function isNotifyOnCooldown(int $ingredientId): bool
+    {
+        return !Cache::add('notifyCooldown:' . $ingredientId, true, now()->addMinutes(3));
+    }
+    private function usingUpIngredients(Ingredient $ingredient, int $cartItemQuantity): void
     {
         $totalQuantity = $ingredient->quantityOnPizza * $cartItemQuantity;
 

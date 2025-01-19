@@ -58,6 +58,7 @@
     <tr>
         <th>{{__('client.name')}}</th>
         <th>{{__('client.ingredients')}}</th>
+        <th>{{__('client.price')}}</th>
         <th>{{__('client.addToCart')}}</th>
         <th>{{__('client.modifyPizza')}}</th>
     </tr>
@@ -65,15 +66,14 @@
         <tr>
             <td>{{ $pizza->name }}</td>
             <td>
-                @foreach($pizza->ingredients as $ingredient)
-                    {{ $ingredient->translations->first()->name ?? $ingredient->name }} ({{ $ingredient->quantityOnPizza}} g)
-                @endforeach
+                {{$pizza->ingredients->map(fn($ingredient) => $ingredient->translatedName)->join(', ')}}
             </td>
+            <td>{{ $pizza->price }} zł</td>
             <td>
                 @if($pizza->unavailable)
                     {{__('client.unavailable')}}
                 @else
-                    <input type="button" value="{{__('client.add')}}" onclick="addToCart({{$pizza->id}}, 'Pizza', 1, 10.99)">
+                    <input type="button" value="{{__('client.add')}}" onclick="addToCart({{$pizza->id}}, 'Pizza', 1, {{$pizza->price}})">
                 @endif
             </td>
             <td>

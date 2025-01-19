@@ -11,7 +11,7 @@
     <ul>
         @foreach($ingredients as $ingredient)
             <li>
-                <p>{{ $ingredient->translations->first()->name ?? $ingredient->name }}: ({{ $ingredient->quantity }} g)</p>
+                <p>{{ $ingredient->translatedName }}: ({{ $ingredient->quantity }} g)</p>
             </li>
         @endforeach
     </ul>

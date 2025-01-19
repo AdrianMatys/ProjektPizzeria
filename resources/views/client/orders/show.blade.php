@@ -33,7 +33,7 @@
                                 <table>
                                     @foreach($orderItem->item->ingredients as $ingredient)
                                         <tr>
-                                            <td>{{ $ingredient->translations->first()->name ?? $ingredient->name }}</td>
+                                            <td>{{ $ingredient->translatedName }}</td>
                                         </tr>
                                     @endforeach
                                 </table>
