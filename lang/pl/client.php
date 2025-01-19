@@ -44,5 +44,6 @@ return [
     'addNewIngredient' => 'Dodaj nowy składnik',
     'remove' => 'Usuń składnik',
     'cancel' => 'Anuluj',
+    'price' => 'Cena'
 
 ];
