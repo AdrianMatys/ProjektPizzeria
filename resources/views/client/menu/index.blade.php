@@ -65,9 +65,7 @@
         <tr>
             <td>{{ $pizza->name }}</td>
             <td>
-                @foreach($pizza->ingredients as $ingredient)
-                    {{ $ingredient->translatedName }} ({{ $ingredient->quantityOnPizza}} g)
-                @endforeach
+                {{$pizza->ingredients->map(fn($ingredient) => $ingredient->translatedName)->join(', ')}}
             </td>
             <td>
                 @if($pizza->unavailable)
