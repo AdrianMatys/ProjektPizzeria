@@ -15,7 +15,7 @@ class Pizza extends Model
 
     public function ingredients(): \Illuminate\Database\Eloquent\Relations\BelongsToMany
     {
-        return $this->belongsToMany(Ingredient::class, 'pizza_ingredients', 'pizza_id', 'ingredient_id');
+        return $this->belongsToMany(Ingredient::class, 'pizza_ingredients', 'pizza_id', 'ingredient_id')->orderBy('id', 'asc');
 
     }
     public function getQuantity(): Attribute
