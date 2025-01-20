@@ -27,6 +27,7 @@ class Cart extends Model
     {
         return $this->hasMany(CartItem::class)->orderBy('id', 'asc');
     }
+
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
@@ -35,7 +36,9 @@ class Cart extends Model
     public function totalPrice(): Attribute
     {
         return Attribute::get(
-            fn(): float => $this->items->sum('price'),
+            fn(): float => $this->items->sum(function ($item) {
+                return $item->price * $item->quantity;
+            }),
         );
     }
 }
