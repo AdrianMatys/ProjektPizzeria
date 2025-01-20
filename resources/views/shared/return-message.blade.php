@@ -8,9 +8,13 @@
         {{ session('error') }}
     </div>
 @endif
-@if (session()->has('errors'))
+@if (session()->has('errors') && $errors->any())
     <div class="notification error">
-        {{ session('errors') }}
+        <ul>
+            @foreach ($errors->all() as $error)
+                <li>{{ $error }}</li>
+            @endforeach
+        </ul>
     </div>
 @endif
 
