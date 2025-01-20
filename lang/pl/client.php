@@ -22,7 +22,7 @@ return [
     'addToCart' => 'Dodaj do koszyka',
     'add' => 'Dodaj',
     'modifyPizza' => 'Modyfikuj pizze',
-    'modify' => 'Modyfikuj',
+    'modify' => 'Edytuj',
     'unavailable' => 'Niedostępna',
     'createCustomPizza' => 'Stwórz własną pizze',
     'productsInCart' => 'produktów w koszyku',
@@ -44,5 +44,9 @@ return [
     'addNewIngredient' => 'Dodaj nowy składnik',
     'remove' => 'Usuń składnik',
     'cancel' => 'Anuluj',
+    'pay'=>'Zapłać',
+    'Gotomenu'=>'Przejdź do menu',
+    'emptycart'=>'Pusty kosz',
+    'waluta'=>'zł'
 
 ];

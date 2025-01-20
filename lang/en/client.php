@@ -44,5 +44,10 @@ return [
     'addNewIngredient' => 'Add new ingredient',
     'remove' => 'Remove ingredient',
     'cancel' => 'Cancel',
+    'pay'=>'Pay',
+    'Gotomenu'=>'Go to menu',
+    'emptycart'=>'Empty cart',
+    'waluta'=>'zł'
+
 
 ];

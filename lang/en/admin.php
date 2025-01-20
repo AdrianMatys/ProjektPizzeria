@@ -50,6 +50,7 @@ return [
     'insertUserEmail' => 'Enter user email',
     'generateToken' => 'Generate token for user',
 
+
     'token' => 'Token',
     'addNewUser' => 'Add new user',
 
@@ -61,4 +62,5 @@ return [
     'employee' => 'Employee',
     'user' => 'User',
     'userRoleUpdated' => 'User role has been updated',
+    
 ];
