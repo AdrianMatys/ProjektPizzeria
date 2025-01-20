@@ -19,6 +19,8 @@ return new class extends Migration
                 ->default(0);
             $table->unsignedInteger('quantityOnPizza')
                 ->default(100);
+            $table->unsignedInteger('minQuantity')
+                ->default(1000);
             $table->string('unit');
             $table->decimal('price', 10, 2)
                 ->default(0.00);
