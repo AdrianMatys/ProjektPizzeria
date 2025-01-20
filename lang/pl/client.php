@@ -46,5 +46,6 @@ return [
     'cancel' => 'Anuluj',
     'price' => 'Cena',
     'totalPrice' => 'Cena całkowita',
+    'notEnoughIngredients' => 'Aktualnie nie ma na stanie wystarczajacej ilości składników aby zrealizować twoje zamówienie. Zapytaj obsługę o pomoc',
 
 ];
