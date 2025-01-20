@@ -41,7 +41,8 @@ async function addToCart(itemId, itemType, quantity, price, name) {
                 <div class="product-price">{{ $pizza->price }} zł</div>
                 <div>
                     <input type="button" value="{{__('client.add')}}" onclick="addToCart({{$pizza->id}}, 'Pizza', 1, {{$pizza->price}}, '{{ $pizza->name }}')">
-                    <a href={{ route("client.pizza.edit", $pizza) }}>{{__('client.modify')}}</a>
+                    <input type="button" value="{{__('client.modify')}}" onclick="window.location.href='{{ route("client.pizza.edit", $pizza)}}'">
+                    
                 </div>
             </div>
         @endif
