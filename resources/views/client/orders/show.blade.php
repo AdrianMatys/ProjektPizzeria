@@ -7,6 +7,7 @@
         <th>{{__('client.status')}}</th>
         <th>{{__('client.createdAt')}}</th>
         <th>{{__('client.products')}}</th>
+        <th>{{__('client.totalPrice')}}</th>
         <th>{{__('client.changeStatus')}}</th>
     </tr>
         <tr>
@@ -25,6 +26,7 @@
                         <th>{{__('client.name')}}</th>
                         <th>{{__('client.ingredients')}}</th>
                         <th>{{__('client.quantity')}}</th>
+                        <th>{{__('client.price')}}</th>
                     </tr>
                     @foreach($order->orderItems as $orderItem)
                         <tr>
@@ -39,12 +41,15 @@
                                 </table>
                             </td>
                             <td>{{$orderItem->quantity}}</td>
+                            <td>{{$orderItem->price}}</td>
                         </tr>
                     @endforeach
                 </table>
             </td>
             <td>
-
+                {{$orderItem->price}} zł
+            </td>
+            <td>
                 <form action="{{ route('client.orders.cancelOrder', $order->id )}}" method="POST">
                     @csrf
                     @method('PATCH')
