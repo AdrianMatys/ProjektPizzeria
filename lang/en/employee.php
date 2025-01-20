@@ -53,5 +53,6 @@ return [
     'addNewTranslation' => 'Add new translation',
     'editTranslation' => 'Edit translation',
     'backToTranslations' => 'Back to translations',
+    'pizzaPrice' => 'Pizza price',
 
 ];
