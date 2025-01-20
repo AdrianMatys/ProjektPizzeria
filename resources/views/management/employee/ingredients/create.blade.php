@@ -5,6 +5,7 @@
         <th>{{__('employee.ingredientName')}}</th>
         <th>{{__('employee.ingredientQuantity')}}</th>
         <th>{{__('employee.price')}}</th>
+        <th>{{__('employee.minQuantity')}}</th>
         <th>{{__('employee.unit')}}</th>
         <th>{{__('employee.add')}}</th>
     </tr>
@@ -19,6 +20,9 @@
             </td>
             <td>
                 <input type="number" min="0" step="0.01" name="price" id="price">
+            </td>
+            <td>
+                <input type="number" min="0" step="1" name="minQuantity" id="minQuantity">
             </td>
             <td>
                 <select name="unit" id="unit">

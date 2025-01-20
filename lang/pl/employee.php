@@ -56,4 +56,5 @@ return [
     'pizzaPrice' => 'Cena pizzy',
     'price' => 'Cena',
     'totalPrice' => 'Cena całkowita',
+    'minQuantity' => 'Minimalna ilość',
 ];

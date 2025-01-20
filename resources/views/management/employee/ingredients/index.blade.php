@@ -7,6 +7,7 @@
         <th>{{__('employee.ingredientQuantity')}}</th>
         <th>{{__('employee.unit')}}</th>
         <th>{{__('employee.price')}}</th>
+        <th>{{__('employee.minQuantity')}}</th>
         <th>{{__('employee.delete')}}</th>
         <th>{{__('employee.edit')}}</th>
     </tr>
@@ -16,6 +17,7 @@
             <td>{{ $ingredient->quantity }}</td>
             <td>{{ $ingredient->unit }}</td>
             <td>{{ $ingredient->price }}</td>
+            <td>{{ $ingredient->minQuantity }}</td>
             <td>
                 <form action="{{ route('management.employee.ingredients.destroy', $ingredient->id) }}" method="post">
                     @csrf
