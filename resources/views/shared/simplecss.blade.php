@@ -14,8 +14,8 @@
         --text: #212121;
         --text-light: #585858;
         --border: #898EA4;
-        --accent: #0d47a1;
-        --accent-hover: #1266e2;
+        --accent:rgb(255, 187, 0);
+        --accent-hover:rgb(171, 126, 3);
         --accent-text: var(--bg);
         --code: #d81b60;
         --preformatted: #444;
