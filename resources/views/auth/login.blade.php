@@ -82,7 +82,7 @@
 </style>
 
 
-@include('shared.navbar')
+@include('shared.header')
 
 <div class="container">
     <form action="{{route('login')}}" method="post">
