@@ -2,13 +2,12 @@
 
 namespace App\Http\Controllers\Employee;
 
-use App\Actions\Logs\LogNewPizzaAction;
+use App\Actions\Logs\LogCreateIngredient;
+use App\Actions\Logs\LogDeletedIngredientAction;
 use App\Actions\Logs\LogUpdateIngredientAction;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\UpdateIngredientRequest;
 use App\Models\Ingredient;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Session;
 
 class IngredientsController extends Controller
 {
@@ -38,7 +37,7 @@ class IngredientsController extends Controller
         return view('management.employee.ingredients.edit', compact('ingredient'));
     }
 
-    public function destroy($id, LogNewPizzaAction $logDeletedIngredientAction)
+    public function destroy($id, LogDeletedIngredientAction $logDeletedIngredientAction)
     {
         $ingredient = Ingredient::query()->find($id);
 
@@ -61,19 +60,19 @@ class IngredientsController extends Controller
         $validated = $request->validated();
         $ingredient->update($validated);
 
-        $logUpdateIngredientAction->execute(auth()->id(), ['ingredientName' => $ingredient->name]);
+        $logUpdateIngredientAction->execute(auth()->id(), ['Ingredient name' => $ingredient->name]);
 
         return redirect()->route('management.employee.ingredients.index')
             ->with('success', __('employee.ingredientUpdated'));
 
     }
 
-    public function store(UpdateIngredientRequest $request, LogNewPizzaAction $logNewIngredientAction)
+    public function store(UpdateIngredientRequest $request, LogCreateIngredient $logCreateIngredient)
     {
         $validated = $request->validated();
         $ingredient = Ingredient::create($validated);
 
-        $logNewIngredientAction->execute(auth()->id(), ['ingredientName' => $ingredient->name]);
+        $logCreateIngredient->execute(auth()->id(), ['Ingredient name' => $ingredient->name]);
 
         return redirect()->route('management.employee.ingredients.index')
             ->with('success', __('employee.ingredientAdded'));

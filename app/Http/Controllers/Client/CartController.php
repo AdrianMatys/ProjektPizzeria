@@ -36,7 +36,11 @@ class CartController extends Controller
 
         $createOrderItemsFromCartItemsAction->execute($user->cart->items, $user->cart->id);
 
-        $logNewOrderAction->execute($user->id, ['cart_id' => $user->cart->id]);
+        $cartItemsString = $user->cart->items->map(function ($item) {
+            return $item->item->name;
+        })->implode(', ');
+
+        $logNewOrderAction->execute($user->id, ['Cart items' => $cartItemsString]);
 
         return view('client.orders.completed', ['cartItems' => $user->cart->items]);
     }

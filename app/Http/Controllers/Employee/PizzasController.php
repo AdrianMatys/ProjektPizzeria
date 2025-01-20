@@ -54,7 +54,7 @@ class PizzasController extends Controller
         if(!$pizza)
             return redirect()->route('management.employee.pizzas.index')->with('error', __('employee.failedRemovePizza'));
 
-        $logDeletedPizzaAction->execute(auth()->id(), ['pizza' => $pizza]);
+        $logDeletedPizzaAction->execute(auth()->id(), ['Pizza name' => $pizza->name]);
         $pizza->delete();
         return redirect()->route('management.employee.pizzas.index')->with('success', __('employee.pizzaRemoved'));
     }
@@ -72,7 +72,7 @@ class PizzasController extends Controller
         $validated = $request->validated();
 
         $createPizzaAsEmployeeAction->execute($validated);
-        $logNewPizzaAction->execute(auth()->id(), ['pizza' => $validated]);
+        $logNewPizzaAction->execute(auth()->id(), ['Pizza name' => $validated['name'], 'Ingredients' => $validated['ingredient']]);
 
         return redirect()->route('management.employee.pizzas.index')->with('success', __('employee.pizzaAdded'));
     }
