@@ -34,7 +34,7 @@ class CreateOrderItemAction
             $this->usingUpIngredients($ingredient, $cartItem->quantity);
             $this->checkLowStock($ingredient->id);
         }
-        $isNotifyOnCooldown = false;
+        $this->isNotifyOnCooldown = false;
     }
 
     private function checkLowStock(int $ingredientId): void
@@ -43,14 +43,15 @@ class CreateOrderItemAction
             ->where('id', $ingredientId)
             ->first();
         if ($Ingredient->quantity < $Ingredient->minQuantity) return;
-        if($this->isNotifyOnCooldown($Ingredient->id)) return;
+        if($this->isIngredientNotifyOnCooldown($Ingredient->id)) return;
+        if($this->isNotifyOnCooldown) return;
 
         Artisan::call('notify:low-stock');
-        $isNotifyOnCooldown = true;
+        $this->isNotifyOnCooldown = true;
     }
-    private function isNotifyOnCooldown(int $ingredientId): bool
+    private function isIngredientNotifyOnCooldown(int $ingredientId): bool
     {
-        return !Cache::add('notifyCooldown:' . $ingredientId, true, now()->addMinutes(3));
+        return !Cache::add('notifyCooldown:' . $ingredientId, true, now()->addDay());
     }
     private function usingUpIngredients(Ingredient $ingredient, int $cartItemQuantity): void
     {
