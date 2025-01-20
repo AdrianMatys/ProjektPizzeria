@@ -87,19 +87,19 @@
     <form action="{{route('register')}}" method="post">
         @csrf
         <label for="name">{{__('auth.nameInput')}}</label>
-        <input type="text" name="name" id="name" placeholder="Your name...">
+        <input type="text" name="name" id="name" placeholder="{{__('auth.Yourname')}}">
         
-        <label for="email">Email</label>
-        <input type="email" name="email" id="email" placeholder="Your email...">
+        <label for="email">{{__('auth.email')}}</label>
+        <input type="email" name="email" id="email" placeholder="{{__('auth.Youremail')}}">
         
         <label for="password">{{__('auth.passwordInput')}}</label>
-        <input type="password" name="password" id="password" placeholder="Your password...">
+        <input type="password" name="password" id="password" placeholder="{{__('auth.Yourpassword')}}">
         
         <label for="password_confirmation">{{__('auth.confirmPasswordInput')}}</label>
-        <input type="password" name="password_confirmation" id="password_confirmation" placeholder="Confirm your password...">
+        <input type="password" name="password_confirmation" id="password_confirmation" placeholder="{{__('auth.confirmPasswordInput')}}">
         
         <label for="registrationToken">{{__('auth.registerationToken')}}</label>
-        <input type="text" name="registrationToken" id="registrationToken" placeholder="Registration token...">
+        <input type="text" name="registrationToken" id="registrationToken" placeholder="`{{__('auth.registerationToken')}}">
         
         <button type="submit">{{__('auth.registerButton')}}</button>
     </form>

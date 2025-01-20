@@ -87,11 +87,11 @@
 <div class="container">
     <form action="{{route('login')}}" method="post">
         @csrf
-        <label for="email">Email</label>
-        <input type="email" name="email" id="email" placeholder="Your email...">
+        <label for="email">{{__('admin.email')}}</label>
+        <input type="email" name="email" id="email" placeholder="{{__('auth.Youremail')}}">
         
         <label for="password">{{__('auth.passwordInput')}}</label>
-        <input type="password" name="password" id="password" placeholder="Your password...">
+        <input type="password" name="password" id="password" placeholder="{{__('auth.Yourpassword')}}">
         
         <button type="submit">{{__('auth.loginButton')}}</button>
     </form>
