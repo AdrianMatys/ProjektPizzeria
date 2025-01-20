@@ -35,7 +35,9 @@ class SendLowStockNotification extends Command
     {
         Log::info('Low stock notification started');
 
-        $lowStockIngredients = Ingredient::query()->where('quantity', '<', 1000)->get();
+        $lowStockIngredients = Ingredient::query()
+            ->whereColumn('quantity', '<', 'minQuantity')
+            ->get();
 
         if($lowStockIngredients->isEmpty()){
             $this->info("Brak składników o niskim stanie magazynowym.");

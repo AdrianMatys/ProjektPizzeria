@@ -42,8 +42,7 @@ class CreateOrderItemAction
         $Ingredient = Ingredient::query()
             ->where('id', $ingredientId)
             ->first();
-
-        if ($Ingredient->quantity < 1000) return;
+        if ($Ingredient->quantity < $Ingredient->minQuantity) return;
         if($this->isNotifyOnCooldown($Ingredient->id)) return;
 
         Artisan::call('notify:low-stock');
