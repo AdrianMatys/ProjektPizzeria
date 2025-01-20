@@ -19,10 +19,4 @@ class Order extends Model
         return $this->hasMany(OrderItem::class);
     }
 
-    public function totalPrice(): Attribute
-    {
-        return Attribute::get(
-            fn(): float => $this->orderItems->sum('price'),
-        );
-    }
 }
