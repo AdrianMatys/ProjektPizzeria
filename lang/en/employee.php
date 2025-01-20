@@ -54,5 +54,7 @@ return [
     'editTranslation' => 'Edit translation',
     'backToTranslations' => 'Back to translations',
     'pizzaPrice' => 'Pizza price',
+    'price' => 'Price',
+    'totalPrice' => 'Total price',
 
 ];

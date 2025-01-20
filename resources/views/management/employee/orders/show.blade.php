@@ -9,6 +9,7 @@
         <th>{{__('employee.status')}}</th>
         <th>{{__('employee.createdAt')}}</th>
         <th>{{__('employee.products')}}</th>
+        <th>{{__('employee.totalPrice')}}</th>
         <th>{{__('employee.changeStatus')}}</th>
     </tr>
         <tr>
@@ -22,6 +23,7 @@
                         <th>{{__('employee.name')}}</th>
                         <th>{{__('employee.ingredients')}}</th>
                         <th>{{__('employee.quantity')}}</th>
+                        <th>{{__('employee.price')}}</th>
                     </tr>
                     @foreach($order->orderItems as $orderItem)
                         <tr>
@@ -36,9 +38,13 @@
                                 </table>
                             </td>
                             <td>{{$orderItem->quantity}}</td>
+                            <td>{{$orderItem->price}}</td>
                         </tr>
                     @endforeach
                 </table>
+            </td>
+            <td>
+                {{$orderItem->price}} zł
             </td>
             <td>
                 <form action="{{ route('management.employee.orders.updateStatus', $order->id )}}" method="POST">
