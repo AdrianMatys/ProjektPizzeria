@@ -27,6 +27,7 @@ class UpdateIngredientRequest extends FormRequest
             'name' => ['required', 'string', 'max:255'],
             'unit' => ['required', 'string', 'max:255'],
             'price' => 'required|numeric|min:0',
+            'minQuantity' => 'required|numeric|min:0',
             'quantity' => [
                 'required',
                 'integer',
