@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -16,5 +17,12 @@ class Order extends Model
     }
     public function orderItems(){
         return $this->hasMany(OrderItem::class);
+    }
+
+    public function totalPrice(): Attribute
+    {
+        return Attribute::get(
+            fn(): float => $this->orderItems->sum('price'),
+        );
     }
 }
