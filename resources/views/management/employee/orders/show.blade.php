@@ -44,7 +44,7 @@
                 </table>
             </td>
             <td>
-                {{$orderItem->price}} zł
+                {{$order->total_price}} zł
             </td>
             <td>
                 <form action="{{ route('management.employee.orders.updateStatus', $order->id )}}" method="POST">
