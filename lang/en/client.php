@@ -44,7 +44,8 @@ return [
     'addNewIngredient' => 'Add new ingredient',
     'remove' => 'Remove ingredient',
     'cancel' => 'Cancel',
-    'price' => 'Price'
+    'price' => 'Price',
+    'totalPrice' => 'Total price',
 
 
 ];

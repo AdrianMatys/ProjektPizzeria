@@ -5,6 +5,7 @@
     <tr>
         <th>{{__('employee.pizzaName')}}</th>
         <th>{{__('employee.ingredients')}}</th>
+        <th>{{__('employee.pizzaPrice')}}</th>
         <th>{{__('employee.remove')}}</th>
         <th>{{__('employee.edit')}}</th>
     </tr>
@@ -15,6 +16,9 @@
             @foreach($pizza->ingredients as $ingredient)
                     {{ $ingredient->translatedName }} ({{ $ingredient->quantityOnPizza}} g)
             @endforeach
+            </td>
+            <td>
+                {{$pizza->price}}
             </td>
             <td>
                 <form action="{{ route('management.employee.pizzas.destroy', $pizza->id) }}" method="post">

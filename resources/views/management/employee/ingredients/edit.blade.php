@@ -4,6 +4,7 @@
     <tr>
         <th>{{__('employee.ingredientName')}}</th>
         <th>{{__('employee.ingredientQuantity')}}</th>
+        <th>{{__('employee.price')}}</th>
         <th>{{__('employee.unit')}}</th>
         <th>{{__('employee.update')}}</th>
     </tr>
@@ -11,8 +12,15 @@
         <form action="{{ route('management.employee.ingredients.update', $ingredient) }}" method="post">
             @csrf
             @method('put')
-            <td><input type="text" name="name" id="name" value="{{ $ingredient->name }}"></td>
-            <td><input type="number" name="quantity" id="quantity" value="{{ $ingredient->quantity }}"></td>
+            <td>
+                <input type="text" name="name" id="name" value="{{ $ingredient->name }}">
+            </td>
+            <td>
+                <input type="number" name="quantity" id="quantity" value="{{ $ingredient->quantity }}">
+            </td>
+            <td>
+                <input type="number" min="0" step="0.01" name="price" id="price" value="{{$ingredient->price}}">
+            </td>
             <td>
                 <select name="unit" id="unit">
                     <option value="g">g</option>

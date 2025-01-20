@@ -23,6 +23,7 @@ class StorePizzaRequest extends FormRequest
     {
         return [
             'name' => 'required|string|max:255|unique:pizzas,name',
+            'price' => 'required|numeric|min:0',
             'ingredient' => 'required|array|min:1',
             'ingredient.*' => 'required|exists:ingredients,id',
             'quantity' => 'required|array|min:1',
