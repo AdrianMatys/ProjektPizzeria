@@ -30,5 +30,8 @@ class AppServiceProvider extends ServiceProvider
             'EditedPizza' => EditedPizza::class,
             'CustomPizza' => CustomPizza::class,
         ]);
+        if($this->app->environment('production')) {
+            \URL::forceScheme('https');
+        }
     }
 }

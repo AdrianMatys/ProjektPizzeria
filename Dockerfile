@@ -46,12 +46,19 @@ RUN mkdir -p /home/${USER_NAME}/.composer && \
     chown -R ${USER_NAME}:root /home/${USER_NAME}
 
 COPY ./nginx.conf /etc/nginx/sites-enabled/default
+COPY ./collegiumpizzerona.pl.csr.txt /etc/nginx/collegiumpizzerona.pl.csr
+COPY ./collegiumpizzerona.pl.key.txt /etc/nginx/collegiumpizzerona.pl.key
+COPY ./collegiumpizzerona.pl.intermediate.pem /etc/nginx/collegiumpizzerona.pl.intermediate.pem
+COPY ./collegiumpizzerona.pl.certificate.pem /etc/nginx/collegiumpizzerona.pl.certificate.pem
+RUN cat /etc/nginx/collegiumpizzerona.pl.certificate.pem /etc/nginx/collegiumpizzerona.pl.intermediate.pem > /etc/nginx/collegiumpizzerona.pl.fullchain.pem
+
+
 COPY ./php-docker.conf /usr/local/etc/php-fpm.d/zz-docker.conf
 
 WORKDIR /application
 
 
-
+RUN nginx -t
 RUN service nginx start
 
 

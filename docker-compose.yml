@@ -12,7 +12,7 @@ services:
     volumes:
       - ./:/application
     ports:
-      - 80:80
+      - 81:80
       - ${VITE_PORT}:${VITE_PORT}
     networks:
       - network-pizza
