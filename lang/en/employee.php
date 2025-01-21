@@ -40,6 +40,7 @@ return [
     'savePizza' => 'Save pizza',
     'pizzaName' => 'Pizza name',
     'addNewPizza' => 'Add new pizza',
+    'pizzaCost'=>"Pizza cost",
 
     'ingredient' => 'Ingredient',
     'languageCode' => 'Language code',
@@ -66,5 +67,6 @@ return [
     'price' => 'Price',
     'totalPrice' => 'Total price',
     'minQuantity' => 'Minimum quantity',
+    'menuManagement'=>'Menu management'
 
 ];

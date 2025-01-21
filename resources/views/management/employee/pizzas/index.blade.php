@@ -1,204 +1,323 @@
-@include('shared.header')
+<title>Admin</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        body {
+            background-color: #fff3e0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        .container {
+            background-color: #fff9e6;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            padding: 20px;
+        }
+        h1 {
+            color: #ff8c00;
+            font-weight: bold;
+        }
+        .section-header {
+            cursor: pointer;
+            user-select: none;
+            padding: 15px;
+            background-color: #ffe0b2;
+            border-left: 5px solid #ff8c00;
+            border-radius: 5px;
+            margin-bottom: 15px;
+            transition: all 0.3s ease;
+        }
+        .section-header:hover {
+            background-color: #ffd180;
+        }
+        .section-header::after {
+            content: '\f078';
+            font-family: 'Font Awesome 5 Free';
+            font-weight: 900;
+            float: right;
+            transition: transform 0.3s ease;
+        }
+        .section-header.collapsed::after {
+            transform: rotate(-90deg);
+        }
+        .section-content {
+            transition: max-height 0.3s ease-out, opacity 0.3s ease-out;
+            max-height: 2000px;
+            opacity: 1;
+            overflow: hidden;
+        }
+        .section-content.collapsed {
+            max-height: 0;
+            opacity: 0;
+            margin-bottom: 15px;
+        }
+        .btn-group-vertical > .btn {
+            margin-bottom: 5px;
+        }
+        .table {
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        .table thead {
+            background-color: #ffa726;
+            color: white;
+        }
+        .btn-primary {
+            background-color: #ff9800;
+            border-color: #ff9800;
+        }
+        .btn-danger {
+            background-color: #ff5722;
+            border-color: #ff5722;
+        }
+        .btn-success {
+            background-color: #ffa726;
+            border-color: #ffa726;
+        }
+    </style>
+</head>
+<body>
+    <div class="container mt-4">
+        <h1 class="text-center mb-4"><i class="fas fa-pizza-slice me-2"></i>Panel administratora pizzerii</h1>
 
-<td><a href={{ route("management.employee.pizzas.create") }}>{{__('employee.addNewPizza')}}</a></td>
-<table>
-    <tr>
-        <th>{{__('employee.pizzaName')}}</th>
-        <th>{{__('employee.ingredients')}}</th>
-        <th>{{__('employee.pizzaPrice')}}</th>
-        <th>{{__('employee.remove')}}</th>
-        <th>{{__('employee.edit')}}</th>
-    </tr>
-    @foreach($pizzas as $pizza)
-        <tr>
-            <td>{{ $pizza->name }}</td>
-            <td>
-            @foreach($pizza->ingredients as $ingredient)
-                    {{ $ingredient->translatedName }} ({{ $ingredient->quantityOnPizza}} g)
-            @endforeach
-            </td>
-            <td>
-                {{$pizza->price}}
-            </td>
-            <td>
-                <form action="{{ route('management.employee.pizzas.destroy', $pizza->id) }}" method="post">
-                    @csrf
-                    @method('delete')
-                    <button type="submit">X</button>
-                </form>
-            </td>
-            <td><a href={{ route("management.employee.pizzas.edit", $pizza) }}>{{__('employee.edit')}}</a></td>
-        </tr>
-    @endforeach
-</table>
+        <div class="mb-5">
+            <h2 class="section-header" onclick="toggleSection(this)">
+                <i class="fas fa-clipboard-list me-2"></i>Bieżące zamówienia
+            </h2>
+            <div class="section-content">
+                <table class="table table-striped" id="ordersTable">
+                    <thead>
+                        <tr>
+                            <th>Nr zamówienia</th>
+                            <th>Klient</th>
+                            <th>Zamówienie</th>
+                            <th>Status</th>
+                            <th>Akcje</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>1</td>
+                            <td>Jan Kowalski</td>
+                            <td>Pepperoni (2), Margherita (1)</td>
+                            <td>W przygotowaniu</td>
+                            <td>
+                                <div class="btn-group-vertical">
+                                    <button class="btn btn-primary btn-sm" onclick="updateOrderStatus(this, 1)">
+                                        <i class="fas fa-arrow-up me-1"></i>Następny status
+                                    </button>
+                                    <button class="btn btn-secondary btn-sm" onclick="updateOrderStatus(this, -1)">
+                                        <i class="fas fa-arrow-down me-1"></i>Poprzedni status
+                                    </button>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>2</td>
+                            <td>Anna Nowak</td>
+                            <td>Cztery sery (1), Hawajska (1)</td>
+                            <td>W dostawie</td>
+                            <td>
+                                <div class="btn-group-vertical">
+                                    <button class="btn btn-primary btn-sm" onclick="updateOrderStatus(this, 1)">
+                                        <i class="fas fa-arrow-up me-1"></i>Następny status
+                                    </button>
+                                    <button class="btn btn-secondary btn-sm" onclick="updateOrderStatus(this, -1)">
+                                        <i class="fas fa-arrow-down me-1"></i>Poprzedni status
+                                    </button>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
 
-<style>
-body {
-    font-family: Arial, sans-serif;
-    margin: 0;
-    padding: 0;
-    background-color: #fdf7e3;
-    color: #333;
-}
+        <div class="mb-5">
+            <h2 class="section-header" onclick="toggleSection(this)">
+                <i class="fas fa-utensils me-2"></i>Zarządzanie menu
+            </h2>
+            <div class="section-content">
+                <table class="table table-striped" id="menuTable">
+                    @foreach($pizzas as $pizza)
+                    <thead>
+                        <tr>
+                            <th>{{__('employee.pizzaName')}}</th>
+                            <th>{{__('employee.ingredients')}}</th>
+                            <th>{{__('employee.pizzaCost')}}</th>
+                            <th>{{__('employeeactions')}}</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>{{$pizza->name}}</td>
+                            <td>{{$pizza->ingredients->map(fn($ingredient) => $ingredient->translatedName)->join(', ')}}</td>
+                            <td>{{$pizza->price}}</td>
+                            <td>
+                                <a href={{ route("management.employee.pizzas.edit", $pizza) }}>{{__('employee.edit')}}</a>
+                                <form action="{{ route('management.employee.pizzas.destroy', $pizza->id) }}" method="post">
+                                    @csrf
+                                    @method('delete')
+                                    <button type="submit">X</button>
+                                </form>
+                            </td>
+                        </tr>
+                    </tbody>
+                    @endforeach
+                </table>
+                <button class="btn btn-success" onclick="openAddModal()">
+                    <i class="fas fa-plus me-1"></i>Dodaj nową pizzę
+                </button>
+            </div>
+        </div>
 
-header {
-    background-color: #f8cb8c;
-    color: #333;
-    padding: 15px;
-    text-align: center;
-    font-size: 1.8rem;
-    font-weight: bold;
-    border-bottom: 2px solid #e6b678;
-}
+        <div class="mb-5">
+            <h2 class="section-header" onclick="toggleSection(this)">
+                <i class="fas fa-chart-bar me-2"></i>Statystyki
+            </h2>
+            <div class="section-content">
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="card text-center mb-3">
+                            <div class="card-body">
+                                <h5 class="card-title">Łączna liczba zamówień dzisiaj</h5>
+                                <p class="card-text display-4" id="totalOrders">15</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="card text-center mb-3">
+                            <div class="card-body">
+                                <h5 class="card-title">Przychód dzisiaj</h5>
+                                <p class="card-text display-4"><span id="totalRevenue">450</span> zł</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="card text-center mb-3">
+                            <div class="card-body">
+                                <h5 class="card-title">Najpopularniejsza pizza</h5>
+                                <p class="card-text display-4" id="mostPopularPizza">Pepperoni</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <h3>Zamówione pizze dzisiaj:</h3>
+                <ul id="pizzaOrdersList" class="list-group"></ul>
+            </div>
+        </div>
 
-a {
-    color: #f08c2e;
-    text-decoration: none;
-    font-weight: bold;
-}
+        <div class="mb-5">
+            <h2 class="section-header" onclick="toggleSection(this)">
+                <i class="fas fa-user-clock me-2"></i>Logi pracowników
+            </h2>
+            <div class="section-content">
+                <table class="table table-striped" id="employeeLogsTable">
+                    <thead>
+                        <tr>
+                            <th>Data</th>
+                            <th>Pracownik</th>
+                            <th>Działanie</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
 
-a:hover {
-    text-decoration: underline;
-}
+    <div class="modal fade" id="editModal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title"><i class="fas fa-edit me-2"></i>Edytuj pizzę</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="editForm">
+                        <div class="mb-3">
+                            <label for="editName" class="form-label">Nazwa:</label>
+                            <input type="text" class="form-control" id="editName" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="editPrice" class="form-label">Cena:</label>
+                            <input type="number" class="form-control" id="editPrice" required>
+                        </div>
+                        <button type="submit" class="btn btn-primary">
+                            <i class="fas fa-save me-1"></i>Zapisz zmiany
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
 
-table {
-    width: 80%;
-    margin: 20px auto;
-    border-collapse: collapse;
-    background-color: #fff9e8;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-    border-radius: 8px;
-    overflow: hidden;
-}
+    <div class="modal fade" id="addModal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title"><i class="fas fa-plus me-2"></i>Dodaj nową pizzę</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="addForm">
+                        <div class="mb-3">
+                            <label for="addName" class="form-label">Nazwa:</label>
+                            <input type="text" class="form-control" id="addName" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="addPrice" class="form-label">Cena:</label>
+                            <input type="number" class="form-control" id="addPrice" required>
+                        </div>
+                        <button type="submit" class="btn btn-success">
+                            <i class="fas fa-plus me-1"></i>Dodaj pizzę
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
 
-th, td {
-    border: 1px solid #f4d7a3;
-    padding: 12px 15px;
-    text-align: center;
-    vertical-align: middle;
-}
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        const orderStatuses = ['Przyjęte', 'W przygotowaniu', 'W dostawie', 'Dostarczono'];
 
-th {
-    background-color: #ffa62b;
-    color: white;
-    text-transform: uppercase;
-    font-size: 1rem;
-}
+        function toggleSection(header) {
+            header.classList.toggle('collapsed');
+            header.nextElementSibling.classList.toggle('collapsed');
+        }
+        function openEditModal(button) {
+            const editModal = new bootstrap.Modal(document.getElementById('editModal'));
+            const row = button.closest('tr');
+            const name = row.cells[0].textContent;
+            const price = parseInt(row.cells[1].textContent);
 
-td {
-    font-size: 0.95rem;
-    color: #444;
-}
+            document.getElementById('editName').value = name;
+            document.getElementById('editPrice').value = price;
 
-tr:nth-child(even) {
-    background-color: #fef6e3;
-}
+            editModal.show();
 
-tr:hover {
-    background-color: #ffeed2;
-    cursor: pointer;
-}
+            document.getElementById('editForm').onsubmit = function(e) {
+                e.preventDefault();
+                const newName = document.getElementById('editName').value;
+                const newPrice = document.getElementById('editPrice').value;
+                row.cells[0].textContent = newName;
+                row.cells[1].textContent = newPrice + ' zł';
+                editModal.hide();
+                updateStatistics();
+                addEmployeeLog(`Edytowano pizzę ${name} na ${newName}, cena: ${newPrice} zł`);
+            };
+        }
 
-button {
-    background-color: #ffa62b;
-    color: white;
-    border: none;
-    padding: 8px 12px;
-    cursor: pointer;
-    font-size: 0.9rem;
-    border-radius: 4px;
-    margin: 2px;
-}
+        function openAddModal() {
+            const addModal = new bootstrap.Modal(document.getElementById('addModal'));
+            addModal.show();
 
-button:hover {
-    background-color: #e59429;
-}
-
-button:focus {
-    outline: none;
-}
-
-button.delete {
-    background-color: #ff6f61;
-}
-
-button.delete:hover {
-    background-color: #e65b4d;
-}
-
-.container {
-    width: 80%;
-    margin: 0 auto;
-    padding: 20px;
-    background-color: #fff9e8;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-    border-radius: 8px;
-    border: 1px solid #f4d7a3;
-}
-
-h1 {
-    text-align: center;
-    color: #f08c2e;
-    font-size: 2rem;
-    margin-bottom: 20px;
-}
-
-.add-button {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin: 20px auto;
-    padding: 12px 20px;
-    background-color: #ffa62b;
-    color: white;
-    text-align: center;
-    text-decoration: none;
-    border-radius: 8px;
-    font-size: 1.2rem;
-    font-weight: bold;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    transition: transform 0.2s ease, background-color 0.2s ease;
-    width: fit-content;
-}
-
-.add-button:hover {
-    background-color: #e59429;
-    transform: scale(1.05);
-}
-
-.add-button:focus {
-    outline: none;
-    box-shadow: 0 0 5px #e59429;
-}
-
-.add-button-container {
-    display: flex;
-    justify-content: flex-end;
-    align-items: center;
-    padding: 10px 20px;
-}
-
-@media (max-width: 768px) {
-    table {
-        width: 100%;
-    }
-
-    th, td {
-        padding: 10px;
-        font-size: 0.85rem;
-    }
-
-    .add-button-container {
-        justify-content: center;
-    }
-
-    .add-button {
-        width: 100%;
-        text-align: center;
-    }
-}
-
-
-
-</style>
-
+            document.getElementById('addForm').onsubmit = function(e) {
+                e.preventDefault();
+                const name = document.getElementById('addName').value;
+                const price = document.getElementById('addPrice').value;
+                addPizza(name, price);
+                addModal.hide();
+                document.getElementById('addForm').reset();
+            };
+        }
