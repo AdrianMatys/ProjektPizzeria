@@ -1,5 +1,4 @@
 @include('shared.return-message')
-@include('shared.simplecss')
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 <!DOCTYPE html>
 <html>
@@ -7,6 +6,7 @@
     <link rel="stylesheet" href="style.css">
     <style>
         .header {
+            background-color: rgb(0, 0, 0);
             display: flex;
             align-items: center;
             gap: 2rem;
@@ -78,31 +78,6 @@
             flex: 1;
             min-width: 200px;
         }
-
-        .search-bar {
-            padding: 0.5rem;
-            padding-left: 1rem;
-            border: 0.1rem solid #FF9800;
-            border-radius: 4rem;
-            width: 100%;
-            min-width: 0;
-        }
-
-        .search-bar::placeholder {
-            color: #FF9800;
-            opacity: 0.7;
-        }
-
-        .search-bar:focus {
-            border-color: #FF9800;
-            outline: none;
-        }
-
-        img {
-            height: 2.5rem;
-            width: 2.5rem;
-        }
-
         .cart-btn {
             position: relative;
             background: none;

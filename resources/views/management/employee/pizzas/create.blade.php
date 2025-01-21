@@ -29,21 +29,21 @@
 
 <style>
     body {
-        background-color: #fdf7e3; /* Кремовый цвет заднего фона страницы */
+        background-color: #fdf7e3; 
         font-family: Arial, sans-serif;
         margin: 0;
         padding: 0;
     }
 
     input[type="text"] {
-        background-color: #fdf7e3; /* Кремовый цвет для строки под Pizza Name */
+        background-color: #fdf7e3;
         border: 1px solid #ccc;
         padding: 10px;
         border-radius: 5px;
-        font-size: 16px; /* Чёткий размер текста */
-        color: #000; /* Чёрный цвет текста */
-        font-family: Arial, sans-serif; /* Ясный и стандартный шрифт */
-        text-rendering: optimizeLegibility; /* Оптимизация рендеринга текста */
+        font-size: 16px; 
+        color: #000; 
+        font-family: Arial, sans-serif; 
+        text-rendering: optimizeLegibility;
     }
 
     table, th, td {
@@ -56,7 +56,7 @@
     }
 
     th {
-        background-color: #f9f1dc; /* Кремовый фон для заголовков таблицы */
+        background-color: #f9f1dc; 
     }
 
     button {
@@ -68,7 +68,7 @@
     }
 
     label {
-        background-color: #f9f1dc; /* Кремовый фон для текста */
+        background-color: #f9f1dc; 
         padding: 5px;
         border-radius: 5px;
     }

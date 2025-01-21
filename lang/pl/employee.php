@@ -63,7 +63,7 @@ return [
     'cancelled'=>'Anulowane',
     'in_progress'=>"W trakcie",
     'pending'=>"Oczekujące",
-    'menuManagement'=>'Zarządzanie menu'
+    'menuManagement'=>'Zarządzanie menu',
 
     'pending'=>"Oczekujące",
 
