@@ -10,7 +10,7 @@
     <label for="name">{{__('employee.pizzaName')}}:</label><br>
     <input type="text" name="name" id="name" value="{{$pizza->name}}"><br><br>
     <label for="name">{{__('employee.pizzaPrice')}}:</label><br>
-    <input type="number" min="0" step="0.01" name="price" id="price"><br><br>
+    <input type="number" min="0" step="0.01" name="price" id="price" value="{{$pizza->price}}"><br><br>
 
     <table id="ingredientsTable">
         <tr>
