@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Employee;
 
 use App\Http\Controllers\Controller;
+use App\Models\Ingredient;
 use App\Models\Order;
 use App\Models\Pizza;
 use Illuminate\Http\Request;
@@ -20,7 +21,15 @@ class employeePanelController extends Controller
             }])
             ->get();
         $groupedOrders = Order::query()->get()->groupBy('status');
-        return view('management.employee.panel.index', compact('groupedOrders', 'pizzas'));
+
+        $locale = App::getLocale();
+        $ingredients = Ingredient::query()
+            ->with(['translations' => function ($query) use ($locale){
+                $query->where('language_code', $locale);
+            }])
+            ->get();
+
+        return view('management.employee.panel.index', compact('groupedOrders', 'pizzas', 'ingredients'));
 
     }
 }
