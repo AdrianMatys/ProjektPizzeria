@@ -534,7 +534,7 @@
         <a href="{{route('client.orders.index')}}" class="menu-item">{{__('Order')}}</a>
     </div>
     <div class="search-container">
-        <input type="text" class="search-bar orange-text" placeholder="{{__('navbar.search')}}">
+        
     </div>
     <div class="cart-btn">
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="cart-icon">

@@ -83,7 +83,7 @@
     <div class="container">
         <h1><i class="fas fa-pizza-slice pizza-icon"></i>{{ __('employee.warehouseTitle') }}</h1>
         
-        <input type="text" id="searchInput" class="form-control mb-3" placeholder="{{ __('employee.searchIngredient') }}">
+        
         
         <div class="mb-3">
             <button class="btn" data-bs-toggle="modal" data-bs-target="#addModal">
