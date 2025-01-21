@@ -4,7 +4,7 @@ namespace App\Actions\Logs;
 
 use App\Services\LoggerService;
 
-class LogUpdateIngredientAction
+class LogCreateIngredient
 {
     protected LoggerService $loggerService;
 

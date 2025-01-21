@@ -9,11 +9,7 @@ Route::get('/user', function (Request $request) {
 })->middleware('auth:sanctum');
 
 Route::middleware('auth:sanctum')->group(function () {
-    Route::get('cart', [CartController::class, 'index'])->name('cart.index');
-
-    Route::post('cart/add', [CartController::class, 'addToCart'])->name('cart.add');
-
-    Route::delete('cart/remove/{itemId}', [CartController::class, 'removeItem'])->name('cart.remove');
-
-    Route::put('cart/update/{itemId}', [CartController::class, 'updateItemQuantity'])->name('cart.update');
+    Route::get('cart/json', [CartController::class, 'getJson'])
+        ->name('client.cart.json')
+        ->middleware(['auth']);
 });

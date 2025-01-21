@@ -163,9 +163,6 @@ Route::delete('cart/item/{id}', [CartController::class, 'destroyItem'])
 Route::patch('cart/item/{id}', [CartController::class, 'patchQuantity'])
     ->name('client.cart.patchQuantity')
     ->middleware(['auth']);;
-Route::get('cart/json', [CartController::class, 'getJson'])
-    ->name('client.cart.json')
-    ->middleware(['auth']);
 Route::get('cart', [CartController::class, 'index'])
     ->name('client.cart.index')
     ->middleware(['auth']);

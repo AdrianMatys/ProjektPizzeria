@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Client;
 
 use App\Actions\Orders\AddItemToCartAction;
 use App\Actions\Logs\LogNewOrderAction;
+use App\Actions\Orders\CheckIngredientQuantityAction;
 use App\Actions\Orders\CreateOrderItemsFromCartItemsAction;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\AddItemToCartRequest;
@@ -29,14 +30,22 @@ class CartController extends Controller
 
     public function order(
         LogNewOrderAction $logNewOrderAction,
-        CreateOrderItemsFromCartItemsAction $createOrderItemsFromCartItemsAction
+        CreateOrderItemsFromCartItemsAction $createOrderItemsFromCartItemsAction,
+        CheckIngredientQuantityAction $checkIngredientQuantityAction
     ) {
         /** @var User $user */
         $user = auth()->user();
 
+        if(!$checkIngredientQuantityAction->hasEnough($user->cart->items))
+            return redirect()->route('client.cart.index')->with('error', __('client.notEnoughIngredients'));
+
         $createOrderItemsFromCartItemsAction->execute($user->cart->items, $user->cart->id);
 
-        $logNewOrderAction->execute($user->id, ['cart_id' => $user->cart->id]);
+        $cartItemsString = $user->cart->items->map(function ($item) {
+            return $item->item->name;
+        })->implode(', ');
+
+        $logNewOrderAction->execute($user->id, ['Cart items' => $cartItemsString]);
 
         return view('client.orders.completed', ['cartItems' => $user->cart->items]);
     }

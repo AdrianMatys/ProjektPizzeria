@@ -18,6 +18,9 @@ seed:
 	@make migrate
 	@docker compose exec app php artisan db:seed
 
+queue:
+	@docker compose exec app php artisan queue:work
+
 check-if-env-file-exist:
 	@if [ ! -f ".env" ]; then \
 	  echo ".env file does not exist. Create a .env file and adjust it." ;\

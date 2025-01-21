@@ -9,4 +9,7 @@ Artisan::command('inspire', function () {
     $this->comment(Inspiring::quote());
 })->purpose('Display an inspiring quote')->hourly();
 
-Schedule::command("notify:low-stock")->at('15:37');
+Schedule::command("notify:low-stock")
+    ->weekdays()
+    ->daily()
+    ->at(18);

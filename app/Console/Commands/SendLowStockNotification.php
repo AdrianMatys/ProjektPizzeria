@@ -35,7 +35,9 @@ class SendLowStockNotification extends Command
     {
         Log::info('Low stock notification started');
 
-        $lowStockIngredients = Ingredient::query()->where('quantity', '<', 1000)->get();
+        $lowStockIngredients = Ingredient::query()
+            ->whereColumn('quantity', '<', 'minQuantity')
+            ->get();
 
         if($lowStockIngredients->isEmpty()){
             $this->info("Brak składników o niskim stanie magazynowym.");
@@ -51,8 +53,8 @@ class SendLowStockNotification extends Command
 
         foreach ($admins as $admin){
             Mail::to($admin->email)->send(new LowStockNotification($lowStockIngredients));
+            $logLowStockNotificationAction->execute(['email' => $admin->email, 'ingredients' => $lowStockIngredients->pluck('name')->implode(', ')]);
             $this->info("Wysłano powiadomienia i niskim stanie magazynowym do: {{$admin->email}}");
-            $logLowStockNotificationAction->execute(['email' => $admin->email, 'ingredients' => $lowStockIngredients]);
         }
     }
 }

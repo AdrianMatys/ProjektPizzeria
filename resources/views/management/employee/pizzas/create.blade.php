@@ -5,8 +5,10 @@
 <form action="{{ route('management.employee.pizzas.store', $pizza) }}" method="post">
     @csrf
     <br>
-    <label for="name">{{__('employee.pizzaName')}}:</label><br>
-    <input type="text" name="name" id="name"><br><br>
+    <label for="name">{{__('employee.pizzaName')}}:</label>
+    <input type="text" name="name" id="name">
+    <label for="name">{{__('employee.pizzaPrice')}}:</label>
+    <input type="number" min="0" step="0.01" name="price" id="price">
 
     <table id="ingredientsTable">
         <tr>

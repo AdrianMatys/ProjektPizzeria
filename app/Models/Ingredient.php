@@ -12,7 +12,7 @@ class Ingredient extends Model
 {
     use HasFactory;
     use SoftDeletes;
-    protected $fillable = ['name', 'quantity', 'unit'];
+    protected $fillable = ['name', 'quantity', 'unit', 'price', 'minQuantity'];
     public function translations(): \Illuminate\Database\Eloquent\Relations\HasMany
     {
         return $this->hasMany(Translation::class);

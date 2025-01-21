@@ -53,4 +53,8 @@ return [
     'addNewTranslation' => 'Dodaj nowe tłumaczenie',
     'editTranslation' => 'Edytuj tłumaczenie',
     'backToTranslations' => 'Wróć do tłumaczeń',
+    'pizzaPrice' => 'Cena pizzy',
+    'price' => 'Cena',
+    'totalPrice' => 'Cena całkowita',
+    'minQuantity' => 'Minimalna ilość',
 ];

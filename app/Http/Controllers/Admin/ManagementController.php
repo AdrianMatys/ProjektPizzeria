@@ -28,7 +28,7 @@ class ManagementController extends Controller
         $validated = $request->validated();
         $pizzeria->update($validated);
 
-        $logUpdatePizzeriaAction->execute(auth()->id(), ['pizzeria' => $validated]);
+        $logUpdatePizzeriaAction->execute(auth()->id(), $validated);
 
         return redirect()->route('management.admin.pizzeria.index')
             ->with('success', __('admin.pizzeriaInfoUpdate'));
