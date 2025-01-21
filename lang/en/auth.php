@@ -22,4 +22,8 @@ return [
     'nameInput' => 'Name',
     'registerationToken' => 'Registeration Token',
     'registerButton' => 'Register',
+    'Youremail'=>'Your email...',
+    'Yourpassword'=>'Your password...',
+    'Yourname'=>'Your name...',
+    
 ];

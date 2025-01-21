@@ -47,4 +47,10 @@ return [
     'price' => 'Price',
     'totalPrice' => 'Total price',
     'notEnoughIngredients' => 'There are currently not enough ingredients in stock to fulfill your order. Please ask your waiter for assistance.',
+    'pay'=>'Pay',
+    'Gotomenu'=>'Go to menu',
+    'emptycart'=>'Empty cart',
+    'waluta'=>'zł'
+
+
 ];

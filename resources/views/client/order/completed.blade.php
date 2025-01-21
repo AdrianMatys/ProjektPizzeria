@@ -1,0 +1,1 @@
+Twoje zamówienie zostało złożone

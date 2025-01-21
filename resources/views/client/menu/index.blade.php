@@ -1,99 +1,98 @@
 @include('shared.header')
 <meta name="csrf-token" content="{{ csrf_token() }}">
-
 <script>
-    async function addToCart(itemId, itemType, quantity , price) {
-        try{
-            const response = await fetch('cart/add', {
-                method: 'POST',
-                headers: {
-                    "Content-Type": "application/json",
-                    "Accept": "application/json, text-plain, */*",
-                    "X-Requested-With": "XMLHttpRequest",
-                    "X-CSRF-TOKEN": "{{ csrf_token() }}"
-                },
-                body: JSON.stringify({
-                    user_id: {{auth()->user() ? auth()->user()->id : 'null'}},
-                    item_id: itemId,
-                    item_type: itemType,
-                    quantity: quantity,
-                    price: price,
-                }),
-            })
-            if(response.ok){
-                const data = await response.json()
-                updateCart(data)
-            }else{
-                console.log('error 1', response)
-            }
-        }catch (error){
-            console.error("error 2: ", error)
+async function addToCart(itemId, itemType, quantity, price, name) {
+    try {
+        const response = await fetch('cart/add', {
+            method: 'POST',
+            headers: {
+                "Content-Type": "application/json",
+                "Accept": "application/json, text-plain, */*",
+                "X-Requested-With": "XMLHttpRequest",
+                "X-CSRF-TOKEN": document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+            },
+            body: JSON.stringify({
+                user_id: {{auth()->user() ? auth()->user()->id : 'null'}},
+                item_id: itemId,
+                item_type: itemType,
+                quantity: quantity,
+                price: price,
+            }),
+        });
+        if (response.ok) {
+            const data = await response.json();
+            window.cart.addItem(itemId, itemType, quantity, price, name);
+        } else {
+            console.log('error 1', response);
         }
+    } catch (error) {
+        console.error("error 2: ", error);
     }
-    async function updateCart() {
-        try{
-            const response = await fetch('cart/json', {
-                method: 'GET',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': 'Bearer ' + localStorage.getItem('token')
-                },
-            })
-            if(response.ok){
-                const data = await response.json()
-                let itemsLength = 0
-                if(data?.cart?.items) itemsLength = data.cart.items.length
-                let cart = document.getElementById('cart')
-                    cart.innerHTML =  itemsLength + " {{__('client.productsInCart')}}"
-            }else{
-                console.log('Error 1.1')
-            }
-        }catch (error){
-            console.error("error 2.2: ", error)
-        }
-    }
-    updateCart()
+}
 </script>
-<table>
-    <tr>
-        <th>{{__('client.name')}}</th>
-        <th>{{__('client.ingredients')}}</th>
-        <th>{{__('client.price')}}</th>
-        <th>{{__('client.addToCart')}}</th>
-        <th>{{__('client.modifyPizza')}}</th>
-    </tr>
+<div class="products">
     @foreach($pizzas as $pizza)
-        <tr>
-            <td>{{ $pizza->name }}</td>
-            <td>
-                {{$pizza->ingredients->map(fn($ingredient) => $ingredient->translatedName)->join(', ')}}
-            </td>
-            <td>{{ $pizza->price }} zł</td>
-            <td>
-                @if($pizza->unavailable)
-                    {{__('client.unavailable')}}
-                @else
-                    <input type="button" value="{{__('client.add')}}" onclick="addToCart({{$pizza->id}}, 'Pizza', 1, {{$pizza->price}})">
-                @endif
-            </td>
-            <td>
-                <a href={{ route("client.pizza.edit", $pizza) }}>{{__('client.modify')}}</a>
-            </td>
-        </tr>
+        @if(!($pizza->unavailable))
+            <div class="product">
+                <div class="product-title">{{ $pizza->name }}</div>
+                <div class="product-description">
+                    {{$pizza->ingredients->map(fn($ingredient) => $ingredient->translatedName)->join(', ')}}
+                </div>
+                <div class="product-price">{{ $pizza->price }} zł</div>
+                <div>
+                    <input type="button" value="{{__('client.add')}}" onclick="addToCart({{$pizza->id}}, 'Pizza', 1, {{$pizza->price}}, '{{ $pizza->name }}')">
+                    <input type="button" value="{{__('client.modify')}}" onclick="window.location.href='{{ route("client.pizza.edit", $pizza)}}'">
+
+                </div>
+            </div>
+        @endif
     @endforeach
-</table>
-
-<a href={{ route("client.pizza.create", $pizza) }}>{{__('client.createCustomPizza')}}</a>
+    <a href={{ route("client.pizza.create") }}>{{__('client.createCustomPizza')}}</a>
+</div>
 <style>
-    table, tr, td, th{
-        border:1px solid black;
-        text-align: center;
-    }
+    .products {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 20px;
+        }
+        .product {
+            background-color: #FFFFFF;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.08);
+            transition: all 0.3s ease;
+            text-align: center;
+            padding: 15px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+        .product-info {
+            padding: 20px;
+        }
+        .product-title {
+            font-size: 1.1em;
+            font-weight: 600;
+            margin-bottom: 8px;
+            color:rgb(58, 58, 58);
+        }
+        .product-description {
+            font-size: 0.9em;
+            color: #666;
+            margin-bottom: 15px;
+            line-height: 1.4;
+        }
+        .product-price {
+            font-weight: 600;
+            color: #FF5722;
+            font-size: 1.2em;
+        }
+        .buttons {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+            margin-top: 10px;
+        }
 </style>
-
-<hr>
-<div id="cart"></div>
-
-
-
 

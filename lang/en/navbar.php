@@ -18,5 +18,9 @@ return [
     'statistics' => 'Statistics',
     'tokens' => 'Registration tokens',
     'languages' => 'Languages',
-    'logout' => 'Log out'
+    'logout' => 'Log out',
+    'search'=>'Search...',
+    'polish'=>'Polski',
+    'english'=>'English',
+    'language'=>'Language'
 ];
