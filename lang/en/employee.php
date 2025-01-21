@@ -44,6 +44,7 @@ return [
     'savePizza' => 'Save pizza',
     'pizzaName' => 'Pizza name',
     'addNewPizza' => 'Add new pizza',
+    'pizzaCost'=>"Pizza cost",
 
     'ingredient' => 'Ingredient',
     'languageCode' => 'Language code',
@@ -66,5 +67,6 @@ return [
     'cancelled'=>'Cancelled',
     'in_progress'=>"In_progress",
     'pending'=>"Pending",
+    'menuManagement'=>'Menu management'
 
 ];

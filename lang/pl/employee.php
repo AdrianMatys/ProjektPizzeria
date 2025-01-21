@@ -44,6 +44,7 @@ return [
     'savePizza' => 'Zapisz pizze',
     'pizzaName' => 'Nazwa pizzy',
     'addNewPizza' => 'Dodaj nową pizze',
+    'pizzaCost'=>"Koszt pizzy",
 
     'ingredient' => 'Składnik',
     'languageCode' => 'Kod języka',
@@ -65,6 +66,7 @@ return [
     'completed'=>'Zakończone',
     'cancelled'=>'Anulowane',
     'in_progress'=>"W trakcie",
-    'pending'=>"Oczekujące", 
+    'pending'=>"Oczekujące",
+    'menuManagement'=>'Zarządzanie menu' 
     
 ];
