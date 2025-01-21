@@ -62,5 +62,6 @@ return [
     'employee' => 'Employee',
     'user' => 'User',
     'userRoleUpdated' => 'User role has been updated',
+    'noDetailsAvailable'=>'No details avaible',
     
 ];

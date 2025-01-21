@@ -53,4 +53,18 @@ return [
     'addNewTranslation' => 'Dodaj nowe tłumaczenie',
     'editTranslation' => 'Edytuj tłumaczenie',
     'backToTranslations' => 'Wróć do tłumaczeń',
+    'warehouseTitle'=>'Zarządzanie zapasami pizzerii',
+    'searchIngredient'=>'Wyszukaj składnik...',
+    'addNewIngredient'=>'Dodaj nowy składnik',
+    'saveChanges'=>'Zapisz zmiany',
+    'editIngredient'=>'Edytuj składnik',
+    'ordermanagementpanel'=>'Panel zarządzania zamówieniami',
+    'actions'=>'Akcje',
+    'nextStatus'=>'Następny status',
+    'previousStatus'=>'Poprzedni status',
+    'completed'=>'Zakończone',
+    'cancelled'=>'Anulowane',
+    'in_progress'=>"W trakcie",
+    'pending'=>"Oczekujące", 
+    
 ];

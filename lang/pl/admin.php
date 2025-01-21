@@ -61,4 +61,5 @@ return [
     'employee' => 'Pracownik',
     'user' => 'Użytkownik',
     'userRoleUpdated' => 'Rola użytkownika została zaktualizowana',
+    'noDetailsAvailable'=>'Brak dostępnych szczegółów',
 ];

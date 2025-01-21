@@ -53,5 +53,18 @@ return [
     'addNewTranslation' => 'Add new translation',
     'editTranslation' => 'Edit translation',
     'backToTranslations' => 'Back to translations',
+    'warehouseTitle'=>'Managing the ingredients of the pizzeria',
+    'searchIngredient'=>'Search ingredient...',
+    'addNewIngredient'=>'Add new ingredient',
+    'saveChanges'=>'Save Changes',
+    'editIngredient'=>'Edit Ingredient',
+    'ordermanagementpanel'=>'Order management panel',
+    'actions'=>'Actions', 
+    'nextStatus'=>'Next Status',
+    'previousStatus'=>'Previous Status',
+    'completed'=>'Completed',
+    'cancelled'=>'Cancelled',
+    'in_progress'=>"In_progress",
+    'pending'=>"Pending",
 
 ];
