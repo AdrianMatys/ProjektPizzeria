@@ -1,10 +1,12 @@
 <?php
 
+use App\Http\Controllers\Admin\adminPanelController;
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\Client\CartController;
 use App\Http\Controllers\Client\ClientOrdersController;
 use App\Http\Controllers\Client\DisplayMenuController;
 use App\Http\Controllers\Admin\EmployeesController;
+use App\Http\Controllers\Employee\employeePanelController;
 use App\Http\Controllers\Employee\IngredientsController;
 use App\Http\Controllers\Admin\LogsController;
 use App\Http\Controllers\Admin\ManagementController;
@@ -92,6 +94,8 @@ Route::get('management/admin/logs/{log}', [LogsController::class, 'show'])->name
 Route::post('management/admin/logout',
     [AuthenticatedSessionController::class, 'destroy'])->name('management.admin.logout')
     ->middleware(['auth', 'role:admin']);
+Route::get('management/admin/panel', [adminPanelController::class, 'index'])->name('management.admin.panel.index')
+    ->middleware(['auth', 'role:admin']);
 
 Route::resource('management/employee/ingredients', IngredientsController::class)
     ->middleware(['auth', 'role:admin'])
@@ -141,6 +145,8 @@ Route::resource('management/employee/translations', TranslationsController::clas
         'update' => 'management.employee.translations.update',
         'destroy' => 'management.employee.translations.destroy',
     ]);
+Route::get('management/employee/panel', [employeePanelController::class, 'index'])->name('management.admin.panel.index')
+    ->middleware(['auth', 'role:admin']);
 
 Route::resource('menu', DisplayMenuController::class)
     ->only(['index'])
