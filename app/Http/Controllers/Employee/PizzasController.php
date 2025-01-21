@@ -35,7 +35,7 @@ class PizzasController extends Controller
                 $query->where('language_code', $locale);
             }])
             ->get();
-        return view('management.employee.pizzas.create', compact('pizza', 'ingredients'));
+        return view('management.employee.panel.create', compact('pizza', 'ingredients'));
     }
 
     public function edit(Pizza $pizza)
@@ -46,7 +46,7 @@ class PizzasController extends Controller
                 $query->where('language_code', $locale);
             }])
             ->get();
-        return view('management.employee.pizzas.edit', compact('pizza', 'ingredients'));
+        return view('management.employee.panel.edit', compact('pizza', 'ingredients'));
     }
 
     public function destroy($id, LogDeletedPizzaAction $logDeletedPizzaAction){
@@ -56,7 +56,7 @@ class PizzasController extends Controller
 
         $logDeletedPizzaAction->execute(auth()->id(), ['Pizza name' => $pizza->name]);
         $pizza->delete();
-        return redirect()->route('management.employee.pizzas.index')->with('success', __('employee.pizzaRemoved'));
+        return redirect()->route('management.employee.panel.index')->with('success', __('employee.pizzaRemoved'));
     }
 
     public function update(UpdatePizzaRequest $request, Pizza  $pizza, LogUpdatePizzaAction $logUpdatePizzaAction, UpdatePizzaAsEmployeeAction $updatePizzaAsEmployeeAction){
@@ -65,7 +65,7 @@ class PizzasController extends Controller
         $updatePizzaAsEmployeeAction->execute($validated, $pizza);
         $logUpdatePizzaAction->execute(auth()->id(), ['pizza' => $validated]);
 
-        return redirect()->route('management.employee.pizzas.index')->with('success', __('employee.pizzaUpdated'));
+        return redirect()->route('management.employee.panel.index')->with('success', __('employee.pizzaUpdated'));
     }
 
     public function store(UpdatePizzaRequest $request, Pizza  $pizza, LogNewPizzaAction $logNewPizzaAction, CreatePizzaAsEmployeeAction $createPizzaAsEmployeeAction){
@@ -74,6 +74,6 @@ class PizzasController extends Controller
         $createPizzaAsEmployeeAction->execute($validated);
         $logNewPizzaAction->execute(auth()->id(), ['Pizza name' => $validated['name'], 'Ingredients' => $validated['ingredient']]);
 
-        return redirect()->route('management.employee.pizzas.index')->with('success', __('employee.pizzaAdded'));
+        return redirect()->route('management.employee.panel.index')->with('success', __('employee.pizzaAdded'));
     }
 }
