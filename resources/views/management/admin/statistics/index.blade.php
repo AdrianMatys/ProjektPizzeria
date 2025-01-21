@@ -35,7 +35,6 @@
     </tr>
 </table>
 
-
 <h1>{{__('admin.weeklyIngredientUsage')}}</h1>
 <table>
     <tr>
@@ -71,7 +70,6 @@
         <td>{{$weeklyStatistics['products']['CustomPizza'] ?? 0}}</td>
     </tr>
 </table>
-
 
 <h1>{{__('admin.monthlyIngredientUsage')}}</h1>
 <table>
@@ -109,8 +107,46 @@
 </table>
 
 <style>
-    table, tr, td, th{
-        border:1px solid black;
+    table {
+        border-collapse: collapse;
+        width: 100%;
+        margin-bottom: 20px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    th, td {
+        border: 1px solid #ddd;
+        padding: 12px;
         text-align: center;
+    }
+
+    th {
+        background-color: #f4f4f4;
+        color: #333;
+        font-weight: bold;
+        text-transform: uppercase;
+    }
+
+    tr:nth-child(even) {
+        background-color: #f9f9f9;
+    }
+
+    tr:hover {
+        background-color: #f1f1f1;
+    }
+
+    h1 {
+        font-family: Arial, sans-serif;
+        font-size: 24px;
+        color: #333;
+        text-align: left;
+        border-bottom: 2px solid #ddd;
+        margin-bottom: 10px;
+        padding-bottom: 5px;
+    }
+
+    td {
+        font-family: Arial, sans-serif;
+        font-size: 14px;
     }
 </style>

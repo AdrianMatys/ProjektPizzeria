@@ -85,22 +85,15 @@
         background-color: var(--accent-bg);
         border-bottom: 1px solid var(--border);
         text-align: center;
-        padding: 0 0.5rem 2rem 0.5rem;
         grid-column: 1 / -1;
+        padding: 0.25rem;
     }
-
-    body > header > *:only-child {
-        margin-block-start: 2rem;
-    }
-
     body > header h1 {
         max-width: 1200px;
-        margin: 1rem auto;
     }
 
     body > header p {
         max-width: 40rem;
-        margin: 1rem auto;
     }
 
     /* Add a little padding to ensure spacing is correct between content and header > nav */
@@ -249,8 +242,8 @@
     /* Format navigation */
     header > nav {
         font-size: 1rem;
-        line-height: 2;
-        padding: 1rem 0 0 0;
+        line-height: 1.5;
+        padding: 0;
     }
 
     /* Use flexbox to allow items to wrap, as needed */
@@ -275,7 +268,7 @@
 
     header > nav a,
     header > nav a:visited {
-        margin: 0 0.5rem 1rem 0.5rem;
+        margin: 0 0.5rem;
         border: 1px solid var(--border);
         border-radius: var(--standard-border-radius);
         color: var(--text);
