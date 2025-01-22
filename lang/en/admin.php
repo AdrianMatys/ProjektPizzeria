@@ -67,5 +67,7 @@ return [
     'currentOrders'=>'Current orders',
     'orderDetails'=>'Order details',
     'additionalDetails'=>'Additional details',
-    
+    'logs' => 'Logs',
+    'logDetails' => 'Log details',
+
 ];

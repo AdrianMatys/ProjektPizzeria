@@ -66,4 +66,6 @@ return [
     'currentOrders'=>'Bieżące zamówienia',
     'orderDetails'=>'Szczegóły zamówieni',
     'additionalDetails'=>'Dodatkowe szczegóły',
+    'logs' => 'Logs',
+    'logDetails' => 'Log details',
 ];
