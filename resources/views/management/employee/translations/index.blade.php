@@ -135,7 +135,7 @@
         }
     }
 
-    /* Стили для кнопок в модальном окне */
+    
     .modal-footer {
         margin-top: 20px;
         padding-top: 20px;
@@ -174,14 +174,14 @@
         background: #d1d5db;
     }
 
-    /* Обновленные стили для модального окна */
+
     .modal-content {
         background-color: #fff;
         margin: 10% auto;
         padding: 20px;
         border-radius: 8px;
         width: 80%;
-        max-width: 450px; /* Уменьшено с 600px */
+        max-width: 450px; 
         position: relative;
         box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
         animation: slideIn 0.3s ease-out;
@@ -195,7 +195,7 @@
 
     .modal-title {
         color: #2d3748;
-        font-size: 20px; /* Уменьшено с 24px */
+        font-size: 20px; 
         font-weight: 600;
     }
 
@@ -203,7 +203,7 @@
         position: absolute;
         right: 15px;
         top: 15px;
-        font-size: 24px; /* Уменьшено с 28px */
+        font-size: 24px; 
         font-weight: bold;
         color: #9ca3af;
         cursor: pointer;
@@ -212,8 +212,8 @@
 
     .info-row {
         display: flex;
-        padding: 8px 10px; /* Уменьшено с 12px */
-        margin-bottom: 6px; /* Уменьшено с 8px */
+        padding: 8px 10px; 
+        margin-bottom: 6px; 
         background: #f8fafc;
         border-radius: 6px;
         align-items: center;
@@ -222,19 +222,18 @@
     .info-label {
         font-weight: 600;
         color: #4b5563;
-        width: 120px; /* Уменьшено с 150px */
+        width: 120px; 
         flex-shrink: 0;
-        font-size: 13px; /* Добавлен размер шрифта */
-    }
+        font-size: 13px; 
 
     .info-value {
         color: #1f2937;
         flex-grow: 1;
-        font-size: 13px; /* Добавлен размер шрифта */
+        font-size: 13px; 
     }
 
     .modal-footer {
-        margin-top: 15px; /* Уменьшено с 20px */
+        margin-top: 15px; 
         padding-top: 15px;
         border-top: 1px solid #f3f4f6;
         display: flex;
@@ -243,12 +242,12 @@
     }
 
     .modal-btn {
-        padding: 8px 16px; /* Уменьшено с 10px 20px */
+        padding: 8px 16px; 
         border-radius: 6px;
         font-weight: 500;
         cursor: pointer;
         transition: all 0.3s ease;
-        font-size: 13px; /* Добавлен размер шрифта */
+        font-size: 13px; 
     }
 
     @media (max-width: 768px) {

@@ -67,5 +67,6 @@ return [
     'currentOrders'=>'Current orders',
     'orderDetails'=>'Order details',
     'additionalDetails'=>'Additional details',
+    'generateToken'=>'Generate token',
     
 ];

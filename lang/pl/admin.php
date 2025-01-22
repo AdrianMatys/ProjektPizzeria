@@ -62,8 +62,11 @@ return [
     'user' => 'Użytkownik',
     'userRoleUpdated' => 'Rola użytkownika została zaktualizowana',
     'noDetailsAvailable'=>'Brak dostępnych szczegółów',
+    
     'pizzeriaAdministratorPanel'=>'Panel administratora pizzerii',
     'currentOrders'=>'Bieżące zamówienia',
     'orderDetails'=>'Szczegóły zamówieni',
     'additionalDetails'=>'Dodatkowe szczegóły',
+
+    'generateToken'=>'Wygeneruj token',
 ];
