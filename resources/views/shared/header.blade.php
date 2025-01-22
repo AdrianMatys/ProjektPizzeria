@@ -510,7 +510,7 @@
 </head>
 <body>
 <header class="header">
-    <a href="/Main.html" class="logo">Pizzeria</a>
+    <a href="/" class="logo">Pizzeria</a>
     <div class="menu">
         <a href="{{route('client.menu.index')}}" class="menu-item">{{__('navbar.menu')}}</a>
         <a href="{{route('client.orders.index')}}" class="menu-item">{{__('Order')}}</a>

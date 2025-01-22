@@ -69,5 +69,6 @@ return [
     'additionalDetails'=>'Additional details',
     'logs' => 'Logs',
     'logDetails' => 'Log details',
-
+    'generateToken'=>'Generate token',
+    
 ];

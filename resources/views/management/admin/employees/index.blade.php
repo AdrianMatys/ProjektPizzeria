@@ -105,36 +105,35 @@
         flex-direction: column;
         min-height: 100vh;
         margin: 0;
-        padding: 20px;
     }
 
     h1 {
         color: #D32F2F;
         text-align: center;
-        margin-bottom: 30px;
+        margin-bottom: 1.875rem;
         font-weight: bold;
-        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+        text-shadow: 0.125rem 0.125rem 0.25rem rgba(0, 0, 0, 0.1);
     }
 
     .employee-card {
         background-color: white;
-        border-radius: 12px;
-        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
-        padding: 25px;
+        border-radius: 0.75rem;
+        box-shadow: 0 0.375rem 0.75rem rgba(0, 0, 0, 0.1);
+        padding: 1.5625rem;
         transition: all 0.3s ease;
-        width: 300px;
-        margin-bottom: 20px;
+        width: 23.4375rem;
+        margin-bottom: 1.25rem;
     }
 
     .employee-card:hover {
-        transform: translateY(-5px);
-        box-shadow: 0 12px 24px rgba(0, 0, 0, 0.15);
+        transform: translateY(-0.3125rem);
+        box-shadow: 0 0.75rem 1.5rem rgba(0, 0, 0, 0.15);
     }
 
     .avatar {
-        width: 100px;
-        height: 100px;
-        margin: 0 auto 20px;
+        width: 6.25rem;
+        height: 6.25rem;
+        margin: 0 auto 1.25rem;
         background-color: #FFA000;
         border-radius: 50%;
         display: flex;
@@ -148,7 +147,7 @@
     }
 
     .avatar i {
-        font-size: 50px;
+        font-size: 3.125rem;
         color: #fff;
     }
 
@@ -156,14 +155,14 @@
         font-size: 1.3em;
         font-weight: bold;
         text-align: center;
-        margin-bottom: 10px;
+        margin-bottom: 0.625rem;
         color: #D32F2F;
     }
 
     .employee-position {
         text-align: center;
         color: #6c757d;
-        margin-bottom: 20px;
+        margin-bottom: 1.25rem;
         font-style: italic;
     }
 
@@ -171,12 +170,11 @@
         display: flex;
         justify-content: space-between;
         align-items: center;
-        margin-bottom: 15px;
-        padding: 10px;
+        margin-bottom: 0.9375rem;
+        padding: 0.625rem;
         background-color: #f1f3f5;
-        border-radius: 8px;
-        transition: all 0.3s ease;
-        
+        border-radius: 0.5rem;
+        transition: all 0.3s ease; 
     }
 
     .employee-info-line:hover {
@@ -186,7 +184,7 @@
     .employee-actions {
         display: flex;
         justify-content: space-around;
-        gap: 10px;
-        margin-top: 20px;
+        gap: 0.625rem;
+        margin-top: 1.25rem;
     }
 </style>

@@ -170,7 +170,7 @@
                             <td>{{ $log->type->name }}</td>
                             <td>{{ $log->created_at }}</td>
                             <td>
-                                <button class="btn btn-primary" onclick="showOrderDetails('{{ $log->user ? $log->user->email : '---' }}',
+                                <button class="btn btn-primary" onclick="showOrderDetails('{{ $log->user ? $log->user->email : `System` }}',
                                     '{{ $log->type->category->name }}',
                                     '{{ $log->type->name }}',
                                     '{{ $log->created_at }}',
