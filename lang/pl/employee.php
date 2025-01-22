@@ -75,5 +75,7 @@ return [
     'pizzeriaEmployeePanel'=>'Panel pracownika pizzerii',
     'currentorders'=>'Bieżące zamówienia',
     'close'=>'Zamknij',
+
+    'translations'=>'Tłumaczenie',
     
 ];

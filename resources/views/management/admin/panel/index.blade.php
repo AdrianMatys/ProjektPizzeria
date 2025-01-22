@@ -84,15 +84,71 @@
         .btn-trash{
             background-color: none;
         }
+        .details-modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.5);
+        }
+
+        .details-modal-content {
+            background-color: #fff9e6;
+            margin: 15% auto;
+            padding: 20px;
+            border: 1px solid #888;
+            width: 80%;
+            max-width: 600px;
+            border-radius: 10px;
+            position: relative;
+            animation: modalSlideDown 0.3s ease-out;
+        }
+
+        @keyframes modalSlideDown {
+            from {
+                transform: translateY(-100px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        .details-close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .details-close:hover {
+            color: #000;
+        }
+
+        .details-row {
+            margin-bottom: 10px;
+            padding: 10px;
+            border-bottom: 1px solid #ffe0b2;
+        }
+
+        .details-label {
+            font-weight: bold;
+            color: #ff8c00;
+        }
     </style>
 </head>
 <body>
     <div class="container mt-4">
-        <h1 class="text-center mb-4"><i class="fas fa-pizza-slice me-2"></i>Panel pracownika pizzerii</h1>
+        <h1 class="text-center mb-4"><i class="fas fa-pizza-slice me-2"></i>{{__('admin.pizzeriaAdministratorPanel')}}</h1>
         
         <div class="mb-5">
             <h2 class="section-header" onclick="toggleSection(this)">
-                <i class="fas fa-clipboard-list me-2"></i>Bieżące zamówienia
+                <i class="fas fa-clipboard-list me-2"></i>{{__('admin.currentOrders')}}
             </h2>
             <div class="section-content">
                
@@ -115,7 +171,15 @@
                     <td>{{ $log->type->name }}</td>
                     <td>{{ $log->created_at }}</td>
                     <td>
-                        <a href="{{route('management.admin.logs.show', $log)}}">{{__('admin.showDetails')}}</a>
+                        <button class="btn btn-primary" onclick="showOrderDetails('{{ $log->user ? $log->user->email : '---' }}', 
+                            '{{ $log->type->category->name }}', 
+                            '{{ $log->type->name }}', 
+                            '{{ $log->created_at }}', 
+                            '{{ $log->details ?? '' }}', 
+                            '{{ $log->status ?? '' }}', 
+                            '{{ $log->total_price ?? '' }}')">
+                            {{__('admin.showDetails')}}
+                        </button>
                     </td>
                 </tr>
                     </tbody>
@@ -266,4 +330,73 @@
             </div>
         </div>
     </div>
+    <div id="orderDetailsModal" class="details-modal">
+        <div class="details-modal-content">
+            <span class="details-close" onclick="closeDetailsModal()">&times;</span>
+            <h2 class="mb-4"><i class="fas fa-info-circle me-2"></i>{{__('admin.orderDetails')}}</h2>
+            <div id="orderDetailsContent">
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function showOrderDetails(email, category, type, date, details, status, totalPrice) {
+            const content = document.getElementById('orderDetailsContent');
+            content.innerHTML = `
+                <div class="details-row">
+                    <span class="details-label">{{__('admin.userName')}}: </span>
+                    <span>${email}</span>
+                </div>
+                <div class="details-row">
+                    <span class="details-label">{{__('admin.category')}}: </span>
+                    <span>${category}</span>
+                </div>
+                <div class="details-row">
+                    <span class="details-label">{{__('admin.type')}}: </span>
+                    <span>${type}</span>
+                </div>
+                <div class="details-row">
+                    <span class="details-label">{{__('admin.date')}}: </span>
+                    <span>${date}</span>
+                </div>
+                ${details ? `
+                    <div class="details-row">
+                        <span class="details-label">{{__('admin.additionalDetails')}}: </span>
+                        <span>${details}</span>
+                    </div>
+                ` : ''}
+                ${status ? `
+                    <div class="details-row">
+                        <span class="details-label">{{__('admin.status')}}: </span>
+                        <span>${status}</span>
+                    </div>
+                ` : ''}
+                ${totalPrice ? `
+                    <div class="details-row">
+                        <span class="details-label">{{__('admin.totalPrice')}}: </span>
+                        <span>${totalPrice}</span>
+                    </div>
+                ` : ''}
+            `;
+            
+            document.getElementById('orderDetailsModal').style.display = 'block';
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeDetailsModal() {
+            document.getElementById('orderDetailsModal').style.display = 'none';
+            document.body.style.overflow = 'auto';
+        }
+        window.onclick = function(event) {
+            const modal = document.getElementById('orderDetailsModal');
+            if (event.target == modal) {
+                closeDetailsModal();
+            }
+        }
+        document.addEventListener('keydown', function(event) {
+            if (event.key === 'Escape') {
+                closeDetailsModal();
+            }
+        });
+    </script>
 </body>

@@ -274,6 +274,13 @@
         .dropdown-content button:hover {
             background-color: #323131;
         }
+        .dropbtn{
+            background: none;
+            color: #FF9800;
+            cursor: pointer;
+            box-shadow: none;
+            border: none;
+        }
 
         .auth-section {
             display: flex;
@@ -528,22 +535,21 @@
         </div>
     </div>
     <div class="dropdown">
-        <button class="dropbtn" onclick="toggleDropdown(event)"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-three-dots-vertical" viewBox="0 0 16 16">
+        <button class="dropbtn" onclick="toggleDropdown(event)"><svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" fill="currentColor" class="bi bi-three-dots-vertical" viewBox="0 0 16 16">
             <path d="M9.5 13a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0m0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0m0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0"/></svg>
         </button>
         <div class="dropdown-content" id="myDropdown">
             @if(auth()->user() && (auth()->user()->isEmployee() || auth()->user()->isAdmin()))
                 <button onclick="window.location.href='{{route('management.employee.ingredients.index')}}'">{{__('navbar.ingredients')}}</button>
-                <button onclick="window.location.href='{{route('management.employee.orders.index')}}'">{{__('navbar.orders')}}</button>
-                <button onclick="window.location.href='{{route('management.employee.pizzas.index')}}'">{{__('navbar.pizzas')}}</button>
                 <button onclick="window.location.href='{{route('management.employee.translations.index')}}'">{{__('navbar.translations')}}</button>
+                <button onclick="window.location.href='{{route('management.employee.panel.index')}}'">{{__('navbar.employeePanel')}}</button>
             @endif
             @if(auth()->user() && auth()->user()->isAdmin())
+                <button onclick="window.location.href='{{route('management.admin.panel.index')}}'">{{__('navbar.adminPanel')}}</button>
                 <button onclick="window.location.href='{{route('management.admin.employees.index')}}'">{{__('navbar.employees')}}</button>
-                <button onclick="window.location.href='{{route('management.admin.logs.index')}}'">{{__('navbar.logs')}}</button>
                 <button onclick="window.location.href='{{route('management.admin.pizzeria.index')}}'">{{__('navbar.pizzeria')}}</button>
-                <button onclick="window.location.href='{{route('management.admin.statistics.index')}}'">{{__('navbar.statistics')}}</button>
                 <button onclick="window.location.href='{{route('management.admin.tokens.index')}}'">{{__('navbar.tokens')}}</button>
+
             @endif
         </div>
     </div>

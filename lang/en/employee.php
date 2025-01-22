@@ -73,4 +73,6 @@ return [
     'currentorders'=>'Curren orders',
     'close'=>'Close',
 
+    'translations'=>'Translations',
+
 ];

@@ -22,5 +22,7 @@ return [
     'search'=>'Search...',
     'polish'=>'Polski',
     'english'=>'English',
-    'language'=>'Language'
+    'language'=>'Language',
+    'adminPanel'=>"Admin panel",
+    'employeePanel'=>'Employee panel',
 ];

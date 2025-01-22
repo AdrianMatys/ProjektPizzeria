@@ -63,5 +63,9 @@ return [
     'user' => 'User',
     'userRoleUpdated' => 'User role has been updated',
     'noDetailsAvailable'=>'No details avaible',
+    'pizzeriaAdministratorPanel'=>'Pizzeria administrator panel',
+    'currentOrders'=>'Current orders',
+    'orderDetails'=>'Order details',
+    'additionalDetails'=>'Additional details',
     
 ];

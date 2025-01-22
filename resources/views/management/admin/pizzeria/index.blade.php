@@ -28,13 +28,12 @@
 </div>
 
 <style>
-    /* Контейнер таблицы */
     .table-container {
         width: 80%;
         margin: 20px auto;
     }
 
-    /* Стиль таблицы */
+   
     table {
         width: 100%;
         border-collapse: collapse;
@@ -70,9 +69,9 @@
         background-color: #ffece5;
     }
 
-    /* Кнопка действий */
+
     .action-buttons {
-        text-align: right; /* Размещает кнопку справа */
+        text-align: right; 
         margin-top: 10px;
     }
 

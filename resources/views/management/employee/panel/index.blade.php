@@ -1,5 +1,5 @@
 @include('shared.header')
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
         body {
@@ -77,15 +77,21 @@
             background-color: #ffa726;
             border-color: #ffa726;
         }
-        .btn-horizontal{
+        .btn-horizontal {
             display: flex;
             align-items: center;
-            gap:1rem;
+            gap: 0.5rem;
         }
-        .btn-trash{
-            background-color: none;
+        .btn-horizontal form {
+            margin: 0;
+            padding: 0;
+            display: flex;
+            align-items: center;
         }
         .btn-edit {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
             background-color: #ffa726;
             color: white;
             border: none;
@@ -94,17 +100,83 @@
             text-decoration: none;
             font-size: 14px;
             transition: background-color 0.3s ease, transform 0.2s ease;
+            height: 38px;
+            margin: 0;
         }
         .btn-edit:hover {
-    background-color: #ff8c00;
-    transform: scale(1.05);
-    text-decoration: none;
-    color: white;
+            background-color: #ff8c00;
+            transform: scale(1.05);
+            text-decoration: none;
+            color: white;
+        }
+        .delete-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            background-color: #ff9800;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 5px;
+            height: 38px;
+            margin: 0;
+            cursor: pointer;
+        }
+        .delete-btn:hover {
+            background-color: #b46d02;
+        }
+        .delete-btn svg {
+            width: 16px;
+            height: 16px;
+        }
+        #addPizzaModal .modal-content {
+  background-color: white;
+  margin: 5% auto;
+  padding: 20px;
+  width: 80%;
+  max-width: 600px;
+  max-height: 80vh;
+  overflow-y: auto;
+  position: relative;
+  border-radius: 8px;
 }
 
-.btn-edit:active {
-    background-color: #e65100;
-    transform: scale(1);
+#ingredientsTableContainer {
+  max-height: 200px;
+  overflow-y: auto;
+  margin-bottom: 10px;
+}
+
+#editPizzaModal .modal-content {
+  background-color: white;
+  margin: 5% auto;
+  padding: 20px;
+  width: 80%;
+  max-width: 600px;
+  max-height: 80vh;
+  overflow-y: auto;
+  position: relative;
+  border-radius: 8px;
+}
+
+#editIngredientsTableContainer {
+  max-height: 200px;
+  overflow-y: auto;
+  margin-bottom: 10px;
+}
+
+@media (max-width: 768px) {
+  #addPizzaModal .modal-content {
+    width: 95%;
+    margin: 2% auto;
+  }
+}
+
+@media (max-width: 768px) {
+  #editPizzaModal .modal-content {
+    width: 95%;
+    margin: 2% auto;
+  }
 }
     </style>
 </head>
@@ -197,7 +269,7 @@
                             <td>{{$pizza->price}}</td>
                             <td>
                                 <div class="btn-horizontal">
-                                    <a href={{ route("management.employee.pizzas.edit", $pizza) }}>{{__('employee.edit')}}</a>
+                                    <a class="btn-edit" onclick="openEditPizzaModal({{$pizza->id}}, '{{$pizza->name}}', {{$pizza->price}}, {{json_encode($pizza->ingredients)}})">{{__('employee.edit')}}</a>
                                     <form action="{{ route('management.employee.pizzas.destroy', $pizza->id) }}" method="post">
                                         @csrf
                                         @method('delete')
@@ -218,29 +290,59 @@
         </div>
     </div>
 
-    <!-- Modal -->
-    <div id="addPizzaModal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background-color:rgba(0,0,0,0.5); z-index:1000;">
-        <div style="background-color:white; margin: 15% auto; padding: 20px; width: 300px;">
-            <h2>{{__('employee.addNewPizza')}}</h2>
-            <form action="{{ route('management.employee.pizzas.store') }}" method="post">
-                @csrf
-                <label for="name">{{__('employee.pizzaName')}}:</label>
-                <input type="text" name="name" id="name" required>
-                <label for="price">{{__('employee.pizzaPrice')}}:</label>
-                <input type="number" min="0" step="0.01" name="price" id="price" required>
+ 
+<div id="addPizzaModal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background-color:rgba(0,0,0,0.5); z-index:1000; overflow-y: auto;">
+    <div class="modal-content">
+        <button onclick="closeAddPizzaModal()" style="position: absolute; top: 10px; right: 10px; background: none; border: none; font-size: 20px; cursor: pointer;">×</button>
+        <h2>{{__('employee.addNewPizza')}}</h2>
+        <form action="{{ route('management.employee.pizzas.store') }}" method="post">
+            @csrf
+            <label for="name">{{__('employee.pizzaName')}}:</label>
+            <input type="text" name="name" id="name" required style="width: 100%; margin-bottom: 10px; padding: 5px;">
+            <label for="price">{{__('employee.pizzaPrice')}}:</label>
+            <input type="number" min="0" step="0.01" name="price" id="price" required style="width: 100%; margin-bottom: 10px; padding: 5px;">
 
-                <table id="ingredientsTable">
+            <div id="ingredientsTableContainer">
+                <table id="ingredientsTable" style="width: 100%;">
                     <tr>
                         <th>{{__('employee.ingredients')}}</th>
                         <th>{{__('employee.remove')}}</th>
                     </tr>
                 </table>
-                <button type="button" onclick="addNewIngredient()">{{__('employee.addNewIngredient')}}</button>
-                <button type="submit">{{__('employee.savePizza')}}</button>
-            </form>
-            <button onclick="closeAddPizzaModal()">{{__('employee.close')}}</button>
-        </div>
+            </div>
+            <button type="button" onclick="addNewIngredient()" style="background-color: #4CAF50; color: white; padding: 5px; border: none; cursor: pointer; margin-right: 5px;">{{__('employee.addNewIngredient')}}</button>
+            <button type="submit" style="background-color: #008CBA; color: white; padding: 5px; border: none; cursor: pointer;">{{__('employee.savePizza')}}</button>
+        </form>
     </div>
+</div>
+
+
+<div id="editPizzaModal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background-color:rgba(0,0,0,0.5); z-index:1000; overflow-y: auto;">
+    <div class="modal-content">
+        <button onclick="closeEditPizzaModal()" style="position: absolute; top: 10px; right: 10px; background: none; border: none; font-size: 20px; cursor: pointer;">×</button>
+        <h2>{{__('employee.editPizza')}}</h2>
+        <form id="editPizzaForm" action="{{ route('management.employee.pizzas.update', '') }}" method="POST">
+            @csrf
+            @method('PATCH')
+            <input type="hidden" id="editPizzaId" name="id">
+            <label for="editName">{{__('employee.pizzaName')}}:</label>
+            <input type="text" name="name" id="editName" required style="width: 100%; margin-bottom: 10px; padding: 5px;">
+            <label for="editPrice">{{__('employee.pizzaPrice')}}:</label>
+            <input type="number" min="0" step="0.01" name="price" id="editPrice" required style="width: 100%; margin-bottom: 10px; padding: 5px;">
+
+            <div id="editIngredientsTableContainer">
+                <table id="editIngredientsTable" style="width: 100%;">
+                    <tr>
+                        <th>{{__('employee.ingredients')}}</th>
+                        <th>{{__('employee.remove')}}</th>
+                    </tr>
+                </table>
+            </div>
+            <button type="button" onclick="addNewIngredientToEdit()" style="background-color: #4CAF50; color: white; padding: 5px; border: none; cursor: pointer; margin-right: 5px;">{{__('employee.addNewIngredient')}}</button>
+            <button type="submit" style="background-color: #008CBA; color: white; padding: 5px; border: none; cursor: pointer;">{{__('employee.savePizza')}}</button>
+        </form>
+    </div>
+</div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
     <script>
@@ -261,18 +363,89 @@
             let cell2 = newRow.insertCell(1);
 
             cell1.innerHTML = '' +
-                '<select name="ingredient[]" id="ingredient[]">' +
+                '<select name="ingredient[]" id="ingredient[]" style="width: 100%; padding: 5px;">' +
                     options +
                 '</select>'
 
-            cell2.innerHTML = '<button type="button" onclick="removeIngredient(this)">X</button>'
+            cell2.innerHTML = '<button type="button" onclick="removeIngredient(this)" style="background-color: #f44336; color: white; border: none; padding: 5px; cursor: pointer;">X</button>'
         }
 
         function openAddPizzaModal() {
             document.getElementById('addPizzaModal').style.display = 'block';
+            document.body.style.overflow = 'hidden';
+            resizeModal();
         }
 
         function closeAddPizzaModal() {
             document.getElementById('addPizzaModal').style.display = 'none';
+            document.body.style.overflow = 'auto';
         }
+
+        function resizeModal() {
+            const modal = document.querySelector('#addPizzaModal .modal-content');
+            const windowHeight = window.innerHeight;
+            modal.style.maxHeight = `${windowHeight * 0.8}px`;
+        }
+
+        function openEditPizzaModal(id, name, price, ingredients) {
+            document.getElementById('editPizzaId').value = id;
+            document.getElementById('editName').value = name;
+            document.getElementById('editPrice').value = price;
+            
+            document.getElementById('editPizzaForm').action = "{{ route('management.employee.pizzas.update', '') }}/" + id;
+            
+            let table = document.getElementById('editIngredientsTable');
+            while (table.rows.length > 1) {
+                table.deleteRow(1);
+            }
+            
+            ingredients.forEach(ingredient => {
+                addIngredientToEditTable(ingredient.id);
+            });
+            
+            document.getElementById('editPizzaModal').style.display = 'block';
+            document.body.style.overflow = 'hidden';
+            resizeEditModal();
+        }
+
+        function closeEditPizzaModal() {
+            document.getElementById('editPizzaModal').style.display = 'none';
+            document.body.style.overflow = 'auto';
+        }
+
+        function addNewIngredientToEdit() {
+            addIngredientToEditTable();
+        }
+
+        function addIngredientToEditTable(selectedId = null) {
+            let table = document.getElementById('editIngredientsTable');
+            let newRow = table.insertRow(-1);
+            let cell1 = newRow.insertCell(0);
+            let cell2 = newRow.insertCell(1);
+
+            let select = document.createElement('select');
+            select.name = 'ingredient[]';
+            select.id = 'ingredient[]';
+            select.required = true;
+            select.style = 'width: 100%; padding: 5px;';
+            select.innerHTML = options;
+            
+            if (selectedId) {
+                select.value = selectedId;
+            }
+            
+            cell1.appendChild(select);
+            cell2.innerHTML = '<button type="button" onclick="removeIngredient(this)" style="background-color: #f44336; color: white; border: none; padding: 5px; cursor: pointer;">X</button>';
+        }
+
+        function resizeEditModal() {
+            const modal = document.querySelector('#editPizzaModal .modal-content');
+            const windowHeight = window.innerHeight;
+            modal.style.maxHeight = `${windowHeight * 0.8}px`;
+        }
+
+        window.addEventListener('resize', resizeModal);
+        window.addEventListener('resize', resizeEditModal);
     </script>
+</body>
+</html>

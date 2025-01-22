@@ -22,5 +22,8 @@ return [
     'search'=>'Wyszukaj...',
     'polish'=>'Polski',
     'english'=>"English",
-    'language'=>'Języki'
+    'language'=>'Języki',
+    'adminPanel'=>'Panel admina',
+    'employeePanel'=>'Panel pracownika',
+    
 ];

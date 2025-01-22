@@ -32,7 +32,7 @@
         }
         .grid-container {
             display: grid;
-            grid-template-columns: repeat(5, 1fr);
+            grid-template-columns: repeat(6, 1fr);
             gap: 10px;
             margin-bottom: 20px;
         }
@@ -94,20 +94,22 @@
         <div id="inventoryList">
             @if($ingredients->count() > 0)
                 <div class="grid-container">
-                    <!-- Headers -->
+                   
                     <div class="grid-header">{{ __('employee.ingredientName') }}</div>
                     <div class="grid-header">{{ __('employee.ingredientQuantity') }}</div>
                     <div class="grid-header">{{ __('employee.unit') }}</div>
+                    <div class= "grid-header">{{ __('employee.minQuantity') }}</div>
                     <div class="grid-header">{{ __('employee.delete') }}</div>
                     <div class="grid-header">{{ __('employee.edit') }}</div>
 
-                    <!-- Items -->
+                    
                     @foreach($ingredients as $ingredient)
                         <div class="grid-item ingredient-name">
                             {{ $ingredient->translations->first()->name ?? $ingredient->name }}
                         </div>
                         <div class="grid-item">{{ $ingredient->quantity }}</div>
                         <div class="grid-item">{{ $ingredient->unit }}</div>
+                        <div class="grid-item">{{ $ingredient->minQuantity }}</div>
                         <div class="grid-item">
                             <form action="{{ route('management.employee.ingredients.destroy', $ingredient->id) }}" method="POST">
                                 @csrf
