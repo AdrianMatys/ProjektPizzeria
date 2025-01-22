@@ -71,4 +71,9 @@ return [
     'price' => 'Cena',
     'totalPrice' => 'Cena całkowita',
     'minQuantity' => 'Minimalna ilość',
+
+    'pizzeriaEmployeePanel'=>'Panel pracownika pizzerii',
+    'currentorders'=>'Bieżące zamówienia',
+    'close'=>'Zamknij',
+    
 ];

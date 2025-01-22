@@ -67,6 +67,10 @@ return [
     'price' => 'Price',
     'totalPrice' => 'Total price',
     'minQuantity' => 'Minimum quantity',
-    'menuManagement'=>'Menu management'
+    'menuManagement'=>'Menu management',
+
+    'pizzeriaEmployeePanel'=>'Pizzeria Employee Panel',
+    'currentorders'=>'Curren orders',
+    'close'=>'Close',
 
 ];

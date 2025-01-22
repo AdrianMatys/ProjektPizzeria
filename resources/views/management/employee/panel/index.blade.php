@@ -55,6 +55,7 @@
         }
         .table {
             box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            align-items: center;
         }
         .table thead {
             background-color: #ffa726;
@@ -84,20 +85,40 @@
         .btn-trash{
             background-color: none;
         }
+        .btn-edit {
+            background-color: #ffa726;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 5px;
+            text-decoration: none;
+            font-size: 14px;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+        }
+        .btn-edit:hover {
+    background-color: #ff8c00;
+    transform: scale(1.05);
+    text-decoration: none;
+    color: white;
+}
+
+.btn-edit:active {
+    background-color: #e65100;
+    transform: scale(1);
+}
     </style>
 </head>
 <body>
     <div class="container mt-4">
-        <h1 class="text-center mb-4"><i class="fas fa-pizza-slice me-2"></i>Panel pracownika pizzerii</h1>
+        <h1 class="text-center mb-4"><i class="fas fa-pizza-slice me-2"></i>{{__('employee.pizzeriaEmployeePanel')}}</h1>
         
         <div class="mb-5">
             <h2 class="section-header" onclick="toggleSection(this)">
-                <i class="fas fa-clipboard-list me-2"></i>Bieżące zamówienia
+                <i class="fas fa-clipboard-list me-2"></i>{{__('employee.currentorders')}}
             </h2>
             <div class="section-content">
                 @foreach($groupedOrders as $status => $orders)
                 <table class="table table-striped" id="ordersTable">
-                    
                     <thead>
                         <tr>
                             <th>{{__('employee.orderId')}}</th>
@@ -115,6 +136,8 @@
                             <td>{{ $order->created_at }}</td>
                             <td>{{ $order->status }}</td>
                             <td>
+                                <div class="btn-horizontal">
+                                    <div class="group1">
                                 <form action="{{ route('management.employee.orders.updateStatus', $order->id )}}" method="POST">
                                     @csrf
                                     @method('PATCH')
@@ -127,6 +150,8 @@
                                     <input type="hidden" name="status" value="in_progress">
                                     <button class="btn-primary" type="submit">{{__('employee.inProgress')}}</button>
                                 </form>
+                                </div>
+                                <div class="group2">
                                 <form action="{{ route('management.employee.orders.updateStatus', $order->id )}}" method="POST">
                                     @csrf
                                     @method('PATCH')
@@ -139,6 +164,8 @@
                                     <input type="hidden" name="status" value="cancelled">
                                     <button class="btn-primary" type="submit">{{__('employee.cancelled')}}</button>
                                 </form>
+                                </div>
+                                </div>
                             </td>
                         </tr>
                     </tbody>
@@ -184,9 +211,68 @@
                     </tbody>
                     @endforeach
                 </table>
-                <button class="btn btn-success" onclick="openAddModal()">
+                <button class="btn btn-success" onclick="openAddPizzaModal()">
                     <i class="fas fa-plus me-1"></i>{{__('employee.addNewPizza')}}
                 </button>
             </div>
         </div>
+    </div>
+
+    <!-- Modal -->
+    <div id="addPizzaModal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background-color:rgba(0,0,0,0.5); z-index:1000;">
+        <div style="background-color:white; margin: 15% auto; padding: 20px; width: 300px;">
+            <h2>{{__('employee.addNewPizza')}}</h2>
+            <form action="{{ route('management.employee.pizzas.store') }}" method="post">
+                @csrf
+                <label for="name">{{__('employee.pizzaName')}}:</label>
+                <input type="text" name="name" id="name" required>
+                <label for="price">{{__('employee.pizzaPrice')}}:</label>
+                <input type="number" min="0" step="0.01" name="price" id="price" required>
+
+                <table id="ingredientsTable">
+                    <tr>
+                        <th>{{__('employee.ingredients')}}</th>
+                        <th>{{__('employee.remove')}}</th>
+                    </tr>
+                </table>
+                <button type="button" onclick="addNewIngredient()">{{__('employee.addNewIngredient')}}</button>
+                <button type="submit">{{__('employee.savePizza')}}</button>
+            </form>
+            <button onclick="closeAddPizzaModal()">{{__('employee.close')}}</button>
+        </div>
+    </div>
+
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        let options = ''
+        @foreach($ingredients as $ingredient)
+            options += '<option value="{{$ingredient->id}}">{{ $ingredient->translatedName }}</option>'
+        @endforeach
+
+        function removeIngredient(button) {
+            let row = button.parentNode.parentNode;
+            row.parentNode.removeChild(row);
+        }
+
+        function addNewIngredient() {
+            let table = document.getElementById('ingredientsTable')
+            let newRow = table.insertRow(-1);
+            let cell1 = newRow.insertCell(0);
+            let cell2 = newRow.insertCell(1);
+
+            cell1.innerHTML = '' +
+                '<select name="ingredient[]" id="ingredient[]">' +
+                    options +
+                '</select>'
+
+            cell2.innerHTML = '<button type="button" onclick="removeIngredient(this)">X</button>'
+        }
+
+        function openAddPizzaModal() {
+            document.getElementById('addPizzaModal').style.display = 'block';
+        }
+
+        function closeAddPizzaModal() {
+            document.getElementById('addPizzaModal').style.display = 'none';
+        }
+    </script>

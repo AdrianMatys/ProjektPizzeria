@@ -22,11 +22,7 @@
     @endforeach
 </table>
 <a href="{{ route('management.admin.tokens.create') }}">{{__('admin.addNewUser')}}</a>
-
-
 <style>
-   
-
 body {
     font-family: Arial, sans-serif;
     margin: 20px;
@@ -103,7 +99,6 @@ a:hover {
     background-color: #218838;
 }
 
-/* Адаптивный дизайн */
 @media (max-width: 768px) {
     table {
         font-size: 11px;
