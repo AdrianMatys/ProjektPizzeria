@@ -372,7 +372,7 @@
                             <div class="cart-empty">
                             
                                 <div>{{__('client.emptycart')}}</div>
-                                <a href="/@Menu.html" class="checkout-btn">{{__('client.Gotomenu')}}</a>
+                                <a href="{{route('client.menu.index')}}" class="checkout-btn">{{__('client.Gotomenu')}}</a>
                             </div>
                         `;
                         return;
