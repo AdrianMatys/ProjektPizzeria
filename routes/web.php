@@ -145,7 +145,7 @@ Route::resource('management/employee/translations', TranslationsController::clas
         'update' => 'management.employee.translations.update',
         'destroy' => 'management.employee.translations.destroy',
     ]);
-Route::get('management/employee/panel', [employeePanelController::class, 'index'])->name('management.admin.panel.index')
+Route::get('management/employee/panel', [employeePanelController::class, 'index'])->name('management.employee.panel.index')
     ->middleware(['auth', 'role:admin']);
 
 Route::resource('menu', DisplayMenuController::class)
