@@ -13,7 +13,6 @@
                     <th>{{('client.details')}}</th>
                 </tr>
             </thead>
-            @foreach($groupedOrders as $status => $orders)
             @foreach($orders as $order)
                 <tbody>
                     <tr>
@@ -38,7 +37,7 @@
                                         </div>
                                         <div class="modal-body">
                                             <p><strong>Order ID:</strong> {{ $order->id }}</p>
-                                            <p><strong>Status:</strong> 
+                                            <p><strong>Status:</strong>
                                                 @if($order->status == 'pending')
                                                     {{ ('client.pending') }}
                                                 @else
@@ -46,7 +45,7 @@
                                                 @endif
                                             </p>
                                             <p><strong>Created At:</strong> {{ $order->created_at }}</p>
-                                            
+
                                         </div>
                                         <div class="modal-footer">
                                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
@@ -57,7 +56,6 @@
                         </td>
                     </tr>
                 </tbody>
-            @endforeach
             @endforeach
         </table>
     </div>

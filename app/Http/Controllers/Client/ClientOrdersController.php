@@ -13,12 +13,12 @@ class ClientOrdersController extends Controller
     public function index(Request $request)
     {
         $userId = $request->user()->id;
-        $groupedOrders = Order::query()
+        $orders = Order::query()
             ->where('user_id', $userId)
             ->whereIn('status', ['pending', 'in_progress'])
-            ->get()
-            ->groupBy('status');
-        return view('client.orders.index', compact('groupedOrders'));
+            ->orderBy('id')
+            ->get();
+        return view('client.orders.index', compact('orders'));
     }
 
     public function show(Order $order)
