@@ -14,6 +14,11 @@ class adminPanelController extends Controller
     public function index(GetStatisticsAction $getStatisticsAction)
     {
         $logs = Log::query()->with('type')->orderBy('created_at', 'desc')->get();
+
+        foreach ($logs as $log){
+            $log->details = json_decode($log->details);
+        }
+
         $thisWeek = Carbon::now()->startOfWeek();
         $thisDay = Carbon::now()->startOfDay();
         $thisMonth = Carbon::now()->startOfMonth();

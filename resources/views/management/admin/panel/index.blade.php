@@ -145,13 +145,13 @@
 <body>
     <div class="container mt-4">
         <h1 class="text-center mb-4"><i class="fas fa-pizza-slice me-2"></i>{{__('admin.pizzeriaAdministratorPanel')}}</h1>
-        
+
         <div class="mb-5">
             <h2 class="section-header" onclick="toggleSection(this)">
-                <i class="fas fa-clipboard-list me-2"></i>{{__('admin.currentOrders')}}
+                <i class="fas fa-clipboard-list me-2"></i>{{__('admin.logs')}}
             </h2>
             <div class="section-content">
-               
+
                 <table class="table table-striped" id="ordersTable">
                     <thead>
                         <tr>
@@ -163,30 +163,29 @@
                         </tr>
                     </thead>
                     @foreach($logs as $log)
-                    <tbody>
-
-                <tr>
-                    <td>{{ $log->user ? $log->user->email : '---' }}</td>
-                    <td>{{ $log->type->category->name }}</td>
-                    <td>{{ $log->type->name }}</td>
-                    <td>{{ $log->created_at }}</td>
-                    <td>
-                        <button class="btn btn-primary" onclick="showOrderDetails('{{ $log->user ? $log->user->email : `System`}}', 
-                            '{{ $log->type->category->name }}', 
-                            '{{ $log->type->name }}', 
-                            '{{ $log->created_at }}', 
-                            '{{ $log->details ?? '' }}', 
-                            '{{ $log->status ?? '' }}', 
-                            '{{ $log->total_price ?? '' }}')">
-                            {{__('admin.showDetails')}}
-                        </button>
-                    </td>
-                </tr>
-                    </tbody>
+                        <tbody>
+                         <tr>
+                            <td>{{ $log->user ? $log->user->email : '---' }}</td>
+                            <td>{{ $log->type->category->name }}</td>
+                            <td>{{ $log->type->name }}</td>
+                            <td>{{ $log->created_at }}</td>
+                            <td>
+                                <button class="btn btn-primary" onclick="showOrderDetails('{{ $log->user ? $log->user->email : `System` }}',
+                                    '{{ $log->type->category->name }}',
+                                    '{{ $log->type->name }}',
+                                    '{{ $log->created_at }}',
+                                    '{{ $log->stringDetails}}',
+                                    '{{ $log->status ?? '' }}',
+                                    '{{ $log->total_price ?? '' }}')">
+                                    {{__('admin.showDetails')}}
+                                </button>
+                            </td>
+                        </tr>
+                        </tbody>
                     @endforeach
                 </table>
             </div>
-        </div>  
+        </div>
         <div class="mb-5">
             <h2 class="section-header" onclick="toggleSection(this)">
                 <i class="fas fa-utensils me-2"></i>{{__('admin.dailyIngredientUsage')}}
@@ -333,7 +332,7 @@
     <div id="orderDetailsModal" class="details-modal">
         <div class="details-modal-content">
             <span class="details-close" onclick="closeDetailsModal()">&times;</span>
-            <h2 class="mb-4"><i class="fas fa-info-circle me-2"></i>{{__('admin.orderDetails')}}</h2>
+            <h2 class="mb-4"><i class="fas fa-info-circle me-2"></i>{{__('admin.logDetails')}}</h2>
             <div id="orderDetailsContent">
             </div>
         </div>
@@ -362,6 +361,7 @@
                 ${details ? `
                     <div class="details-row">
                         <span class="details-label">{{__('admin.additionalDetails')}}: </span>
+                        <br>
                         <span>${details}</span>
                     </div>
                 ` : ''}
@@ -378,7 +378,7 @@
                     </div>
                 ` : ''}
             `;
-            
+
             document.getElementById('orderDetailsModal').style.display = 'block';
             document.body.style.overflow = 'hidden';
         }

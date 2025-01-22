@@ -69,4 +69,6 @@ return [
     'additionalDetails'=>'Dodatkowe szczegóły',
 
     'generateToken'=>'Wygeneruj token',
+    'logs' => 'Logs',
+    'logDetails' => 'Log details',
 ];
