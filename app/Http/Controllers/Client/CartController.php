@@ -37,7 +37,7 @@ class CartController extends Controller
         $user = auth()->user();
 
         if(!$checkIngredientQuantityAction->hasEnough($user->cart->items))
-            return redirect()->route('client.cart.index')->with('error', __('client.notEnoughIngredients'));
+            return redirect()->route('client.menu.index')->with('error', __('client.notEnoughIngredients'));
 
         $createOrderItemsFromCartItemsAction->execute($user->cart->items, $user->cart->id);
 
