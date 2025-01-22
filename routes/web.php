@@ -98,7 +98,7 @@ Route::get('management/admin/panel', [adminPanelController::class, 'index'])->na
     ->middleware(['auth', 'role:admin']);
 
 Route::resource('management/employee/ingredients', IngredientsController::class)
-    ->middleware(['auth', 'role:admin'])
+    ->middleware(['auth', 'role:employee'])
     ->names([
         'index' => 'management.employee.ingredients.index',
         'create' => 'management.employee.ingredients.create',
@@ -110,7 +110,7 @@ Route::resource('management/employee/ingredients', IngredientsController::class)
     ]);
 
 Route::resource('management/employee/pizzas', PizzasController::class)
-    ->middleware(['auth', 'role:admin'])
+    ->middleware(['auth', 'role:employee'])
     ->names([
         'index' => 'management.employee.pizzas.index',
         'create' => 'management.employee.pizzas.create',
@@ -122,7 +122,7 @@ Route::resource('management/employee/pizzas', PizzasController::class)
     ]);
 
 Route::resource('management/employee/orders', ManageOrdersController::class)
-    ->middleware(['auth', 'role:admin'])
+    ->middleware(['auth', 'role:employee'])
     ->names([
         'index' => 'management.employee.orders.index',
         'show' => 'management.employee.orders.show',
@@ -130,12 +130,12 @@ Route::resource('management/employee/orders', ManageOrdersController::class)
         'update' => 'management.employee.orders.update',
     ]);
 Route::patch('management/employee/orders/{order}/status', [ManageOrdersController::class, 'updateStatus'])
-    ->middleware(['auth', 'role:admin'])
+    ->middleware(['auth', 'role:employee'])
     ->name('management.employee.orders.updateStatus');
 
 
 Route::resource('management/employee/translations', TranslationsController::class)
-    ->middleware(['auth', 'role:admin'])
+    ->middleware(['auth', 'role:employee'])
     ->names([
         'index' => 'management.employee.translations.index',
         'show' => 'management.employee.translations.show',
@@ -146,7 +146,7 @@ Route::resource('management/employee/translations', TranslationsController::clas
         'destroy' => 'management.employee.translations.destroy',
     ]);
 Route::get('management/employee/panel', [employeePanelController::class, 'index'])->name('management.employee.panel.index')
-    ->middleware(['auth', 'role:admin']);
+    ->middleware(['auth', 'role:employee']);
 
 Route::resource('menu', DisplayMenuController::class)
     ->only(['index'])
