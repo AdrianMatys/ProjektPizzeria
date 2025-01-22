@@ -2,18 +2,16 @@
 
 namespace App\Http\Requests;
 
-use App\Models\User;
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Validation\Rule;
 
-class UpdateIngredientRequest extends FormRequest
+class CreateIngredientRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
      */
     public function authorize(): bool
-    {
-        return auth()->user()->isEmployee() ||  auth()->user()->isAdmin();
+    {        return auth()->user()->isEmployee() ||  auth()->user()->isAdmin();
+
     }
 
     /**
@@ -25,6 +23,7 @@ class UpdateIngredientRequest extends FormRequest
     {
         return [
             'name' => ['required', 'string', 'max:255'],
+            'unit' => ['required', 'string', 'max:255'],
             'price' => 'required|numeric|min:0',
             'minQuantity' => 'required|numeric|min:0',
             'quantity' => [

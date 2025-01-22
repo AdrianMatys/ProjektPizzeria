@@ -6,6 +6,7 @@ use App\Actions\Logs\LogCreateIngredient;
 use App\Actions\Logs\LogDeletedIngredientAction;
 use App\Actions\Logs\LogUpdateIngredientAction;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\CreateIngredientRequest;
 use App\Http\Requests\UpdateIngredientRequest;
 use App\Models\Ingredient;
 
@@ -67,7 +68,7 @@ class IngredientsController extends Controller
 
     }
 
-    public function store(UpdateIngredientRequest $request, LogCreateIngredient $logCreateIngredient)
+    public function store(CreateIngredientRequest $request, LogCreateIngredient $logCreateIngredient)
     {
         $validated = $request->validated();
         $ingredient = Ingredient::create($validated);
