@@ -534,6 +534,14 @@
             <a href="{{ route('set-locale', ['locale' => 'pl']) }}">{{__('navbar.polish')}}</a>
         </div>
     </div>
+    @if(auth()->check())
+        <form action="{{ route('logout') }}" method="POST" style="margin: 0;">
+            @csrf
+            <button type="submit" class="auth-btn">{{__('Log out')}}</button>
+        </form>
+    @else
+        <a href="{{ route('login') }}" class="auth-btn">{{__('Log in')}}</a>
+    @endif
     <div class="dropdown">
         <button class="dropbtn" onclick="toggleDropdown(event)"><svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" fill="currentColor" class="bi bi-three-dots-vertical" viewBox="0 0 16 16">
             <path d="M9.5 13a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0m0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0m0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0"/></svg>
