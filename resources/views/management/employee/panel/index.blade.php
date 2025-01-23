@@ -178,6 +178,45 @@
     margin: 2% auto;
   }
 }
+        .section-header {
+            cursor: pointer;
+            user-select: none;
+            padding: 15px;
+            background-color: #ffe0b2;
+            border-left: 5px solid #ff8c00;
+            border-radius: 5px;
+            margin-bottom: 15px;
+            transition: all 0.3s ease;
+        }
+
+        .section-header:hover {
+            background-color: #ffd180;
+        }
+
+        .section-header::after {
+            content: '\f078';
+            font-family: 'Font Awesome 5 Free';
+            font-weight: 900;
+            float: right;
+            transition: transform 0.3s ease;
+        }
+
+        .section-header.collapsed::after {
+            transform: rotate(-90deg);
+        }
+        .section-content {
+            transition: max-height 0.3s ease-out, opacity 0.3s ease-out;
+            max-height: 2000px;
+            opacity: 1;
+            overflow: hidden;
+        }
+
+        .section-content.collapsed {
+            max-height: 0;
+            opacity: 0;
+            margin-bottom: 0;
+            padding: 0;
+        }
     </style>
 </head>
 <body>
@@ -238,6 +277,62 @@
                                 </form>
                                 </div>
                                 </div>
+                            </td>
+                            <td>
+                            <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#orderModal{{ $order->id }}">
+                                {{__('client.showOrder') }}
+                            </button>
+                            <div class="modal fade" id="orderModal{{ $order->id }}" tabindex="-1" aria-labelledby="orderModalLabel{{ $order->id }}" aria-hidden="true">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="orderModalLabel{{ $order->id }}">{{__('client.orderDetails') }} #{{ $order->id }}</h5>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <p><strong>{{__('client.orderId') }}:</strong> {{ $order->id }}</p>
+                                            <p><strong>{{__('client.status')}}:</strong>
+                                                @if($order->status == 'pending')
+                                                    {{__('client.pending')}}
+                                                @else
+                                                    {{__('client.inProgress') }}
+                                                @endif
+                                            </p>
+                                            <p><strong>{{__('admin.createdAt') }}:</strong> {{ $order->created_at }}</p>
+
+                                            <h4 class="order-title mb-3">{{__('navbar.order')}}</h4>
+                                            @foreach($order->orderItems as $orderItem)
+                                                <div class="mb-3">
+                                                    <p class="pizza-header" onclick="toggleSection(this)">
+                                                        {{$orderItem->item->name}}
+                                                    </p>
+                                                    <div class="section-content">
+                                                        <table class="table table-sm">
+                                                            <thead>
+                                                            <tr>
+                                                                <th>{{__('client.price')}}: {{$orderItem->price}} zł</th>
+                                                            </tr>
+                                                            </thead>
+
+                                                            <tr>
+                                                                <th>{{__('admin.details')}}</th>
+                                                            </tr>
+                                                            @foreach($orderItem->item->ingredients as $ingredient)
+                                                                <tr>
+                                                                    <td>{{ $ingredient->translatedName }}</td>
+                                                                </tr>
+                                                            @endforeach
+                                                        </table>
+                                                    </div>
+                                                </div>
+                                            @endforeach
+                                            <div class=" modal-footer">
+                                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">{{__('admin.close') }}</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                             </td>
                         </tr>
                     </tbody>
