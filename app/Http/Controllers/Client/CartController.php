@@ -47,7 +47,7 @@ class CartController extends Controller
 
         $logNewOrderAction->execute($user->id, ['Cart items' => $cartItemsString]);
 
-        return view('client.orders.completed', ['cartItems' => $user->cart->items]);
+        return redirect(route('client.menu.index'))->with('success', __('client.orderCanceled'))->with('resetCart', true);
     }
 
     public function getJson()

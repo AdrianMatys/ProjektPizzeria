@@ -17,6 +17,15 @@
         </ul>
     </div>
 @endif
+@if (session()->has('resetCart'))
+    <script>
+        localStorage.removeItem('cartItems');
+        if (window.cart) {
+            window.cart.items = [];
+            window.cart.updateDisplay();
+        }
+    </script>
+@endif
 
 <style>
     .notification {
