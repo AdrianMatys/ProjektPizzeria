@@ -26,19 +26,7 @@
             margin-bottom: 15px;
             transition: all 0.3s ease;
         }
-        .section-header:hover {
-            background-color: #ffd180;
-        }
-        .section-header::after {
-            content: '\f078';
-            font-family: 'Font Awesome 5 Free';
-            font-weight: 900;
-            float: right;
-            transition: transform 0.3s ease;
-        }
-        .section-header.collapsed::after {
-            transform: rotate(-90deg);
-        }
+
         .section-content {
             transition: max-height 0.3s ease-out, opacity 0.3s ease-out;
             max-height: 2000px;

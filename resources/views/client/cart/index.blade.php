@@ -54,10 +54,6 @@
         border: 1px solid black;
         text-align: center;
     }
-</style>
-
-
-<style>
     /* Styl dla tabeli */
     table {
         width: 100%;
@@ -98,7 +94,7 @@
     }
 
     button:hover {
-        background-color: #0056b3;
+        background-color: #a16103;
     }
 
     button:active {
@@ -110,7 +106,7 @@
         max-width: 600px;
         margin: 0 auto;
         padding: 20px;
-        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+
         border-radius: 8px;
     }
 
