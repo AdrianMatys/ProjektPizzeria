@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Client;
 
 use App\Http\Controllers\Controller;
+use App\Models\Ingredient;
 use App\Models\Pizza;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\App;
@@ -28,8 +29,9 @@ class DisplayMenuController extends Controller
                 }
             }
         }
+        $ingredients = Ingredient::query()->get();
 
-        return view('client.menu.index', compact('pizzas'));
+        return view('client.menu.index', compact('pizzas', 'ingredients'));
     }
 
 }
