@@ -5,6 +5,7 @@ return [
     'cart' => 'Koszyk',
     'menu' => 'Menu',
     'orders' => 'Zamównia',
+    'order' => 'Zamówienie',
     'login' => 'Zaloguj się',
     'register' => 'Zarejestruj się',
     'employee' => 'Pracownik',

@@ -12,6 +12,7 @@ return [
     'pizzaUpdated' => 'Pizza has been updated',
 
     'ingredientName' => 'Ingredient name',
+    'ingredientNames' => 'Ingredient names',
     'ingredientQuantity' => 'Ingredient quantity',
     'unit' => 'Unit',
     'add' => 'Add',

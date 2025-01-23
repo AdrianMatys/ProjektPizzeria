@@ -43,6 +43,7 @@ return [
     'cancelOrder' => 'Cancel order',
     'products' => 'Products',
     'backToOrders' => 'Back to orders',
+    'create'=>'Create',
 
     'addNewIngredient' => 'Add new ingredient',
     'remove' => 'Remove ingredient',

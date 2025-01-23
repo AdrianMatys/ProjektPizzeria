@@ -5,6 +5,7 @@ return [
     'cart' => 'Cart',
     'menu' => 'Menu',
     'orders' => 'Orders',
+    'order' => 'Order',
     'login' => 'Log In',
     'register' => 'Register',
     'employee' => 'Employee',

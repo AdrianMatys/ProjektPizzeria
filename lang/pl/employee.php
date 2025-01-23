@@ -12,6 +12,7 @@ return [
     'pizzaUpdated' => 'Pizza została zaktualizowana',
 
     'ingredientName' => 'Nazwa składnika',
+    'ingredientNames' => 'Nazwy składników',
     'ingredientQuantity' => 'Ilość składnika',
     'unit' => 'Jednostka',
     'add' => 'Dodaj składnik',

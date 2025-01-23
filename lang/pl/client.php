@@ -43,6 +43,7 @@ return [
     'cancelOrder' => 'Anuluj zamówienie',
     'products' => 'Produkty',
     'backToOrders' => 'Wróć do zamówień',
+    'create'=>'Stwórz',
 
     'addNewIngredient' => 'Dodaj nowy składnik',
     'remove' => 'Usuń składnik',

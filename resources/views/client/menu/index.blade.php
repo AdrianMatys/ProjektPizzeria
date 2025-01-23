@@ -47,12 +47,75 @@ function filterByPrice() {
         }
     });
 }
+
+function filterByIngredients() {
+    const selectedIngredients = Array.from(document.querySelectorAll('.ingredient-filter-checkbox:checked'))
+        .map(checkbox => checkbox.id.replace('filter_ingredient_', ''));
+
+    const products = document.querySelectorAll('.product');
+    
+    products.forEach(product => {
+        if (selectedIngredients.length === 0) {
+            // If no ingredients selected, show all products
+            product.style.display = 'flex';
+            return;
+        }
+
+        const ingredientsText = product.querySelector('.product-description').textContent;
+        const shouldShow = selectedIngredients.every(ingredientId => {
+            const ingredient = document.querySelector(`#filter_ingredient_${ingredientId}`).nextElementSibling.textContent.trim();
+            return ingredientsText.includes(ingredient);
+        });
+
+        product.style.display = shouldShow ? 'flex' : 'none';
+    });
+}
+
+function openCreatePizzaModal() {
+    const modal = document.getElementById('createPizzaModal');
+    modal.style.display = 'block';
+    document.body.style.overflow = 'hidden';
+    document.body.style.paddingRight = '15px'; // Prevent layout shift
+}
+
+function closeCreatePizzaModal() {
+    const modal = document.getElementById('createPizzaModal');
+    modal.style.display = 'none';
+    document.body.style.overflow = '';
+    document.body.style.paddingRight = '';
+}
+
+async function submitCreatePizza(event) {
+    event.preventDefault();
+    const formData = new FormData(event.target);
+    
+    try {
+        const response = await fetch('{{ route("client.pizza.store") }}', {
+            method: 'POST',
+            headers: {
+                "X-CSRF-TOKEN": document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+            },
+            body: formData
+        });
+        
+        if (response.ok) {
+            closeCreatePizzaModal();
+            window.location.reload();
+        } else {
+            console.error('Error creating pizza');
+        }
+    } catch (error) {
+        console.error('Error:', error);
+    }
+}
 </script>
 <div class="empty">
     <div class="filter-sidebar">
         <h3>{{__('client.filters')}} <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" fill="currentColor" class="bi bi-funnel-fill" viewBox="0 0 16 16">
-  <path d="M1.5 1.5A.5.5 0 0 1 2 1h12a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-.128.334L10 8.692V13.5a.5.5 0 0 1-.342.474l-3 1A.5.5 0 0 1 6 14.5V8.692L1.628 3.834A.5.5 0 0 1 1.5 3.5z"/>
-</svg></h3>
+            <path d="M1.5 1.5A.5.5 0 0 1 2 1h12a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-.128.334L10 8.692V13.5a.5.5 0 0 1-.342.474l-3 1A.5.5 0 0 1 6 14.5V8.692L1.628 3.834A.5.5 0 0 1 1.5 3.5z"/>
+        </svg></h3>
+
+        <!-- Price range filter first -->
         <div class="price-range-container">
             <div class="price-labels">
                 <span id="currentMinPrice">0 {{__('client.waluta')}}</span>
@@ -63,40 +126,83 @@ function filterByPrice() {
                 <input type="range" id="maxPriceRange" min="0" max="100" value="100" oninput="filterByPrice()">
             </div>
         </div>
-    </div>
-<div class="container">
-    <div class="products">
-        @foreach($pizzas as $pizza)
-            @if(!($pizza->unavailable))
-                <div class="product">
-                    <div class="product-title">{{ $pizza->name }}</div>
-                    <div class="product-description">
-                        {{$pizza->ingredients->map(fn($ingredient) => $ingredient->translatedName)->join(', ')}}
-                    </div>
-                    <div class="product-price">{{ $pizza->price }} zł</div>
-                    <div>
-                        <input type="button" value="{{__('client.add')}}" onclick="addToCart({{$pizza->id}}, 'Pizza', 1, {{$pizza->price}}, '{{ $pizza->name }}')">
-                        <input type="button" value="{{__('client.modify')}}" onclick="window.location.href='{{ route("client.pizza.edit", $pizza)}}'">
-                    </div>
-                </div>
-            @endif
-        @endforeach
 
-        <a href={{ route("client.pizza.create") }} class="button">{{__('client.createCustomPizza')}}</a>
+        <!-- Ingredients filter below -->
+        <div class="ingredients-filter">
+            <h4>{{__('client.ingredients')}}</h4>
+            <div class="ingredients-checkbox-list">
+                @foreach($ingredients as $ingredient)
+                    <div class="filter-checkbox-item">
+                        <input type="checkbox" 
+                               id="filter_ingredient_{{$ingredient->id}}" 
+                               onchange="filterByIngredients()"
+                               class="ingredient-filter-checkbox">
+                        <label for="filter_ingredient_{{$ingredient->id}}">
+                            {{$ingredient->translatedName}}
+                        </label>
+                    </div>
+                @endforeach
+            </div>
+        </div>
+    </div>
+    <div class="container">
+        <div class="products">
+            @foreach($pizzas as $pizza)
+                @if(!($pizza->unavailable))
+                    <div class="product">
+                        <div class="product-title">{{ $pizza->name }}</div>
+                        <div class="product-description">
+                            {{$pizza->ingredients->map(fn($ingredient) => $ingredient->translatedName)->join(', ')}}
+                        </div>
+                        <div class="product-price">{{ $pizza->price }} zł</div>
+                        <div>
+                            <input type="button" value="{{__('client.add')}}" onclick="addToCart({{$pizza->id}}, 'Pizza', 1, {{$pizza->price}}, '{{ $pizza->name }}')">
+                            <input type="button" value="{{__('client.modify')}}" onclick="window.location.href='{{ route("client.pizza.edit", $pizza)}}'">
+                        </div>
+                    </div>
+                @endif
+            @endforeach
+
+            <button onclick="openCreatePizzaModal()" class="button">{{__('client.createCustomPizza')}}</button>
+        </div>
     </div>
 </div>
+
+<!-- Modal -->
+<div id="createPizzaModal" class="modal">
+    <div class="modal-content">
+        <span class="close" onclick="closeCreatePizzaModal()">&times;</span>
+        <h2>{{__('client.createCustomPizza')}}</h2>
+        <form onsubmit="submitCreatePizza(event)">
+            <div class="form-group">
+                <label>{{__('client.ingredients')}}</label>
+                <div class="ingredients-selection">
+                    @foreach($ingredients as $ingredient)
+                        <div class="ingredient-item">
+                            <div class="ingredient-checkbox">
+                                <input type="checkbox" 
+                                       id="ingredient_{{$ingredient->id}}" 
+                                       name="ingredients[]" 
+                                       value="{{$ingredient->id}}">
+                            </div>
+                            <label for="ingredient_{{$ingredient->id}}" class="ingredient-label">
+                                <span class="ingredient-name">{{$ingredient->translatedName}}</span>
+                                <span class="ingredient-price">{{$ingredient->price}} zł</span>
+                            </label>
+                        </div>
+                    @endforeach
+                </div>
+            </div>
+            <button type="submit" class="create-button">{{__('client.create')}}</button>
+        </form>
+    </div>
 </div>
+
 <style>
     .empty{
         display: flex;
     }
-    body {
-        margin: 0;
-        background-image: url('https://cdn.discordapp.com/attachments/1210997818773340291/1331216873903357962/Qs8h9maF1VKIwAAAABJRU5ErkJggg.png?ex=6790cfd3&is=678f7e53&hm=de12bc7651bdd9f349fed15d44eda7efa253d77924e2ed282fc4983cdba54903&');
-        background-size: contain;
-        background-repeat: repeat;
-        background-position: center;
-    }
+
     .container {
         display: flex;
         gap: 20px;
@@ -109,14 +215,21 @@ function filterByPrice() {
         padding: 20px;
         position: sticky;
         top: 20px;
-        height: 100vh;
+        height: calc(100vh - 40px); /* Adjust height to prevent overflow */
+        overflow-y: auto;
+        border-top-right-radius: 10px;
+        border-bottom-right-radius:10px;
     }
     .filter-sidebar h3 {
         color: rgb(0, 0, 0);
         margin-bottom: 15px;
     }
     .price-range-container {
-        padding: 20px 10px;
+        background: white;
+        border-radius: 10px;
+        padding: 20px;
+        margin-bottom: 20px;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.1);
     }
     .price-labels {
         display: flex;
@@ -250,5 +363,236 @@ function filterByPrice() {
     }
     .button:hover {
         background-color: #e64a19;
+    }
+    .product input[type="button"] {
+        background: linear-gradient(to right, #ff4e00, #ff7a00);
+        color: white;
+        border: none;
+        border-radius: 25px;
+        padding: 8px 16px;
+        margin: 5px;
+        cursor: pointer;
+        font-weight: 600;
+        transition: all 0.3s ease;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+    }
+
+    .product input[type="button"]:hover {
+        background: linear-gradient(to right, #ff7a00, #ff4e00);
+        transform: translateY(-2px);
+        box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+    }
+
+    .modal {
+        position: fixed;
+        z-index: 1000;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0,0,0,0.5);
+        overflow-y: auto;
+        -webkit-overflow-scrolling: touch;
+    }
+
+    .modal-content {
+        background-color: rgb(250, 217, 164);
+        margin: 5% auto;
+        padding: 30px;
+        border-radius: 15px;
+        width: 90%;
+        max-width: 500px;
+        position: relative;
+        box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+    }
+
+    .close {
+        position: absolute;
+        right: 20px;
+        top: 15px;
+        font-size: 28px;
+        font-weight: bold;
+        cursor: pointer;
+        color: #666;
+        transition: color 0.3s ease;
+    }
+
+    .close:hover {
+        color: #ff4e00;
+    }
+
+    .form-group {
+        margin-bottom: 15px;
+    }
+
+    .form-group label {
+        display: block;
+        margin-bottom: 5px;
+        color: rgb(58, 58, 58);
+    }
+
+    .form-group input,
+    .form-group textarea {
+        width: 100%;
+        padding: 8px;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+        box-sizing: border-box;
+    }
+
+    .form-group textarea {
+        height: 100px;
+        resize: vertical;
+    }
+
+    .ingredients-selection {
+        background: white;
+        border-radius: 10px;
+        padding: 15px;
+        max-height: 400px;
+        overflow-y: auto;
+    }
+
+    .ingredient-item {
+        display: flex;
+        align-items: center;
+        padding: 12px;
+        border-bottom: 1px solid #eee;
+        transition: background-color 0.2s;
+    }
+
+    .ingredient-item:last-child {
+        border-bottom: none;
+    }
+
+    .ingredient-item:hover {
+        background-color: #fff5e6;
+    }
+
+    .ingredient-checkbox {
+        margin-right: 15px;
+    }
+
+    .ingredient-checkbox input[type="checkbox"] {
+        width: 20px;
+        height: 20px;
+        cursor: pointer;
+    }
+
+    .ingredient-label {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        flex-grow: 1;
+        cursor: pointer;
+    }
+
+    .ingredient-name {
+        font-size: 1.1em;
+        color: #333;
+    }
+
+    .ingredient-price {
+        color: #ff4e00;
+        font-weight: 600;
+        font-size: 1.1em;
+        margin-left: 15px;
+    }
+
+    .create-button {
+        background: linear-gradient(to right, #ff4e00, #ff7a00);
+        color: white;
+        border: none;
+        border-radius: 25px;
+        padding: 12px 30px;
+        font-size: 1.1em;
+        font-weight: 600;
+        cursor: pointer;
+        margin-top: 20px;
+        width: 100%;
+        transition: all 0.3s ease;
+    }
+
+    .create-button:hover {
+        background: linear-gradient(to right, #ff7a00, #ff4e00);
+        transform: translateY(-2px);
+        box-shadow: 0 4px 15px rgba(255, 78, 0, 0.2);
+    }
+
+    .modal h2 {
+        text-align: center;
+        color: #333;
+        margin-bottom: 25px;
+        font-size: 1.8em;
+    }
+
+    /* Scrollbar styling */
+    .ingredients-selection::-webkit-scrollbar {
+        width: 8px;
+    }
+
+    .ingredients-selection::-webkit-scrollbar-track {
+        background: #f1f1f1;
+        border-radius: 4px;
+    }
+
+    .ingredients-selection::-webkit-scrollbar-thumb {
+        background: #ff7a00;
+        border-radius: 4px;
+    }
+
+    .ingredients-selection::-webkit-scrollbar-thumb:hover {
+        background: #ff4e00;
+    }
+
+    .ingredients-filter {
+        background: white;
+        border-radius: 10px;
+        padding: 15px;
+        margin-top: 0;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+
+    .ingredients-filter h4 {
+        margin: 0 0 10px 0;
+        color: #333;
+    }
+
+    .ingredients-checkbox-list {
+        max-height: 300px;
+        overflow-y: auto;
+        padding-right: 5px;
+    }
+
+    .filter-checkbox-item {
+        display: flex;
+        align-items: center;
+        padding: 8px 0;
+        border-bottom: 1px solid #eee;
+    }
+
+    .filter-checkbox-item:last-child {
+        border-bottom: none;
+    }
+
+    .filter-checkbox-item input[type="checkbox"] {
+        margin-right: 10px;
+        cursor: pointer;
+    }
+
+    .filter-checkbox-item label {
+        cursor: pointer;
+        color: #444;
+        font-size: 0.9em;
+    }
+
+    .filter-checkbox-item:hover {
+        background-color: #f8f8f8;
+    }
+
+    body.modal-open {
+        overflow: hidden;
+        position: fixed;
+        width: 100%;
     }
 </style>
