@@ -18,8 +18,9 @@ class TranslationsController extends Controller
     {
         $translations = Translation::query()->get();
         $translations = $translations->unique('ingredient_id');
+        $ingredients = Ingredient::query()->get();
 
-        return view('management.employee.translations.index', compact('translations'));
+        return view('management.employee.translations.index', compact('translations', 'ingredients'));
     }
 
     public function show(Translation $translation)
@@ -51,9 +52,7 @@ class TranslationsController extends Controller
 
         $logUpdateTranslationAction->execute(auth()->id(), ['name' => $translation->name]);
 
-        $translations = Translation::query()->where('ingredient_id', $translation->ingredient_id)->get();
-
-        return view('management.employee.translations.show', compact('translations'))->with('success',
+        return redirect()->route('management.employee.translations.index')->with('success',
             'Zaktualizowano tłumaczenie');
 
     }

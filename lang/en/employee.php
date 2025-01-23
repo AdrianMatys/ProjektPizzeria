@@ -75,5 +75,8 @@ return [
 
     'translations'=>'Translations',
     'description'=>'Description',
+    'english'=>'English',
+    'polish'=>'Polish',
+    'translationDetails'=>'Translation details',
 
 ];

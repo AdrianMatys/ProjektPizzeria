@@ -78,5 +78,8 @@ return [
 
     'translations'=>'Tłumaczenie',
     'description'=>'Opis',
-    
+    'english'=>'Angielski',
+    'polish'=>'Polski',
+    'translationDetails'=>'Szczegóły tłumaczenia',
+
 ];

@@ -1,7 +1,7 @@
 @include('shared.header')
 
 <style>
-    
+
     .translations-container {
         max-width: 1200px;
         margin: 30px auto;
@@ -48,7 +48,7 @@
         box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     }
 
-   
+
     .translations-table {
         width: 100%;
         background: white;
@@ -135,7 +135,7 @@
         }
     }
 
-    
+
     .modal-footer {
         margin-top: 20px;
         padding-top: 20px;
@@ -181,7 +181,7 @@
         padding: 20px;
         border-radius: 8px;
         width: 80%;
-        max-width: 450px; 
+        max-width: 450px;
         position: relative;
         box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
         animation: slideIn 0.3s ease-out;
@@ -195,7 +195,7 @@
 
     .modal-title {
         color: #2d3748;
-        font-size: 20px; 
+        font-size: 20px;
         font-weight: 600;
     }
 
@@ -203,7 +203,7 @@
         position: absolute;
         right: 15px;
         top: 15px;
-        font-size: 24px; 
+        font-size: 24px;
         font-weight: bold;
         color: #9ca3af;
         cursor: pointer;
@@ -212,8 +212,8 @@
 
     .info-row {
         display: flex;
-        padding: 8px 10px; 
-        margin-bottom: 6px; 
+        padding: 8px 10px;
+        margin-bottom: 6px;
         background: #f8fafc;
         border-radius: 6px;
         align-items: center;
@@ -222,18 +222,18 @@
     .info-label {
         font-weight: 600;
         color: #4b5563;
-        width: 120px; 
+        width: 120px;
         flex-shrink: 0;
-        font-size: 13px; 
+        font-size: 13px;
 
     .info-value {
         color: #1f2937;
         flex-grow: 1;
-        font-size: 13px; 
+        font-size: 13px;
     }
 
     .modal-footer {
-        margin-top: 15px; 
+        margin-top: 15px;
         padding-top: 15px;
         border-top: 1px solid #f3f4f6;
         display: flex;
@@ -242,12 +242,12 @@
     }
 
     .modal-btn {
-        padding: 8px 16px; 
+        padding: 8px 16px;
         border-radius: 6px;
         font-weight: 500;
         cursor: pointer;
         transition: all 0.3s ease;
-        font-size: 13px; 
+        font-size: 13px;
     }
 
     @media (max-width: 768px) {
@@ -269,7 +269,7 @@
         }
     }
 
-   
+
     .edit-input {
         width: 100%;
         padding: 6px 10px;
@@ -305,7 +305,7 @@
 
 <div class="translations-container">
     <h1 class="page-title">{{__('employee.translations')}}</h1>
-    
+
     <button onclick="showAddModal()" class="add-translation-btn">
         {{__('employee.addNewTranslation')}}
     </button>
@@ -332,8 +332,8 @@
                     <td>
                         <button class="details-btn" onclick="showDetails(
                             '{{ $translation->id }}',
-                            '{{ $translation->ingredient->name }}', 
-                            '{{ $translation->ingredient->description }}', 
+                            '{{ $translation->ingredient->name }}',
+                            '{{ $translation->name }}',
                             '{{ implode(', ', $translation->ingredient->translations->pluck('language_code')->toArray()) }}',
                             '{{ $translation->created_at }}',
                             '{{ $translation->updated_at }}',
@@ -355,18 +355,14 @@
         <div class="modal-header">
             <h2 class="modal-title">{{__('employee.translationDetails')}}</h2>
         </div>
-        <form id="editForm" class="modal-body view-mode" action="{{ route('management.employee.translations.update', $translation) }}" method="post">
+        <form id="editForm" class="modal-body view-mode" method="post">
             @csrf
             @method('put')
             <input type="hidden" id="translationId" name="id">
             <div class="info-row">
                 <div class="info-label">{{__('employee.ingredientName')}}</div>
                 <div class="info-value"></div>
-                <input type="text" class="edit-input" name="name">
-            </div>
-            <div class="info-row">
-                <div class="info-label">{{__('employee.description')}}</div>
-                <input type="text" class="edit-input" name="description">
+                <input type="text" class="edit-input" name="ingredientName" disabled>
             </div>
             <div class="info-row">
                 <div class="info-label">{{__('employee.availableLanguages')}}</div>
@@ -376,19 +372,18 @@
                     <option value="pl">{{__('employee.polish')}}</option>
                 </select>
             </div>
-            <button type="submit">{{__('employee.saveTranslation')}}</button>
+            <div class="info-row">
+                <div class="info-label">{{__('employee.translatedName')}}</div>
+                <div class="info-value"></div>
+                <input type="text" class="edit-input" name="name">
+            </div>
+            <div class="modal-footer">
+                <button class="modal-btn modal-btn-edit" type="submit">{{__('employee.saveTranslation')}}</button>
+                <button class="modal-btn modal-btn-close" onclick="closeModal()">
+                    {{__('employee.close')}}
+                </button>
+            </div>
         </form>
-        <div class="modal-footer">
-            <button class="modal-btn modal-btn-edit" onclick="toggleEditMode()" id="editButton">
-                {{__('employee.edit')}}
-            </button>
-            <button class="modal-btn modal-btn-save" onclick="saveChanges()" id="saveButton" style="display: none; background: #ff9800; color: white;">
-                {{__('employee.saveChanges')}}
-            </button>
-            <button class="modal-btn modal-btn-close" onclick="closeModal()">
-                {{__('employee.close')}}
-            </button>
-        </div>
     </div>
 </div>
 
@@ -403,18 +398,25 @@
             @csrf
             <div class="info-row">
                 <div class="info-label">{{__('employee.ingredientName')}}</div>
-                <input type="text" class="edit-input" name="name" required>
-            </div>
-            <div class="info-row">
-                <div class="info-label">{{__('employee.description')}}</div>
-                <input type="text" class="edit-input" name="description" required>
-            </div>
-            <div class="info-row">
-                <div class="info-label">{{__('navbar.language')}}</div>
-                <select class="language-select edit-input" name="language_code" required>
-                    <option value="en">{{__('navbar.english')}}</option>
-                    <option value="pl">{{__('navbar.polish')}}</option>
+                <div class="info-value"></div>
+                <select class="language-select edit-input" name="ingredient_id">
+                    @foreach($ingredients as $ingredient)
+                        <option value="{{$ingredient->id}}">{{$ingredient->translatedName}}</option>
+                    @endforeach
                 </select>
+            </div>
+            <div class="info-row">
+                <div class="info-label">{{__('employee.availableLanguages')}}</div>
+                <div class="info-value"></div>
+                <select class="language-select edit-input" name="language_code">
+                    <option value="en">{{__('employee.english')}}</option>
+                    <option value="pl">{{__('employee.polish')}}</option>
+                </select>
+            </div>
+            <div class="info-row">
+                <div class="info-label">{{__('employee.translatedName')}}</div>
+                <div class="info-value"></div>
+                <input type="text" class="edit-input" name="name">
             </div>
             <div class="modal-footer">
                 <button type="submit" class="modal-btn modal-btn-edit">
@@ -429,32 +431,28 @@
 </div>
 
 <script>
-    function showDetails(id, name, description, languages) {
+    function showDetails(id, name, translatedName, languages) {
         const modal = document.getElementById('detailsModal');
         const form = document.getElementById('editForm');
-        
-       
-        document.getElementById('translationId').value = id;
-        form.querySelector('[name="name"]').value = name;
-        form.querySelector('[name="description"]').value = description;
-        
-        
-        const infoValues = form.querySelectorAll('.info-value');
-        infoValues[0].textContent = name;
-        infoValues[1].textContent = description;
-        infoValues[2].textContent = languages;
+        console.log(name)
 
-       
+
+        document.getElementById('translationId').value = id;
+        form.querySelector('[name="ingredientName"]').value = name;
+        form.querySelector('[name="name"]').value = translatedName;
+
+
         const languagesArray = languages.split(',').map(lang => lang.trim());
         const languageSelect = form.querySelector('[name="language_code"]');
         Array.from(languageSelect.options).forEach(option => {
             option.selected = languagesArray.includes(option.value);
         });
-        
+
         modal.style.display = 'block';
         document.body.style.overflow = 'hidden';
-        
-        
+
+        form.action = `/management/employee/translations/${id}`;
+
         form.classList.remove('edit-mode');
         form.classList.add('view-mode');
         document.getElementById('editButton').style.display = 'block';
@@ -465,15 +463,15 @@
         const form = document.getElementById('editForm');
         const editButton = document.getElementById('editButton');
         const saveButton = document.getElementById('saveButton');
-        
+
         form.classList.toggle('view-mode');
         form.classList.toggle('edit-mode');
-        
+
         editButton.style.display = form.classList.contains('view-mode') ? 'block' : 'none';
         saveButton.style.display = form.classList.contains('edit-mode') ? 'block' : 'none';
     }
 
-   
+
 
     function closeModal() {
         const modal = document.getElementById('detailsModal');
