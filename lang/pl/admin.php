@@ -33,7 +33,7 @@ return [
     'updatePizzeria' => 'Zaktualizuj dane pizzerii',
 
     'edit' => 'Edytuj',
-    'edit' => 'Zamknij',
+    'close' => 'Zamknij',
     'yes' => 'Tak',
     'no' => 'Nie',
 
@@ -63,7 +63,7 @@ return [
     'user' => 'Użytkownik',
     'userRoleUpdated' => 'Rola użytkownika została zaktualizowana',
     'noDetailsAvailable'=>'Brak dostępnych szczegółów',
-    
+
     'pizzeriaAdministratorPanel'=>'Panel administratora pizzerii',
     'currentOrders'=>'Bieżące zamówienia',
     'orderDetails'=>'Szczegóły zamówieni',

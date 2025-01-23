@@ -53,8 +53,9 @@ return [
     'emptycart'=>'Pusty kosz',
     'waluta'=>'zł',
     'price' => 'Cena',
-    'filters' => 'Filters',
+    'filters' => 'Filtry',
     'totalPrice' => 'Cena całkowita',
     'notEnoughIngredients' => 'Aktualnie nie ma na stanie wystarczajacej ilości składników aby zrealizować twoje zamówienie. Zapytaj obsługę o pomoc',
 
+    'currentOrders'=>'Aktualne zamówienie',
 ];

@@ -25,4 +25,7 @@ return [
     'Yourpassword'=>'Twoje hasło...',
     'Yourname'=>'Twoje imię...',
 
+    'logout'=>'Wyloguj się',
+    'login'=>'Zaloguj się',
+
 ];

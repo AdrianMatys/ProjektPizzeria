@@ -359,7 +359,7 @@
                 updateDisplay() {
                     const cartDropdown = document.querySelector('.cart-dropdown');
                     const cartCount = document.querySelector('.cart-count');
-                    
+
                     const totalItems = this.items.reduce((sum, item) => sum + item.quantity, 0);
                     if (cartCount) {
                         cartCount.textContent = totalItems;
@@ -370,7 +370,7 @@
                     if (this.items.length === 0) {
                         cartDropdown.innerHTML = `
                             <div class="cart-empty">
-                            
+
                                 <div>{{__('client.emptycart')}}</div>
                                 <a href="{{route('client.menu.index')}}" class="checkout-btn">{{__('client.Gotomenu')}}</a>
                             </div>
@@ -513,10 +513,10 @@
     <a href="/" class="logo">Pizzeria</a>
     <div class="menu">
         <a href="{{route('client.menu.index')}}" class="menu-item">{{__('navbar.menu')}}</a>
-        <a href="{{route('client.orders.index')}}" class="menu-item">{{__('Order')}}</a>
+        <a href="{{route('client.orders.index')}}" class="menu-item">{{__('navbar.order')}}</a>
     </div>
     <div class="search-container">
-        
+
     </div>
     <div class="cart-btn">
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="cart-icon">
@@ -537,10 +537,10 @@
     @if(auth()->check())
         <form action="{{ route('logout') }}" method="POST" style="margin: 0;">
             @csrf
-            <button type="submit" class="auth-btn">{{__('Log out')}}</button>
+            <button type="submit" class="auth-btn">{{__('auth.logout')}}</button>
         </form>
     @else
-        <a href="{{ route('login') }}" class="auth-btn">{{__('Log in')}}</a>
+        <a href="{{ route('login') }}" class="auth-btn">{{__('auth.login')}}</a>
     @endif
     <div class="dropdown">
         <button class="dropbtn" onclick="toggleDropdown(event)"><svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" fill="currentColor" class="bi bi-three-dots-vertical" viewBox="0 0 16 16">

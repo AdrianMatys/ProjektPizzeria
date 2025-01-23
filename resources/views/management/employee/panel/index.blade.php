@@ -183,7 +183,7 @@
 <body>
     <div class="container mt-4">
         <h1 class="text-center mb-4"><i class="fas fa-pizza-slice me-2"></i>{{__('employee.pizzeriaEmployeePanel')}}</h1>
-        
+
         <div class="mb-5">
             <h2 class="section-header" onclick="toggleSection(this)">
                 <i class="fas fa-clipboard-list me-2"></i>{{__('employee.currentorders')}}
@@ -246,7 +246,7 @@
                 @endforeach
             </div>
         </div>
-        
+
         <div class="mb-5">
             <h2 class="section-header" onclick="toggleSection(this)">
                 <i class="fas fa-utensils me-2"></i>{{__('employee.menuManagement')}}
@@ -259,7 +259,7 @@
                             <th>{{__('employee.pizzaName')}}</th>
                             <th>{{__('employee.ingredients')}}</th>
                             <th>{{__('employee.pizzaCost')}}</th>
-                            <th>{{__('employeeactions')}}</th>
+                            <th>{{__('employee.actions')}}</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -290,7 +290,7 @@
         </div>
     </div>
 
- 
+
 <div id="addPizzaModal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background-color:rgba(0,0,0,0.5); z-index:1000; overflow-y: auto;">
     <div class="modal-content">
         <button onclick="closeAddPizzaModal()" style="position: absolute; top: 10px; right: 10px; background: none; border: none; font-size: 20px; cursor: pointer;">×</button>
@@ -391,18 +391,18 @@
             document.getElementById('editPizzaId').value = id;
             document.getElementById('editName').value = name;
             document.getElementById('editPrice').value = price;
-            
+
             document.getElementById('editPizzaForm').action = "{{ route('management.employee.pizzas.update', '') }}/" + id;
-            
+
             let table = document.getElementById('editIngredientsTable');
             while (table.rows.length > 1) {
                 table.deleteRow(1);
             }
-            
+
             ingredients.forEach(ingredient => {
                 addIngredientToEditTable(ingredient.id);
             });
-            
+
             document.getElementById('editPizzaModal').style.display = 'block';
             document.body.style.overflow = 'hidden';
             resizeEditModal();
@@ -429,11 +429,11 @@
             select.required = true;
             select.style = 'width: 100%; padding: 5px;';
             select.innerHTML = options;
-            
+
             if (selectedId) {
                 select.value = selectedId;
             }
-            
+
             cell1.appendChild(select);
             cell2.innerHTML = '<button type="button" onclick="removeIngredient(this)" style="background-color: #f44336; color: white; border: none; padding: 5px; cursor: pointer;">X</button>';
         }

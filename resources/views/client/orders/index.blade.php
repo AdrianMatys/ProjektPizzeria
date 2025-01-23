@@ -10,6 +10,7 @@
                 <tr>
                     <th>{{__('client.orderId')}}</th>
                     <th>{{__('client.status')}}</th>
+                    <th>{{__('client.price')}}</th>
                     <th>{{__('client.createdAt')}}</th>
                     <th>{{__('client.details')}}</th>
                 </tr>
@@ -24,6 +25,7 @@
                         {{__('client.inProgress') }}
                         @endif
                     </td>
+                    <td>{{$order->total_price}}</td>
                     <td>{{ $order->created_at }}</td>
                     <td>
                         <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#orderModal{{ $order->id }}">
@@ -46,7 +48,7 @@
                                             @endif
                                         </p>
                                         <p><strong>{{__('admin.createdAt') }}:</strong> {{ $order->created_at }}</p>
-                                        
+
                                         <h4 class="order-title mb-3">{{__('navbar.order')}}</h4>
                                         @foreach($order->orderItems as $orderItem)
                                         <div class="mb-3">
@@ -57,9 +59,13 @@
                                                 <table class="table table-sm">
                                                     <thead>
                                                         <tr>
-                                                            <th>{{__('admin.details')}}</th>
+                                                            <th>{{__('client.price')}}: {{$orderItem->price}} zł</th>
                                                         </tr>
                                                     </thead>
+
+                                                    <tr>
+                                                        <th>{{__('admin.details')}}</th>
+                                                    </tr>
                                                     @foreach($orderItem->item->ingredients as $ingredient)
                                                     <tr>
                                                         <td>{{ $ingredient->translatedName }}</td>
@@ -280,7 +286,7 @@
             content.style.display = content.style.display === 'none' ? 'block' : 'none';
         }
     }
-    
+
     document.addEventListener('DOMContentLoaded', function() {
         const contents = document.querySelectorAll('.section-content');
         const headers = document.querySelectorAll('.pizza-header');

@@ -83,4 +83,6 @@ return [
     'polish'=>'Polski',
     'translationDetails'=>'Szczegóły tłumaczenia',
 
+    'editPizza'=>'Edytuj pizze'
+
 ];

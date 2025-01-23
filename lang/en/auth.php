@@ -25,5 +25,7 @@ return [
     'Youremail'=>'Your email...',
     'Yourpassword'=>'Your password...',
     'Yourname'=>'Your name...',
-    
+
+    'logout'=>'Log out',
+    'login'=>'Login',
 ];

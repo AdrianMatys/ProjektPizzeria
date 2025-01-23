@@ -80,4 +80,6 @@ return [
     'polish'=>'Polish',
     'translationDetails'=>'Translation details',
 
+    'editPizza'=>'Edit pizza',
+
 ];

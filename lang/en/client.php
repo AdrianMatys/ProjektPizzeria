@@ -55,6 +55,8 @@ return [
     'Gotomenu'=>'Go to menu',
     'emptycart'=>'Empty cart',
     'waluta'=>'zł',
-    'filters' => 'Filters'
+    'filters' => 'Filters',
+
+    'currentOrders'=>'Current orders',
 
 ];
