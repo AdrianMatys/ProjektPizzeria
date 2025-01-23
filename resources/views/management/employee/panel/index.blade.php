@@ -237,6 +237,7 @@
                             <th>{{__('employee.createdAt')}}</th>
                             <th>{{__('employee.status')}}</th>
                             <th>{{__('employee.details')}}</th>
+                            <th>{{__('employee.actions')}}</th>
                         </tr>
                     </thead>
                     @foreach($orders as $order)

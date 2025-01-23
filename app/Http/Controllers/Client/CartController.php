@@ -81,11 +81,11 @@ class CartController extends Controller
         $cartItem = CartItem::query()->find($cartItemId);
 
         if (!$cartItem) {
-            return redirect()->route('client.cart.index')->with('error', __('client.couldntRemoveItemFromCart'));
+            return redirect()->route('client.menu.index')->with('error', __('client.couldntRemoveItemFromCart'));
         }
 
         $cartItem->delete();
-        return redirect()->route('client.cart.index')->with('success', __('client.deletedFromCart'));
+        return redirect()->route('client.menu.index')->with('success', __('client.deletedFromCart'));
     }
     public function patchQuantity(Request $request, $cartItemId)
     {

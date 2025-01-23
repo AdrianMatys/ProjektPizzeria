@@ -98,9 +98,7 @@
             z-index: 1;
         }
 
-        .cart-btn:hover .cart-dropdown {
-            display: block;
-        }
+
 
         .cart-item {
             display: flex;
@@ -518,6 +516,7 @@
     <div class="search-container">
 
     </div>
+    <a href="{{route('client.cart.index')}}">
     <div class="cart-btn">
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="cart-icon">
             <circle cx="9" cy="21" r="1"></circle>
@@ -527,6 +526,7 @@
         <span class="cart-count">0</span>
         <div class="cart-dropdown"></div>
     </div>
+    </a>
     <div class="language-dropdown">
         <button class="language-btn">{{__('navbar.language')}}</button>
         <div class="language-dropdown-content">
