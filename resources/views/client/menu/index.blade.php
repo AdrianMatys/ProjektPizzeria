@@ -1,6 +1,9 @@
 @include('shared.header')
 <meta name="csrf-token" content="{{ csrf_token() }}">
 <script>
+    function addToFrontCart(itemId, itemType, quantity, price, name){
+        window.cart.addItem(itemId, itemType, quantity, price, name);
+    }
 async function addToCart(itemId, itemType, quantity, price, name) {
     try {
         const response = await fetch('cart/add', {
@@ -33,10 +36,10 @@ async function addToCart(itemId, itemType, quantity, price, name) {
 function filterByPrice() {
     const minPrice = document.getElementById('minPriceRange').value;
     const maxPrice = document.getElementById('maxPriceRange').value;
-    
+
     document.getElementById('currentMinPrice').textContent = minPrice + ' zł';
     document.getElementById('currentMaxPrice').textContent = maxPrice + ' zł';
-    
+
     const products = document.querySelectorAll('.product');
     products.forEach(product => {
         const price = parseFloat(product.querySelector('.product-price').textContent);
@@ -53,7 +56,7 @@ function filterByIngredients() {
         .map(checkbox => checkbox.id.replace('filter_ingredient_', ''));
 
     const products = document.querySelectorAll('.product');
-    
+
     products.forEach(product => {
         if (selectedIngredients.length === 0) {
             // If no ingredients selected, show all products
@@ -88,7 +91,7 @@ function closeCreatePizzaModal() {
 async function submitCreatePizza(event) {
     event.preventDefault();
     const formData = new FormData(event.target);
-    
+
     try {
         const response = await fetch('{{ route("client.pizza.store") }}', {
             method: 'POST',
@@ -97,7 +100,7 @@ async function submitCreatePizza(event) {
             },
             body: formData
         });
-        
+
         if (response.ok) {
             closeCreatePizzaModal();
             window.location.reload();
@@ -133,8 +136,8 @@ async function submitCreatePizza(event) {
             <div class="ingredients-checkbox-list">
                 @foreach($ingredients as $ingredient)
                     <div class="filter-checkbox-item">
-                        <input type="checkbox" 
-                               id="filter_ingredient_{{$ingredient->id}}" 
+                        <input type="checkbox"
+                               id="filter_ingredient_{{$ingredient->id}}"
                                onchange="filterByIngredients()"
                                class="ingredient-filter-checkbox">
                         <label for="filter_ingredient_{{$ingredient->id}}">
@@ -173,16 +176,17 @@ async function submitCreatePizza(event) {
     <div class="modal-content">
         <span class="close" onclick="closeCreatePizzaModal()">&times;</span>
         <h2>{{__('client.createCustomPizza')}}</h2>
-        <form onsubmit="submitCreatePizza(event)">
+        <form action="{{ route('client.pizza.store')}}" method="post">
+            @csrf
             <div class="form-group">
                 <label>{{__('client.ingredients')}}</label>
                 <div class="ingredients-selection">
                     @foreach($ingredients as $ingredient)
                         <div class="ingredient-item">
                             <div class="ingredient-checkbox">
-                                <input type="checkbox" 
-                                       id="ingredient_{{$ingredient->id}}" 
-                                       name="ingredients[]" 
+                                <input type="checkbox"
+                                       id="ingredient_{{$ingredient->id}}"
+                                       name="ingredient[]"
                                        value="{{$ingredient->id}}">
                             </div>
                             <label for="ingredient_{{$ingredient->id}}" class="ingredient-label">
@@ -193,7 +197,7 @@ async function submitCreatePizza(event) {
                     @endforeach
                 </div>
             </div>
-            <button type="submit" class="create-button">{{__('client.create')}}</button>
+            <button type="submit" class="create-button" onclick="addToFrontCart(0, 'customPizza', 1, 0, 'Custom pizza')">{{__('client.create')}}</button>
         </form>
     </div>
 </div>
