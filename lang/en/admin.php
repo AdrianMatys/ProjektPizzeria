@@ -33,6 +33,7 @@ return [
     'updatePizzeria' => 'Update pizzeria information',
 
     'edit' => 'Edit',
+    'close' => 'Close',
     'yes' => 'Yes',
     'no' => 'No',
 

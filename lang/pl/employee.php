@@ -77,5 +77,6 @@ return [
     'close'=>'Zamknij',
 
     'translations'=>'Tłumaczenie',
+    'description'=>'Opis',
     
 ];

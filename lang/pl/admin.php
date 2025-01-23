@@ -33,6 +33,7 @@ return [
     'updatePizzeria' => 'Zaktualizuj dane pizzerii',
 
     'edit' => 'Edytuj',
+    'edit' => 'Zamknij',
     'yes' => 'Tak',
     'no' => 'Nie',
 
@@ -69,6 +70,6 @@ return [
     'additionalDetails'=>'Dodatkowe szczegóły',
 
     'generateToken'=>'Wygeneruj token',
-    'logs' => 'Logs',
-    'logDetails' => 'Log details',
+    'logs' => 'Dziennik Zdarzeń',
+    'logDetails' => 'Szczegóły Dziennika Zdarzeń',
 ];

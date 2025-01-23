@@ -32,6 +32,9 @@ return [
     'orderId' => 'Order number',
     'status' => 'Status',
     'details' => 'Details',
+    'currentOrders' => 'Current Orders',
+    'orderDetails' => 'Order Details',
+    'showOrder' => 'Show Order',
     'pending' => 'Pending',
     'inProgress' => 'In progress',
     'createdAt' => 'Order date',
@@ -50,7 +53,7 @@ return [
     'pay'=>'Pay',
     'Gotomenu'=>'Go to menu',
     'emptycart'=>'Empty cart',
-    'waluta'=>'zł'
-
+    'waluta'=>'zł',
+    'filters' => 'Filters'
 
 ];

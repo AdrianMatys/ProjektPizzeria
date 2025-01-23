@@ -74,5 +74,6 @@ return [
     'close'=>'Close',
 
     'translations'=>'Translations',
+    'description'=>'Description',
 
 ];

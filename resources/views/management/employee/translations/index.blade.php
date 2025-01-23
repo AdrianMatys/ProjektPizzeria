@@ -154,13 +154,13 @@
     }
 
     .modal-btn-edit {
-        background: #22c55e;
+        background: #ff9800;
         color: white;
         border: none;
     }
 
     .modal-btn-edit:hover {
-        background: #16a34a;
+        background:rgb(158, 95, 0);
         transform: translateY(-1px);
     }
 
@@ -306,9 +306,9 @@
 <div class="translations-container">
     <h1 class="page-title">{{__('employee.translations')}}</h1>
     
-    <a href={{ route("management.employee.translations.create") }} class="add-translation-btn">
+    <button onclick="showAddModal()" class="add-translation-btn">
         {{__('employee.addNewTranslation')}}
-    </a>
+    </button>
 
     <table class="translations-table">
         <thead>
@@ -382,8 +382,8 @@
             <button class="modal-btn modal-btn-edit" onclick="toggleEditMode()" id="editButton">
                 {{__('employee.edit')}}
             </button>
-            <button class="modal-btn modal-btn-save" onclick="saveChanges()" id="saveButton" style="display: none; background: #22c55e; color: white;">
-                {{__('employee.save')}}
+            <button class="modal-btn modal-btn-save" onclick="saveChanges()" id="saveButton" style="display: none; background: #ff9800; color: white;">
+                {{__('employee.saveChanges')}}
             </button>
             <button class="modal-btn modal-btn-close" onclick="closeModal()">
                 {{__('employee.close')}}
@@ -392,6 +392,41 @@
     </div>
 </div>
 
+<!-- Add New Translation Modal -->
+<div id="addTranslationModal" class="modal">
+    <div class="modal-content">
+        <span class="close-modal" onclick="closeAddModal()">&times;</span>
+        <div class="modal-header">
+            <h2 class="modal-title">{{__('employee.addNewTranslation')}}</h2>
+        </div>
+        <form id="addTranslationForm" action="{{ route('management.employee.translations.store') }}" method="POST">
+            @csrf
+            <div class="info-row">
+                <div class="info-label">{{__('employee.ingredientName')}}</div>
+                <input type="text" class="edit-input" name="name" required>
+            </div>
+            <div class="info-row">
+                <div class="info-label">{{__('employee.description')}}</div>
+                <input type="text" class="edit-input" name="description" required>
+            </div>
+            <div class="info-row">
+                <div class="info-label">{{__('navbar.language')}}</div>
+                <select class="language-select edit-input" name="language_code" required>
+                    <option value="en">{{__('navbar.english')}}</option>
+                    <option value="pl">{{__('navbar.polish')}}</option>
+                </select>
+            </div>
+            <div class="modal-footer">
+                <button type="submit" class="modal-btn modal-btn-edit">
+                    {{__('employee.saveChanges')}}
+                </button>
+                <button type="button" class="modal-btn modal-btn-close" onclick="closeAddModal()">
+                    {{__('client.cancel')}}
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
 
 <script>
     function showDetails(id, name, description, languages) {
@@ -446,18 +481,36 @@
         document.body.style.overflow = 'auto';
     }
 
-    
+    function showAddModal() {
+        const modal = document.getElementById('addTranslationModal');
+        modal.style.display = 'block';
+        document.body.style.overflow = 'hidden';
+    }
+
+    function closeAddModal() {
+        const modal = document.getElementById('addTranslationModal');
+        modal.style.display = 'none';
+        document.body.style.overflow = 'auto';
+        document.getElementById('addTranslationForm').reset();
+    }
+
+    // Update the existing window.onclick handler
     window.onclick = function(event) {
-        const modal = document.getElementById('detailsModal');
-        if (event.target == modal) {
+        const detailsModal = document.getElementById('detailsModal');
+        const addModal = document.getElementById('addTranslationModal');
+        if (event.target == detailsModal) {
             closeModal();
+        }
+        if (event.target == addModal) {
+            closeAddModal();
         }
     }
 
-    
+    // Update the existing escape key handler
     document.addEventListener('keydown', function(event) {
         if (event.key === 'Escape') {
             closeModal();
+            closeAddModal();
         }
     });
 </script>
