@@ -15,15 +15,7 @@ class IngredientsController extends Controller
 
     public function index()
     {
-        $locale = app()->getLocale();
         $ingredients = Ingredient::query()->with('translations')->orderBy('name')->get();
-
-        foreach ($ingredients as $ingredient) {
-            $translation = $ingredient->translations->firstWhere('language_code', $locale);
-            if ($translation) {
-                $ingredient['name'] = $translation->name;
-            }
-        }
 
         return view('management.employee.ingredients.index', compact('ingredients'));
     }

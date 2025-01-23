@@ -32,7 +32,7 @@
         }
         .grid-container {
             display: grid;
-            grid-template-columns: repeat(6, 1fr);
+            grid-template-columns: repeat(7, 1fr);
             gap: 10px;
             margin-bottom: 20px;
         }
@@ -94,22 +94,24 @@
         <div id="inventoryList">
             @if($ingredients->count() > 0)
                 <div class="grid-container">
-                   
+
                     <div class="grid-header">{{ __('employee.ingredientName') }}</div>
                     <div class="grid-header">{{ __('employee.ingredientQuantity') }}</div>
                     <div class="grid-header">{{ __('employee.unit') }}</div>
                     <div class= "grid-header">{{ __('employee.minQuantity') }}</div>
+                    <div class= "grid-header">{{ __('employee.price') }}</div>
                     <div class="grid-header">{{ __('employee.delete') }}</div>
                     <div class="grid-header">{{ __('employee.edit') }}</div>
 
-                    
+
                     @foreach($ingredients as $ingredient)
                         <div class="grid-item ingredient-name">
-                            {{ $ingredient->translations->first()->name ?? $ingredient->name }}
+                            {{  $ingredient->name }}
                         </div>
                         <div class="grid-item">{{ $ingredient->quantity }}</div>
                         <div class="grid-item">{{ $ingredient->unit }}</div>
                         <div class="grid-item">{{ $ingredient->minQuantity }}</div>
+                        <div class="grid-item">{{ $ingredient->price }}</div>
                         <div class="grid-item">
                             <form action="{{ route('management.employee.ingredients.destroy', $ingredient->id) }}" method="POST">
                                 @csrf
@@ -124,8 +126,10 @@
                                     data-bs-toggle="modal"
                                     data-bs-target="#editModal"
                                     data-id="{{ $ingredient->id }}"
-                                    data-name="{{ $ingredient->translations->first()->name ?? $ingredient->name }}"
+                                    data-name="{{ $ingredient->name }}"
                                     data-quantity="{{ $ingredient->quantity }}"
+                                    data-minQuantity="{{ $ingredient->minQuantity }}"
+                                    data-price="{{ $ingredient->price }}"
                                     data-unit="{{ $ingredient->unit }}">
                                 {{ __('employee.edit') }}
                             </button>
@@ -151,17 +155,32 @@
                 <div class="modal-body">
                     <form id="addForm" action="{{ route('management.employee.ingredients.store') }}" method="POST">
                         @csrf
+
                         <div class="mb-3">
-                            <label for="newIngredientName" class="form-label">{{ __('employee.ingredientName') }}</label>
-                            <input type="text" class="form-control" id="newIngredientName" name="name" required>
+                            <label for="ingredientName" class="form-label">{{ __('employee.ingredientName') }}</label>
+                            <input type="text" class="form-control" id="ingredientName" name="name" required>
                         </div>
+
                         <div class="mb-3">
-                            <label for="newIngredientQuantity" class="form-label">{{ __('employee.ingredientQuantity') }}</label>
-                            <input type="number" class="form-control" id="newIngredientQuantity" name="quantity" required>
+                            <label for="ingredientQuantity" class="form-label">{{ __('employee.ingredientQuantity') }}</label>
+                            <input type="number" class="form-control" id="ingredientQuantity" name="quantity" required>
                         </div>
+
                         <div class="mb-3">
-                            <label for="newIngredientUnit" class="form-label">{{ __('employee.unit') }}</label>
-                            <input type="text" class="form-control" id="newIngredientUnit" name="unit" required>
+                            <label for="ingredientUnit" class="form-label">{{ __('employee.unit') }}</label>
+                            <select class="form-control" id="ingredientUnit" name="unit" required>
+                                <option value="g">g</option>
+                            </select>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="ingredientMinQuantity" class="form-label">{{ __('employee.minQuantity') }}</label>
+                            <input type="number" class="form-control" id="ingredientMinQuantity" name="minQuantity" required>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="ingredientPrice" class="form-label">{{ __('employee.price') }}</label>
+                            <input type="number" class="form-control" id="ingredientPrice" name="price" required>
                         </div>
                         <button type="submit" class="btn">{{ __('employee.addNewIngredient') }}</button>
                     </form>
@@ -181,19 +200,36 @@
                 <div class="modal-body">
                     <form id="editForm" method="POST">
                         @csrf
-                        @method('PUT')
+                        @method('POST')
+                        <input type="hidden" id="ingredientId" name="id">
+
                         <div class="mb-3">
                             <label for="ingredientName" class="form-label">{{ __('employee.ingredientName') }}</label>
                             <input type="text" class="form-control" id="ingredientName" name="name" required>
                         </div>
+
                         <div class="mb-3">
                             <label for="ingredientQuantity" class="form-label">{{ __('employee.ingredientQuantity') }}</label>
                             <input type="number" class="form-control" id="ingredientQuantity" name="quantity" required>
                         </div>
+
                         <div class="mb-3">
                             <label for="ingredientUnit" class="form-label">{{ __('employee.unit') }}</label>
-                            <input type="text" class="form-control" id="ingredientUnit" name="unit" required>
+                            <select class="form-control" id="ingredientUnit" name="unit" required>
+                                <option value="g">g</option>
+                            </select>
                         </div>
+
+                        <div class="mb-3">
+                            <label for="ingredientMinQuantity" class="form-label">{{ __('employee.minQuantity') }}</label>
+                            <input type="number" class="form-control" id="ingredientMinQuantity" name="minQuantity" required>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="ingredientPrice" class="form-label">{{ __('employee.price') }}</label>
+                            <input type="number" class="form-control" id="ingredientPrice" name="price" required>
+                        </div>
+
                         <button type="submit" class="btn">{{ __('employee.saveChanges') }}</button>
                     </form>
                 </div>
@@ -202,3 +238,29 @@
     </div>
 </body>
 </html>
+
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const editModal = document.getElementById('editModal');
+
+        editModal.addEventListener('show.bs.modal', function(event) {
+            const button = event.relatedTarget;
+
+            const id = button.getAttribute('data-id');
+            const name = button.getAttribute('data-name');
+            const quantity = button.getAttribute('data-quantity');
+            const minQuantity = button.getAttribute('data-minQuantity');
+            const unit = button.getAttribute('data-unit');
+            const price = button.getAttribute('data-price');
+
+            document.getElementById('ingredientId').value = id;
+            document.getElementById('ingredientName').value = name;
+            document.getElementById('ingredientQuantity').value = quantity;
+            document.getElementById('ingredientMinQuantity').value = minQuantity;
+            document.getElementById('ingredientUnit').value = unit;
+            document.getElementById('ingredientPrice').value = price;
+        });
+    });
+</script>
+
